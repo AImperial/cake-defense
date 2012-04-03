@@ -21,12 +21,17 @@ namespace CakeDefense
         protected int speed; // Either Speed of Enemy or Speed of Bullet
         protected Rectangle location; // The current location and size of the object
         protected SpriteBatch sprBtch; // Objects Picture
-        protected Color type; // Color shows the type of enemy or tower
+        protected Color color; // Color shows the type of enemy or tower
         protected Texture pic; // Picture
 
-        
-
-        public GameObject(int sh, int dd, int sp, int x, int y, int w, int h, SpriteBatch spB, Color t, Texture p)
+        #region Constructor
+        /// <param name="sh">Max Health</param>
+        /// <param name="dd">Damage that the object does</param>
+        /// <param name="sp">Either Speed of Enemy or Speed of Bullet</param>
+        /// <param name="spB">Objects Picture</param>
+        /// <param name="c">Color</param>
+        /// <param name="t">Texture (Picture)</param>
+        public GameObject(int sh, int dd, int sp, int x, int y, int w, int h, SpriteBatch spB, Color c, Texture t)
         {
             strtHlth = sh;
             currHealth = sh;
@@ -35,8 +40,16 @@ namespace CakeDefense
             speed = sp;
             location = new Rectangle(x, y, w, h);
             sprBtch = spB;
-            type = t;
-            pic = p;
+            color = c;
+            pic = t;
+        }
+        #endregion Constructor
+
+        public Rectangle Rectangle
+        {
+            get { return location; }
+
+            set { }
         }
     }
 }
