@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace CakeDefense
 {
-    class GameObject
+    public class GameObject
     {
         protected int strtHlth; // Max Health
         protected int currHealth; // Current Health
