@@ -33,6 +33,8 @@ namespace CakeDefense
         Rectangle mouseLoc;
         Dictionary<ButtonType, Rectangle[]> buttons;
         bool singlePress, musicOn, soundEffectsOn;
+
+        Map map;
         #endregion Attributes
 
         #region Initialize
@@ -58,6 +60,8 @@ namespace CakeDefense
                     new Rectangle(762, 80, 420, 145),
                     new Rectangle(776, 387, 417, 136) } }
             };
+
+            map = new Map();
 
             base.Initialize();
         }
@@ -85,7 +89,7 @@ namespace CakeDefense
 
         protected override void Update(GameTime gameTime)
         {
-            #region Gamepad, Kb/MouseState & Frame Stuff
+            #region Kb/MouseState
             singlePress = false;
 
             //Keyboard
@@ -96,7 +100,7 @@ namespace CakeDefense
             mouseState = Mouse.GetState();
 
             mouseLoc = new Rectangle(mouseState.X, mouseState.Y, 1, 1);
-            #endregion Gamepad, Kb/MouseState & Frame Stuff
+            #endregion Kb/MouseState
 
             switch (gameState)
             {
@@ -147,7 +151,7 @@ namespace CakeDefense
             {
                 #region GameState.Game
                 case GameState.Game:
-
+                    map.DrawMap(spriteBatch, blankTex);
                     break;
                 #endregion GameState.Game
 
@@ -247,10 +251,7 @@ namespace CakeDefense
         private void DrawBox(int x, int y, int width, int height, Color color)
         {
             // Draw the box
-            spriteBatch.Draw(
-                blankTex,
-                new Rectangle(x, y, width, height),
-                color);
+            spriteBatch.Draw(blankTex, new Rectangle(x, y, width, height), color);
         }
         #endregion Draw Rectangle
     }
