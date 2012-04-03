@@ -21,13 +21,17 @@ namespace CakeDefense
         #region Attributes
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        SpriteFont largeFont, mediumFont, normalFont, smallFont;
+        Texture2D blankTex, cursorTex, mainMenu, instructions, credits;
 
         public enum GameState { Menu, Instructions, Credits, Game, GameOver }
+        public enum ButtonType { Menu }
         private GameState gameState;
         KeyboardState kbState, previouskbState;
         MouseState mouseState, previousMouseState;
 
         Rectangle mouseLoc;
+        Dictionary<ButtonType, Rectangle[]> buttons;
         bool singlePress, musicOn, soundEffectsOn;
         #endregion Attributes
 
@@ -40,17 +44,42 @@ namespace CakeDefense
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            graphics.PreferredBackBufferHeight = Var.TOTAL_HEIGHT;
+            graphics.PreferredBackBufferWidth = Var.TOTAL_WIDTH;
+            graphics.IsFullScreen = false;
+            graphics.ApplyChanges();
+            gameState = GameState.Menu;
+
+            singlePress = false; musicOn = true; soundEffectsOn = true;
+
+            buttons = new Dictionary<ButtonType, Rectangle[]>{
+                { ButtonType.Menu, new Rectangle[]{
+                    new Rectangle(118, 184, 498, 284),
+                    new Rectangle(762, 80, 420, 145),
+                    new Rectangle(776, 387, 417, 136) } }
+            };
 
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            blankTex = this.Content.Load<Texture2D>("Blank");
+            cursorTex = this.Content.Load<Texture2D>("Cursor");
 
-            // TODO: use this.Content to load your game content here
+            #region Menu
+            mainMenu = this.Content.Load<Texture2D>("Menu/MainMenu");
+            instructions = this.Content.Load<Texture2D>("Menu/Instructions");
+            credits = this.Content.Load<Texture2D>("Menu/Credits");
+            #endregion Menu
+
+            #region Spritefonts
+            largeFont = this.Content.Load<SpriteFont>("Spritefonts/Large");
+            mediumFont = this.Content.Load<SpriteFont>("Spritefonts/Medium");
+            normalFont = this.Content.Load<SpriteFont>("Spritefonts/Normal");
+            smallFont = this.Content.Load<SpriteFont>("Spritefonts/Small");
+            #endregion Spritefonts
         }
         #endregion Initialize
 
@@ -79,13 +108,26 @@ namespace CakeDefense
 
                 #region Everything else
                 case GameState.Menu:
-
+                    if (CheckIfClicked(buttons[ButtonType.Menu][0]))
+                    {
+                        gameState = GameState.Game;
+                    }
+                    else if (CheckIfClicked(buttons[ButtonType.Menu][1]))
+                    {
+                        gameState = GameState.Instructions;
+                    }
+                    else if (CheckIfClicked(buttons[ButtonType.Menu][2]))
+                    {
+                        gameState = GameState.Credits;
+                    }
                     break;
                 case GameState.Instructions:
-
+                    if (mouseState.RightButton == ButtonState.Pressed)
+                        gameState = GameState.Menu;
                     break;
                 case GameState.Credits:
-
+                    if (mouseState.RightButton == ButtonState.Pressed)
+                        gameState = GameState.Menu;
                     break;
                 case GameState.GameOver:
 
@@ -98,7 +140,8 @@ namespace CakeDefense
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.MediumPurple);
+            GraphicsDevice.Clear(Color.DarkGreen);
+            spriteBatch.Begin();
 
             switch (gameState)
             {
@@ -110,20 +153,24 @@ namespace CakeDefense
 
                 #region Everything else
                 case GameState.Menu:
-
+                    spriteBatch.Draw(mainMenu, Var.SCREEN_SIZE, Color.White);
                     break;
                 case GameState.Instructions:
-
+                    spriteBatch.Draw(instructions, Var.SCREEN_SIZE, Color.White);
+                    spriteBatch.DrawString(mediumFont, "Right click to return", new Vector2(15, Var.TOTAL_HEIGHT - mediumFont.MeasureString("-").Y - 10), Color.DarkGreen);
                     break;
                 case GameState.Credits:
-
+                    spriteBatch.Draw(credits, Var.SCREEN_SIZE, Color.White);
+                    spriteBatch.DrawString(mediumFont, "Right click to return", new Vector2(15, Var.TOTAL_HEIGHT - mediumFont.MeasureString("-").Y - 10), Color.DarkGreen);
                     break;
                 case GameState.GameOver:
 
                     break;
                 #endregion Everything else
             }
+            spriteBatch.Draw(cursorTex, new Rectangle(mouseLoc.X, mouseLoc.Y, 25, 25), Color.White);
 
+            spriteBatch.End();
             base.Draw(gameTime);
         }
 
@@ -180,5 +227,31 @@ namespace CakeDefense
         #endregion CheckIfClickedd (Includes SinglePress)
 
         #endregion Mouse / Keyboard Stuff
+
+        #region Draw Rectangle
+        /// <summary> Draws an outline around a rectangle. </summary>
+        /// <param name="rect">The Rectangle To Be Outlined</param>
+        private void DrawRectangleOutline(Rectangle rect, Color color)//, int borderSize)
+        {
+            int borderSize = 1;
+            int cB = borderSize / 2 + 1; // Center By
+
+            // Draw the 4 lines as 4 thin boxes:
+            // Top, right, bottom, left
+            DrawBox(rect.X - cB, rect.Y - cB, rect.Width, borderSize, color);
+            DrawBox(rect.X + rect.Width - cB, rect.Y - cB, borderSize, rect.Height + borderSize, color);
+            DrawBox(rect.X - cB, rect.Y + rect.Height - cB, rect.Width + borderSize, borderSize, color);
+            DrawBox(rect.X - cB, rect.Y - cB, borderSize, rect.Height, color);
+        }
+
+        private void DrawBox(int x, int y, int width, int height, Color color)
+        {
+            // Draw the box
+            spriteBatch.Draw(
+                blankTex,
+                new Rectangle(x, y, width, height),
+                color);
+        }
+        #endregion Draw Rectangle
     }
 }
