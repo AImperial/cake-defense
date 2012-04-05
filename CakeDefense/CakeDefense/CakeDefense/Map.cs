@@ -57,7 +57,7 @@ namespace CakeDefense
                     if(tiles[i, j] == 0)
                         sprite.Draw(tex, new Rectangle(j * 40, i * 40, 38, 38), Color.White);
                     else if (tiles[i, j] == 2)
-                        sprite.Draw(tex, new Rectangle(j * 40, i * 40, 38, 38), Color.Green);
+                        sprite.Draw(tex, new Rectangle(j * 40, i * 40, 38, 38), Color.Red);
                     else if (tiles[i, j] == 3)
                         sprite.Draw(tex, new Rectangle(j * 40, i * 40, 38, 38), Color.Red);
                     else
