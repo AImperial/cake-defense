@@ -21,14 +21,14 @@ namespace CakeDefense
         //this can be scaled however is needed. right now its set to 18 x 18 tiles with a border of 2
         //not very hard to then draw a path from this based on the grid
         //actual tiles can be implemented just as easily
-        int[,] tiles;
+        public int[,] tiles;
 
         public Map()
         {
             //create list for use in loop to change specific tiles
             //32 wide 18 high
             tiles = new int [,]{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
                                 {0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0},
                                 {0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0},
                                 {0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0},
@@ -39,7 +39,7 @@ namespace CakeDefense
                                 {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
                                 {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
                                 {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
-                                {3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0},
+                                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0},
                                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -56,10 +56,6 @@ namespace CakeDefense
                 {
                     if(tiles[i, j] == 0)
                         sprite.Draw(tex, new Rectangle(j * 40, i * 40, 38, 38), Color.White);
-                    else if (tiles[i, j] == 2)
-                        sprite.Draw(tex, new Rectangle(j * 40, i * 40, 38, 38), Color.Red);
-                    else if (tiles[i, j] == 3)
-                        sprite.Draw(tex, new Rectangle(j * 40, i * 40, 38, 38), Color.Red);
                     else
                         sprite.Draw(tex, new Rectangle(j * 40, i * 40, 38, 38), Color.Black);
                 }

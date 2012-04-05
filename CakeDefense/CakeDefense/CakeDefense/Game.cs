@@ -65,7 +65,7 @@ namespace CakeDefense
             map = new Map();
 
             testEnemy = new GameObject(Var.MAX_ENEMY_HEALTH, 2, 2, 0, 480, Var.TILE_HEIGHT, Var.TILE_WIDTH, spriteBatch, Color.Green, blankTex);
-            testTower = new GameObject(Var.MAX_TOWER_HEALTH, 2, 2, 640, 40, Var.TOTAL_HEIGHT, Var.TILE_WIDTH, spriteBatch, Color.Green, blankTex);
+            testTower = new GameObject(Var.MAX_TOWER_HEALTH, 2, 2, 640, 40, Var.TILE_HEIGHT, Var.TILE_WIDTH, spriteBatch, Color.Green, blankTex);
 
             base.Initialize();
         }
@@ -110,7 +110,10 @@ namespace CakeDefense
             {
                 #region GameState.Game
                 case GameState.Game:
-
+                    if (testEnemy.IsActive)
+                    {
+                        testEnemy.Move(map.tiles);
+                    }
                     break;
                 #endregion GameState.Game
 
@@ -156,8 +159,17 @@ namespace CakeDefense
                 #region GameState.Game
                 case GameState.Game:
                     map.DrawMap(spriteBatch, blankTex);
-                    spriteBatch.Draw(blankTex, testEnemy.Rectangle, Color.Green);
-                    spriteBatch.Draw(blankTex, testTower.Rectangle, Color.Green);
+
+                    //draw test objects
+                    if (testEnemy.IsActive)
+                    {
+                        spriteBatch.Draw(blankTex, testEnemy.Rectangle, Color.Green);
+                    }
+
+                    if (testTower.IsActive)
+                    {
+                        spriteBatch.Draw(blankTex, testTower.Rectangle, Color.Green);
+                    }
                     break;
                 #endregion GameState.Game
 

@@ -21,6 +21,7 @@ namespace CakeDefense
         public Cake(int sh, int dd, int sp, int x, int y, int w, int h, SpriteBatch spB, Color c, Texture t)
             : base(sh, dd, sp, x, y, w, h, spB, c, t)
         {
+
         }
     }
 }
