@@ -18,13 +18,10 @@ namespace CakeDefense
 {
     public class GameObject
     {
-        protected int strtHlth; // Max Health
-        protected int currHealth; // Current Health
-        protected int dmgDn; // Damage that the object does
+        protected int strtHlth, currHealth, dmgDn, speed; // Max health, current health, damage that the object does, either speed of enemy or speed of bullet
         protected bool isActive; // If the object is currently active
-        protected int speed; // Either Speed of Enemy or Speed of Bullet
         protected Rectangle location; // The current location and size of the object
-        protected SpriteBatch sprBtch; // Objects Picture
+        protected SpriteBatch sprBtch; // Objects picture
         protected Color color; // Color shows the type of enemy or tower
         protected Texture pic; // Picture
 
@@ -50,12 +47,43 @@ namespace CakeDefense
         #endregion Constructor
 
         #region Properties
+        public bool IsActive
+        {
+            get{ return isActive; }
+
+            set { isActive = value; }
+        }
+
         public Rectangle Rectangle
         {
             get { return location; }
-
-            set { }
         }
         #endregion Properties
+
+        #region Other Methods
+        public void Move(int[,] tileArray)
+        {
+            //check current tile
+            //if a valid path tile, move along it towards the next
+            /*for (int i = 0; i < 18; i++)
+            {
+                for (int j = 0; j < 32; j++)
+                {
+                    if (tileArray[i, j] == 1 && location.Intersects(new Rectangle(i*40, j*40, Var.TILE_WIDTH, Var.TILE_HEIGHT)))
+                    {
+                        
+                    }
+                }
+            }*/
+            location.X++;
+        }
+
+        public void TakeDamage(int damage)
+        {
+            currHealth -= damage;
+            if (currHealth <= 0)
+                isActive = false;
+        }
+        #endregion Other Methods
     }
 }
