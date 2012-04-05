@@ -35,6 +35,7 @@ namespace CakeDefense
         bool singlePress, musicOn, soundEffectsOn;
 
         Map map;
+        GameObject testEnemy, testTower;
         #endregion Attributes
 
         #region Initialize
@@ -62,6 +63,9 @@ namespace CakeDefense
             };
 
             map = new Map();
+
+            testEnemy = new GameObject(Var.MAX_ENEMY_HEALTH, 2, 2, 0, 480, Var.TILE_HEIGHT, Var.TILE_WIDTH, spriteBatch, Color.Green, blankTex);
+            testTower = new GameObject(Var.MAX_TOWER_HEALTH, 2, 2, 640, 40, Var.TOTAL_HEIGHT, Var.TILE_WIDTH, spriteBatch, Color.Green, blankTex);
 
             base.Initialize();
         }
@@ -152,6 +156,8 @@ namespace CakeDefense
                 #region GameState.Game
                 case GameState.Game:
                     map.DrawMap(spriteBatch, blankTex);
+                    spriteBatch.Draw(blankTex, testEnemy.Rectangle, Color.Green);
+                    spriteBatch.Draw(blankTex, testTower.Rectangle, Color.Green);
                     break;
                 #endregion GameState.Game
 

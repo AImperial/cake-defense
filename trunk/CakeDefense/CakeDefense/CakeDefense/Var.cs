@@ -22,5 +22,11 @@ namespace CakeDefense
         public static int TOTAL_WIDTH = 1280;
         public static int TOTAL_HEIGHT = 720;
         public static Rectangle SCREEN_SIZE = new Rectangle(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT);
+
+        public static int TILE_HEIGHT = 40;
+        public static int TILE_WIDTH = 40;
+
+        public static int MAX_ENEMY_HEALTH = 10;
+        public static int MAX_TOWER_HEALTH = 10;
     }
 }
