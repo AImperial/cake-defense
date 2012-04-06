@@ -64,8 +64,8 @@ namespace CakeDefense
 
             map = new Map();
 
-            testEnemy = new GameObject(Var.MAX_ENEMY_HEALTH, 2, 2, 0, 480, Var.TILE_HEIGHT, Var.TILE_WIDTH, spriteBatch, Color.Green, blankTex);
-            testTower = new GameObject(Var.MAX_TOWER_HEALTH, 2, 2, 640, 40, Var.TILE_HEIGHT, Var.TILE_WIDTH, spriteBatch, Color.Green, blankTex);
+            testEnemy = new GameObject(Var.MAX_ENEMY_HEALTH, 2, 2, 0, 480, Var.TILE_SIZE, Var.TILE_SIZE, spriteBatch, Color.Green, blankTex);
+            testTower = new GameObject(Var.MAX_TOWER_HEALTH, 2, 2, 640, 40, Var.TILE_SIZE, Var.TILE_SIZE, spriteBatch, Color.Green, blankTex);
 
             base.Initialize();
         }
