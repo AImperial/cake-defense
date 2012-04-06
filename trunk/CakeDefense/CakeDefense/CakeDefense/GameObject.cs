@@ -65,17 +65,9 @@ namespace CakeDefense
         {
             //check current tile
             //if a valid path tile, move along it towards the next
-            /*for (int i = 0; i < 18; i++)
-            {
-                for (int j = 0; j < 32; j++)
-                {
-                    if (tileArray[i, j] == 1 && location.Intersects(new Rectangle(i*40, j*40, Var.TILE_WIDTH, Var.TILE_HEIGHT)))
-                    {
-                        
-                    }
-                }
-            }*/
-            location.X++;
+            //if(tileArray[(int)location.X / 40, (int)location.Y / 40] == 1)
+            //round up?
+                location.X++;
         }
 
         public void TakeDamage(int damage)
