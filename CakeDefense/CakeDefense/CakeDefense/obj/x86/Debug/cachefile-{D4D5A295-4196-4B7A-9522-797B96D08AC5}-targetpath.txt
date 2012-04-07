@@ -7,3 +7,4 @@ Content\Spritefonts\Medium.xnb
 Content\Spritefonts\Normal.xnb
 Content\Spritefonts\Small.xnb
 Content\Cursor.xnb
+Content\Sprites\SpiderSprite.xnb
