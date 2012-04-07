@@ -19,7 +19,7 @@ namespace CakeDefense
 {
     class CountDown
     {
-        public int timeToNextWave;
+        public int timeToNextWave = 0;
 
         #region Constructor
         public CountDown()

@@ -14,14 +14,14 @@ using System.Diagnostics;
 using System.IO;
 #endregion using
 
+
 namespace CakeDefense
 {
-    class Cake:GameObject
+    class Tower:GameObject
     {
-        public Cake(int sh, int dd, int sp, int x, int y, int w, int h, SpriteBatch spB, Color c, Texture2D t)
+        public Tower(int sh, int dd, int sp, int x, int y, int w, int h, SpriteBatch spB, Color c, Texture2D t)
             : base(sh, dd, sp, x, y, w, h, spB, c, t)
         {
-
         }
     }
 }

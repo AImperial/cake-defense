@@ -16,10 +16,10 @@ using System.IO;
 
 namespace CakeDefense
 {
-    class Cake:GameObject
+    class Tile_Path:Tile
     {
-        public Cake(int sh, int dd, int sp, int x, int y, int w, int h, SpriteBatch spB, Color c, Texture2D t)
-            : base(sh, dd, sp, x, y, w, h, spB, c, t)
+        public Tile_Path(int x, int y, int w, int h, Point tileNum)
+            : base(x, y, w, h, tileNum)
         {
 
         }

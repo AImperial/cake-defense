@@ -35,7 +35,8 @@ namespace CakeDefense
         bool singlePress, musicOn, soundEffectsOn;
 
         Map map;
-        GameObject testEnemy, testTower;
+        GameObject testTower;
+        Enemy testEnemy;
         #endregion Attributes
 
         #region Initialize
@@ -62,12 +63,21 @@ namespace CakeDefense
                     new Rectangle(776, 387, 417, 136) } }
             };
 
-            map = new Map();
-
-            testEnemy = new GameObject(Var.MAX_ENEMY_HEALTH, 2, 2, 0, 480, Var.TILE_SIZE, Var.TILE_SIZE, spriteBatch, Color.Green, blankTex);
-            testTower = new GameObject(Var.MAX_TOWER_HEALTH, 2, 2, 640, 40, Var.TILE_SIZE, Var.TILE_SIZE, spriteBatch, Color.Green, blankTex);
-
             base.Initialize();
+        }
+
+        /// <summary>
+        /// Objects that use things such as Textures / a SpriteBatch
+        /// that need to be made after LoadContent go here.
+        /// </summary>
+        protected void InitializeAfterLoadContent()
+        {
+            map = new Map(32, 18, spriteBatch);
+
+            Tile startTile = map.Tiles[0, 11];
+            testEnemy = new Enemy(Var.MAX_ENEMY_HEALTH, 2, 2, startTile.X, startTile.Y, Var.TILE_SIZE, Var.TILE_SIZE, spriteBatch, Color.Red, blankTex,
+                map.FindPath(startTile, map.Tiles[23, 17], 1), 1);
+            testTower = new GameObject(Var.MAX_TOWER_HEALTH, 2, 2, 640, 40, Var.TILE_SIZE, Var.TILE_SIZE, spriteBatch, Color.Blue, blankTex);
         }
 
         protected override void LoadContent()
@@ -88,6 +98,8 @@ namespace CakeDefense
             normalFont = this.Content.Load<SpriteFont>("Spritefonts/Normal");
             smallFont = this.Content.Load<SpriteFont>("Spritefonts/Small");
             #endregion Spritefonts
+
+            InitializeAfterLoadContent();
         }
         #endregion Initialize
 
@@ -112,7 +124,7 @@ namespace CakeDefense
                 case GameState.Game:
                     if (testEnemy.IsActive)
                     {
-                        testEnemy.Move(map.tiles);
+                        testEnemy.Move();
                     }
                     break;
                 #endregion GameState.Game
@@ -158,18 +170,11 @@ namespace CakeDefense
             {
                 #region GameState.Game
                 case GameState.Game:
-                    map.DrawMap(spriteBatch, blankTex);
 
-                    //draw test objects
-                    if (testEnemy.IsActive)
-                    {
-                        spriteBatch.Draw(blankTex, testEnemy.Rectangle, Color.Green);
-                    }
+                    map.DrawMap(blankTex, smallFont);
+                    testEnemy.Draw();
+                    testTower.Draw();
 
-                    if (testTower.IsActive)
-                    {
-                        spriteBatch.Draw(blankTex, testTower.Rectangle, Color.Green);
-                    }
                     break;
                 #endregion GameState.Game
 
