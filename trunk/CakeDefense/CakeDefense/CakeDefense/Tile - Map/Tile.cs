@@ -18,19 +18,19 @@ namespace CakeDefense
 {
     class Tile:GameObject
     {
+        #region Attributes
         protected Point tileNum; // Where the tile is located in tile Array
-        /// <summary>
-        /// This contains references to the for nodes surrounding 
-        /// this tile (Up, Down, Left, Right).
-        /// </summary>
         protected Tile[] neighbors;
+        #endregion Attributes
 
+        #region Constructor
         public Tile(int x, int y, int w, int h, Point tileNum)
             : base(0, 0, 0, x, y, w, h, null, Color.White, null)
         {
             this.tileNum = tileNum;
             neighbors = new Tile[4];
         }
+        #endregion Constructor
 
         #region Propeties
 
@@ -40,6 +40,7 @@ namespace CakeDefense
             get { return tileNum; }
         }
 
+        /// <summary> Holds the 4 neighboring Tiles </summary>
         public Tile[] Neighbors
         {
             get { return neighbors; }

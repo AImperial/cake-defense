@@ -64,8 +64,8 @@ namespace CakeDefense
                 {
                     if (tileMap[j, i] == 0)
                         tiles[i, j] = new Tile_Tower(i * Var.TILE_SIZE, j * Var.TILE_SIZE, Var.TILE_SIZE, Var.TILE_SIZE, new Point(i,j));
-                    else if (tileMap[j, i] == 1)
-                        tiles[i, j] = new Tile_Path(i * Var.TILE_SIZE, j * Var.TILE_SIZE, Var.TILE_SIZE, Var.TILE_SIZE, new Point(i, j));
+                    else if (tileMap[j, i] >= 1)
+                        tiles[i, j] = new Tile_Path(i * Var.TILE_SIZE, j * Var.TILE_SIZE, Var.TILE_SIZE, Var.TILE_SIZE, new Point(i, j), tileMap[j, i] - 1);
                 }
             }
             AssignTileNeighbors();
@@ -145,7 +145,7 @@ namespace CakeDefense
             }
         }
 
-        public List<Tile> FindPath(Tile startNode, Tile endNode, int pathNum)
+        public Path FindPath(Tile startNode, Tile endNode, int pathNum)
         {
             List<Tile> path = new List<Tile>();
             Tile lastTile = startNode;
@@ -160,7 +160,7 @@ namespace CakeDefense
                 movesLeft = false;
                 foreach (Tile neighbor in currentTile.Neighbors)
                 {
-                    if (neighbor is Tile_Path && visited[neighbor.TileNum.X, neighbor.TileNum.Y] == false)
+                    if (neighbor is Tile_Path && visited[neighbor.TileNum.X, neighbor.TileNum.Y] == false && ((Tile_Path)neighbor).Type <= pathNum)
                     {
                         movesLeft = true;
                         visited[neighbor.TileNum.X, neighbor.TileNum.Y] = true;
@@ -172,7 +172,7 @@ namespace CakeDefense
                 }
             }
 
-            return path;
+            return new Path(path);
         }
         #endregion Methods
 

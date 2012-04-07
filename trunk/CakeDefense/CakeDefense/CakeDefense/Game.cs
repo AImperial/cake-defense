@@ -22,7 +22,7 @@ namespace CakeDefense
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
-        Texture2D blankTex, cursorTex, mainMenu, instructions, credits;
+        Texture2D blankTex, cursorTex, mainMenu, instructions, credits, enemyAnimationTest;
 
         public enum GameState { Menu, Instructions, Credits, Game, GameOver }
         public enum ButtonType { Menu }
@@ -74,10 +74,11 @@ namespace CakeDefense
         {
             map = new Map(32, 18, spriteBatch);
 
-            Tile startTile = map.Tiles[0, 11];
-            testEnemy = new Enemy(Var.MAX_ENEMY_HEALTH, 2, 2, startTile.X, startTile.Y, Var.TILE_SIZE, Var.TILE_SIZE, spriteBatch, Color.Red, blankTex,
-                map.FindPath(startTile, map.Tiles[23, 17], 1), 1);
-            testTower = new GameObject(Var.MAX_TOWER_HEALTH, 2, 2, 640, 40, Var.TILE_SIZE, Var.TILE_SIZE, spriteBatch, Color.Blue, blankTex);
+            Path path0 = map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1);
+            testEnemy = new Enemy(Var.MAX_ENEMY_HEALTH, 2, 10, path0, Var.TILE_SIZE, Var.TILE_SIZE, spriteBatch, Color.Red, enemyAnimationTest);
+            testEnemy.Start(new GameTime(TimeSpan.Zero, TimeSpan.Zero)); // The Fake GameTime is for testing purposes.
+
+            testTower = new GameObject(Var.MAX_TOWER_HEALTH, 2, 2, 640, 80, Var.TILE_SIZE, Var.TILE_SIZE, spriteBatch, Color.Blue, blankTex);
         }
 
         protected override void LoadContent()
@@ -98,6 +99,10 @@ namespace CakeDefense
             normalFont = this.Content.Load<SpriteFont>("Spritefonts/Normal");
             smallFont = this.Content.Load<SpriteFont>("Spritefonts/Small");
             #endregion Spritefonts
+
+            #region Sprites
+            enemyAnimationTest = this.Content.Load<Texture2D>("Sprites/SpiderSprite");
+            #endregion Sprites
 
             InitializeAfterLoadContent();
         }
@@ -124,7 +129,7 @@ namespace CakeDefense
                 case GameState.Game:
                     if (testEnemy.IsActive)
                     {
-                        testEnemy.Move();
+                        testEnemy.Move(gameTime);
                     }
                     break;
                 #endregion GameState.Game
@@ -172,7 +177,7 @@ namespace CakeDefense
                 case GameState.Game:
 
                     map.DrawMap(blankTex, smallFont);
-                    testEnemy.Draw();
+                    testEnemy.Draw(gameTime);
                     testTower.Draw();
 
                     break;
