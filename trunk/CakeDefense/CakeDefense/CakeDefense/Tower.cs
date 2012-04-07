@@ -14,15 +14,16 @@ using System.Diagnostics;
 using System.IO;
 #endregion using
 
-
 namespace CakeDefense
 {
     class Tower:GameObject
     {
+        #region Constructor
         public Tower(int health, int damage, int speed, int x, int y, int w, int h, SpriteBatch spB, Color c, Texture2D t)
             : base(t, x, y, w, h, spB, health, damage, speed)
         {
             Image.Color = c;
         }
+        #endregion Constructor
     }
 }

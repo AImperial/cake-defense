@@ -82,6 +82,15 @@
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Small.xnb</Output>
       <Time>2012-04-03T00:36:20.8199795-04:00</Time>
     </Item>
+    <Item>
+      <Source>Sprites\SpiderSprite.png</Source>
+      <Name>Sprites\SpiderSprite</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\SpiderSprite.xnb</Output>
+      <Time>2012-04-07T15:41:08.2454289-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{D4D5A295-4196-4B7A-9522-797B96D08AC5}</ContentProjectGUID>

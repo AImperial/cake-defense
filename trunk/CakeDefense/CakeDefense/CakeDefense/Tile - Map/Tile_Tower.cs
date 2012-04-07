@@ -18,10 +18,12 @@ namespace CakeDefense
 {
     class Tile_Tower:Tile
     {
+        #region Constructor
         public Tile_Tower(int x, int y, int w, int h, Point tileNum)
             : base(x, y, w, h, tileNum)
         {
 
         }
+        #endregion Constructor
     }
 }

@@ -14,12 +14,13 @@ using System.Diagnostics;
 using System.IO;
 #endregion using
 
-
 namespace CakeDefense
 {
     class CountDown
     {
+        #region Attributes
         public int timeToNextWave = 0;
+        #endregion Attributes
 
         #region Constructor
         public CountDown()
