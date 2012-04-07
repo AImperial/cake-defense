@@ -25,8 +25,12 @@ namespace CakeDefense
 
         #region Constructor
         public Tile(int x, int y, int w, int h, Point tileNum)
-            : base(0, 0, 0, x, y, w, h, null, Color.White, null)
+            : base()
         {
+            X = x;
+            Y = y;
+            Width = w;
+            Height = h;
             this.tileNum = tileNum;
             neighbors = new Tile[4];
         }

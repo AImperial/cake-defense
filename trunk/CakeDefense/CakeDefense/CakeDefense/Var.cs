@@ -38,14 +38,18 @@ namespace CakeDefense
         #region Enemy
 
         public static int MAX_ENEMY_HEALTH = 10;
-        public static TimeSpan SPAWN_TIME = new TimeSpan(0, 0, 5);
-        public const int SPAWN_SPINS = 3;
+        public static TimeSpan SPAWN_TIME = new TimeSpan(0, 0, 0, 0, 500);
+        public static TimeSpan DESPAWN_TIME = new TimeSpan(0, 0, 1);
+        public const int SPAWN_SPINS = 1;
+        public static TimeSpan TIME_BETWEEN_SPAWNS = new TimeSpan(0, 0, 1);
+        public static TimeSpan TIME_BETWEEN_WAVES = new TimeSpan(0, 0, 10);
 
         #endregion Enemy
 
         #region Time Stuff
 
         public static int GAME_SPEED = 1;
+        public const int FRAME_SPEED = 500;
 
         private static double timeDif;
         public static float TimePercentTillComplete(TimeSpan startTime, TimeSpan plusTime, GameTime gameTime)
@@ -61,10 +65,9 @@ namespace CakeDefense
 
         //--
 
-        private static Color testColor;
         public static Color EffectTransparency(float percent, Color clr)
         {
-            return Color.FromNonPremultiplied(clr.R, clr.G, clr.B, (byte)(clr.A / percent));
+            return Color.FromNonPremultiplied(clr.R, clr.G, clr.B, (byte)(clr.A * percent));
         }
         #endregion Colors
     }

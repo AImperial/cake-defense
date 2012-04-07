@@ -18,8 +18,8 @@ namespace CakeDefense
 {
     class Cake:GameObject
     {
-        public Cake(int sh, int dd, int sp, int x, int y, int w, int h, SpriteBatch spB, Color c, Texture2D t)
-            : base(sh, dd, sp, x, y, w, h, spB, c, t)
+        public Cake(int health, int x, int y, int w, int h, SpriteBatch spB, Texture2D t)
+            : base(t, x, y, w, h, spB, health, 0, 0)
         {
 
         }
