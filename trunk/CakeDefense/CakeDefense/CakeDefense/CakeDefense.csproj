@@ -74,11 +74,16 @@
   <ItemGroup>
     <Compile Include="Cake.cs" />
     <Compile Include="CountDown.cs" />
+    <Compile Include="Enemy.cs" />
     <Compile Include="GameObject.cs" />
-    <Compile Include="Map.cs" />
+    <Compile Include="Tile - Map\Map.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Misc\Program.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Tile - Map\Tile.cs" />
+    <Compile Include="Tile - Map\Tile_Path.cs" />
+    <Compile Include="Tile - Map\Tile_Tower.cs" />
+    <Compile Include="Tower.cs" />
     <Compile Include="Var.cs" />
   </ItemGroup>
   <ItemGroup>
