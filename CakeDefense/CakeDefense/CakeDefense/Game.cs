@@ -23,6 +23,7 @@ namespace CakeDefense
         SpriteBatch spriteBatch;
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
         Texture2D blankTex, cursorTex, mainMenu, instructions, credits, enemyAnimationTest;
+        ImageObject testanimationImage;
 
         public enum GameState { Menu, Instructions, Credits, Game, GameOver }
         public enum ButtonType { Menu }
@@ -33,10 +34,14 @@ namespace CakeDefense
         Rectangle mouseLoc;
         Dictionary<ButtonType, Rectangle[]> buttons;
         bool singlePress, musicOn, soundEffectsOn;
+        TimeSpan lastSpawnTime;
 
         Map map;
         GameObject testTower;
         Enemy testEnemy;
+        List<Enemy> enemies;
+
+        List<Queue<Enemy>> waves;
         #endregion Attributes
 
         #region Initialize
@@ -55,6 +60,9 @@ namespace CakeDefense
             gameState = GameState.Menu;
 
             singlePress = false; musicOn = true; soundEffectsOn = true;
+            lastSpawnTime = TimeSpan.Zero;
+            enemies = new List<Enemy>();
+            waves = new List<Queue<Enemy>>();
 
             buttons = new Dictionary<ButtonType, Rectangle[]>{
                 { ButtonType.Menu, new Rectangle[]{
@@ -73,12 +81,37 @@ namespace CakeDefense
         protected void InitializeAfterLoadContent()
         {
             map = new Map(32, 18, spriteBatch);
-
             Path path0 = map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1);
-            testEnemy = new Enemy(Var.MAX_ENEMY_HEALTH, 2, 10, path0, Var.TILE_SIZE, Var.TILE_SIZE, spriteBatch, Color.Red, enemyAnimationTest);
-            testEnemy.Start(new GameTime(TimeSpan.Zero, TimeSpan.Zero)); // The Fake GameTime is for testing purposes.
 
-            testTower = new GameObject(Var.MAX_TOWER_HEALTH, 2, 2, 640, 80, Var.TILE_SIZE, Var.TILE_SIZE, spriteBatch, Color.Blue, blankTex);
+            testanimationImage = new ImageObject(enemyAnimationTest, 0, 0, Var.TILE_SIZE, Var.TILE_SIZE, 3, 0, 0, 16, 16, 0, 0, Color.White, ImageObject.RIGHT, Vector2.Zero, SpriteEffects.None, spriteBatch);
+            testanimationImage.CenterOrigin();
+
+            testEnemy = new Enemy(testanimationImage, Var.MAX_ENEMY_HEALTH, 2, 2, path0);
+
+            Queue<Enemy> wave1 = new Queue<Enemy>();
+            wave1.Enqueue(testEnemy);
+            wave1.Enqueue(new Enemy(new ImageObject(enemyAnimationTest, 0, 0, Var.TILE_SIZE, Var.TILE_SIZE, 3, 0, 0, 16, 16, 0, 0, Color.White, ImageObject.RIGHT, Vector2.Zero, SpriteEffects.None, spriteBatch), Var.MAX_ENEMY_HEALTH, 2, 2, path0));
+            wave1.Enqueue(new Enemy(new ImageObject(enemyAnimationTest, 0, 0, Var.TILE_SIZE, Var.TILE_SIZE, 3, 0, 0, 16, 16, 0, 0, Color.White, ImageObject.RIGHT, Vector2.Zero, SpriteEffects.None, spriteBatch), Var.MAX_ENEMY_HEALTH, 2, 2, path0));
+            wave1.Enqueue(new Enemy(new ImageObject(enemyAnimationTest, 0, 0, Var.TILE_SIZE, Var.TILE_SIZE, 3, 0, 0, 16, 16, 0, 0, Color.White, ImageObject.RIGHT, Vector2.Zero, SpriteEffects.None, spriteBatch), Var.MAX_ENEMY_HEALTH, 2, 2, path0));
+            foreach (Enemy bla in wave1)
+            {
+                bla.Image.CenterOrigin();
+            }
+
+            waves.Add(wave1);
+
+            Queue<Enemy> wave2 = new Queue<Enemy>();
+            wave2.Enqueue(new Enemy(new ImageObject(enemyAnimationTest, 0, 0, Var.TILE_SIZE, Var.TILE_SIZE, 3, 0, 0, 16, 16, 0, 0, Color.White, ImageObject.RIGHT, Vector2.Zero, SpriteEffects.None, spriteBatch), Var.MAX_ENEMY_HEALTH, 2, 5, path0));
+            wave2.Enqueue(new Enemy(new ImageObject(enemyAnimationTest, 0, 0, Var.TILE_SIZE, Var.TILE_SIZE, 3, 0, 0, 16, 16, 0, 0, Color.White, ImageObject.RIGHT, Vector2.Zero, SpriteEffects.None, spriteBatch), Var.MAX_ENEMY_HEALTH, 2, 5, path0));
+            wave2.Enqueue(new Enemy(new ImageObject(enemyAnimationTest, 0, 0, Var.TILE_SIZE, Var.TILE_SIZE, 3, 0, 0, 16, 16, 0, 0, Color.White, ImageObject.RIGHT, Vector2.Zero, SpriteEffects.None, spriteBatch), Var.MAX_ENEMY_HEALTH, 2, 5, path0));
+            foreach (Enemy bla in wave2)
+            {
+                bla.Image.CenterOrigin();
+            }
+
+            waves.Add(wave2);
+
+            testTower = new Tower(Var.MAX_TOWER_HEALTH, 2, 2, 640, 80, Var.TILE_SIZE, Var.TILE_SIZE, spriteBatch, Color.Blue, blankTex);
         }
 
         protected override void LoadContent()
@@ -127,9 +160,24 @@ namespace CakeDefense
             {
                 #region GameState.Game
                 case GameState.Game:
-                    if (testEnemy.IsActive)
+                    if (waves.Count > 0 && waves[0].Count > 0 && (lastSpawnTime + Var.TIME_BETWEEN_SPAWNS).TotalMilliseconds < gameTime.TotalGameTime.TotalMilliseconds)
                     {
-                        testEnemy.Move(gameTime);
+                        enemies.Add(waves[0].Dequeue());
+                        enemies[enemies.Count - 1].Start(gameTime);
+                        lastSpawnTime = new TimeSpan(0, 0, 0, 0, (int)gameTime.TotalGameTime.TotalMilliseconds);
+                    }
+                    else if (waves.Count > 0 && waves[0].Count == 0 &&  (lastSpawnTime + Var.TIME_BETWEEN_WAVES).TotalMilliseconds < gameTime.TotalGameTime.TotalMilliseconds)
+                    {
+                        waves.RemoveAt(0);
+                    }
+
+
+                    foreach(Enemy enemy in enemies)
+                    {
+                        if (enemy.IsActive)
+                        {
+                            enemy.Move(gameTime);
+                        }
                     }
                     break;
                 #endregion GameState.Game
@@ -177,7 +225,8 @@ namespace CakeDefense
                 case GameState.Game:
 
                     map.DrawMap(blankTex, smallFont);
-                    testEnemy.Draw(gameTime);
+                    foreach(Enemy enemy in enemies)
+                        enemy.Draw(gameTime);
                     testTower.Draw();
 
                     break;

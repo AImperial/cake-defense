@@ -19,6 +19,195 @@ namespace CakeDefense
     public class GameObject
     {
         #region Attributes
+        public ImageObject Image;
+        private Vector2 point;
+        private Point size;
+        private bool isActive;
+        private int strtHlth, currHealth, dmgDn, speed;
+        #endregion Attributes
+
+        #region Constructors
+        public GameObject()
+        {
+            Image = new ImageObject();
+            point = Vector2.Zero;
+            size = new Point(10, 10);
+            isActive = true;
+            speed = 0;
+            Damage = 0;
+            strtHlth = currHealth = 0;
+        }
+
+        public GameObject(ImageObject io)
+        {
+            Image = io;
+            point = new Vector2(io.X, io.Y);
+            size = new Point(io.Width, io.Height);
+            isActive = true;
+            speed = 0;
+            Damage = 0;
+            strtHlth = currHealth = 0;
+        }
+
+        public GameObject(ImageObject io, int health, int damage, int speed)
+        {
+            Image = io;
+            point = new Vector2(io.X, io.Y);
+            size = new Point(io.Width, io.Height);
+            isActive = true;
+            strtHlth = currHealth = health;
+            dmgDn = damage;
+            this.speed = speed;
+        }
+
+        public GameObject(Texture2D texture, float x, float y, int width, int height, SpriteBatch spriteBatch, int health, int damage, int speed)
+        {
+            Image = new ImageObject(texture, (int)x, (int)y, width, height, spriteBatch);
+            point = new Vector2(x, y);
+            size = new Point(width, height);
+            isActive = true;
+            strtHlth = currHealth = health;
+            dmgDn = damage;
+            this.speed = speed;
+        }
+
+        public GameObject(ImageObject io, float x, float y, int width, int height, int health, int damage, int speed)
+            : this(io)
+        {
+            point = new Vector2(x, y);
+            size = new Point(width, height);
+            strtHlth = currHealth = health;
+            dmgDn = damage;
+            this.speed = speed;
+        }
+        #endregion Constructors
+
+        #region Properties
+
+        #region Position Properties
+        public float X
+        {
+            get { return point.X; }
+
+            set { point.X = value; }
+        }
+
+        public float Y
+        {
+            get { return point.Y; }
+
+            set { point.Y = value; }
+        }
+
+        public int Width
+        {
+            get { return size.X; }
+
+            set { size.X = value; }
+        }
+
+        public int Height
+        {
+            get { return size.Y; }
+
+            set { size.Y = value; }
+        }
+
+        public Vector2 Point
+        {
+            get { return point; }
+
+            set { point = value; }
+        }
+
+        public Rectangle Rectangle
+        {
+            get { return new Rectangle((int)X, (int)Y, Width, Height); }
+
+            set
+            {
+                X = value.X;
+                Y = value.Y;
+                size = new Point(value.Width, value.Height);
+            }
+        }
+
+        public Vector2 Center
+        {
+            get { return new Vector2(X + Width / 2, Y + Height / 2); }
+
+            set
+            {
+                X = (int)value.X - (Width / 2);
+                Y = (int)value.Y - (Height / 2);
+            }
+        }
+        #endregion Position Properties
+
+        public bool IsActive
+        {
+            get { return isActive; }
+
+            set { isActive = value; }
+        }
+
+        public int StartHealth
+        {
+            get { return strtHlth; }
+
+            set { strtHlth = value; }
+        }
+
+        public int CurrentHealth
+        {
+            get { return currHealth; }
+
+            set { currHealth = value; }
+        }
+
+        public int Damage
+        {
+            get { return dmgDn; }
+
+            set { dmgDn = value; }
+        }
+
+        public int Speed
+        {
+            get { return speed; }
+
+            set { speed = value; }
+        }
+
+        #endregion Properties
+
+        #region Methods
+        public void Move(float x, float y)
+        {
+            X = x;
+            Y = y;
+
+            Image.Center = Center;
+        }
+        #endregion Methods
+
+        #region Draw
+        public void Draw()
+        {
+            if (isActive)
+                Image.Draw();
+        }
+
+        public void Draw(GameTime gameTime, int frameSpeed)
+        {
+            if (isActive)
+                Image.Draw(gameTime, frameSpeed);
+        }
+        #endregion Draw
+
+        #region Old Version
+        /*
+        #region Attributes
         protected int strtHlth, currHealth, dmgDn, speed; // Max health, current health, damage that the object does, either speed of enemy or speed of bullet
         protected bool isActive; // If the object is currently active
         protected Rectangle rectangle; // The current location and size of the object
@@ -166,5 +355,7 @@ namespace CakeDefense
                 sprBtch.Draw(Texture, Rectangle, Color);
         }
         #endregion Draw
+        */
+        #endregion Old Version
     }
 }

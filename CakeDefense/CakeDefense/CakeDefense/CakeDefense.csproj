@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cake.cs" />
+    <Compile Include="ImageObject.cs" />
     <Compile Include="Path.cs" />
     <Compile Include="CountDown.cs" />
     <Compile Include="Enemy.cs" />

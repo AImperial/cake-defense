@@ -184,8 +184,8 @@ namespace CakeDefense
                 if (tile is Tile_Tower)
                     sprite.Draw(tex, tile.Rectangle, Color.White);
                 else if (tile is Tile_Path)
-                    sprite.Draw(tex, tile.Rectangle, Color.Black);
-                sprite.DrawString(font, "x:" + tile.TileNum.X.ToString("00") + "\ny:" + tile.TileNum.Y.ToString("00"), tile.Vector, Color.Green);
+                    sprite.Draw(tex, tile.Rectangle, Color.Gray);
+                //sprite.DrawString(font, "x:" + tile.TileNum.X.ToString("00") + "\ny:" + tile.TileNum.Y.ToString("00"), tile.Point, Color.Green);
             }
         }
         #endregion Draw

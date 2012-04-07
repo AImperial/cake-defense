@@ -23,21 +23,21 @@ namespace CakeDefense
         private int currentTile;
         private TimeSpan time; // hold time when anm action started.
 
-        private bool spawning;
+        private bool spawning, despawning;
         private float transparency;
         #endregion Attributes
 
         #region Constructor
-        public Enemy(int sh, int dd, int speed, Path path, int w, int h, SpriteBatch spB, Color c, Texture2D t)
-            : base(sh, dd, speed, 0, 0, w, h, spB, c, t)
+        public Enemy(ImageObject imageObject, int health, int damage, int speed, Path path)
+            : base(imageObject, health, damage, speed)
         {
-            isActive = false;
+            IsActive = false;
             this.path = path;
-            Center = path.Start.Center;
+            Image.Center = Center = path.Start.Center;
             currentTile = 0;
 
             transparency = 0;
-            rotation = RIGHT;
+            Image.Rotation = ImageObject.RIGHT;
             spawning = true;
         }
         #endregion Constructor
@@ -51,15 +51,26 @@ namespace CakeDefense
         #region Move
         public void Move(GameTime gameTime)
         {
-            if (spawning == false)
+            if (spawning == false && despawning == false)
             {
-                MoveBy(speed * Var.GAME_SPEED); // move the enemy (properly)
+                MoveBy(Speed * Var.GAME_SPEED); // move the enemy (properly)
 
+                if (path.GetTile(currentTile) == path.End)
+                {
+                    despawning = true;
+                    time = new TimeSpan(0, 0, 0, 0, (int)gameTime.TotalGameTime.TotalMilliseconds);
+                    Move(gameTime);
+                    return;
+                }
                 // check attack stuff/etc here
             }
-            else
+            else if (spawning == true)
             {
                 Spawning(gameTime);
+            }
+            else if (despawning == true)
+            {
+                Despawning(gameTime);
             }
         }
 
@@ -67,6 +78,7 @@ namespace CakeDefense
         {
             if (path.InRange(currentTile + 1))
             {
+                // Move Left
                 if (path.GetNextTile(currentTile).Center.X < Center.X)
                 {
                     // Encase Rounding a corner
@@ -81,11 +93,13 @@ namespace CakeDefense
                     // Otherwise move normally
                     else
                     {
+                        Image.Rotation = ImageObject.LEFT;
                         X -= num;
                         if (Center.X == path.GetNextTile(currentTile).Center.X)
                             currentTile++;
                     }
                 }
+                // Move Up
                 else if (path.GetNextTile(currentTile).Center.Y < Center.Y)
                 {
                     // Encase Rounding a corner
@@ -100,11 +114,13 @@ namespace CakeDefense
                     // Otherwise move normally
                     else
                     {
+                        Image.Rotation = ImageObject.UP;
                         Y -= num;
                         if (Center.Y == path.GetNextTile(currentTile).Center.Y)
                             currentTile++;
                     }
                 }
+                // Move Right
                 else if (path.GetNextTile(currentTile).Center.X > Center.X)
                 {
                     // Encase Rounding a corner
@@ -113,17 +129,19 @@ namespace CakeDefense
                         currentTile++;
                         // How far off it went over center
                         int distOff = (int)(Center.X - path.GetNextTile(currentTile).Center.X);
-                        X -= num - distOff;
+                        X += num - distOff;
                         MoveBy(distOff);
                     }
                     // Otherwise move normally
                     else
                     {
+                        Image.Rotation = ImageObject.RIGHT;
                         X += num;
                         if (Center.X == path.GetNextTile(currentTile).Center.X)
                             currentTile++;
                     }
                 }
+                // Move Down
                 else if (path.GetNextTile(currentTile).Center.Y > Center.Y)
                 {
                     // Encase Rounding a corner
@@ -132,92 +150,91 @@ namespace CakeDefense
                         currentTile++;
                         // How far off it went over center
                         int distOff = (int)(Center.Y - path.GetNextTile(currentTile).Center.Y);
-                        Y -= num - distOff;
+                        Y += num - distOff;
                         MoveBy(distOff);
                     }
                     // Otherwise move normally
                     else
                     {
+                        Image.Rotation = ImageObject.DOWN;
                         Y += num;
                         if (Center.Y == path.GetNextTile(currentTile).Center.Y)
                             currentTile++;
                     }
                 }
             }
+            Image.Center = Center;
         }
         #endregion Move
 
+        #region Spawning / Despawning Stuff
         public void Start(GameTime gameTime)
         {
-            isActive = true;
+            IsActive = true;
             transparency = 0;
-            rotation = 0;
+            Image.Rotation = ImageObject.RIGHT;
             spawning = true;
             time = new TimeSpan(0, 0, 0, 0, (int)gameTime.TotalGameTime.TotalMilliseconds);
         }
 
         /// <summary> Called in Move. Controls enemy's behavior when spawning. </summary>
-        public void Spawning(GameTime gameTime)
+        private void Spawning(GameTime gameTime)
         {
             if ((time + Var.SPAWN_TIME).TotalMilliseconds > gameTime.TotalGameTime.TotalMilliseconds)
             {
                 float percComplete = Var.TimePercentTillComplete(time, Var.SPAWN_TIME, gameTime);
                 transparency = percComplete;
-                rotation = (float)(Var.SPAWN_SPINS * (Math.PI * 2) * percComplete);
+                Image.Rotation = (float)(Var.SPAWN_SPINS * (Math.PI * 2) * percComplete);
             }
             else
             {
                 transparency = 100;
-                rotation = RIGHT;
+                Image.Rotation = ImageObject.RIGHT;
                 time = TimeSpan.Zero;
                 spawning = false;
-                isActive = true;
+                IsActive = true;
             }
         }
+
+        /// <summary> Called in Move. Controls enemy's behavior when despawning. </summary>
+        private void Despawning(GameTime gameTime)
+        {
+            if ((time + Var.DESPAWN_TIME).TotalMilliseconds > gameTime.TotalGameTime.TotalMilliseconds)
+            {
+                transparency = 1 - Var.TimePercentTillComplete(time, Var.DESPAWN_TIME, gameTime);
+            }
+            else
+            {
+                transparency = 100;
+                Image.Rotation = ImageObject.RIGHT;
+                time = TimeSpan.Zero;
+                despawning = false;
+                IsActive = false;
+
+                // something here handling getting cake to the end
+            }
+        }
+        #endregion Spawning / Despawning Stuff
 
         #endregion Methods
 
         #region Draw
         public void Draw(GameTime gameTime)
         {
-            if (isActive)
+            if (IsActive)
             {
-                #region Spawning
-                if (spawning)
+                #region Spawning / Despawning
+                if (spawning || despawning)
                 {
-                    // This allow to rotate image by center
-                    Rectangle drawOff = Rectangle;
-                    drawOff.X += Width / 2;
-                    drawOff.Y += Height / 2;
-
-                    sprBtch.Draw(
-                        Texture,
-                        drawOff,
-                        new Rectangle(0 + (16 * ((int)(gameTime.TotalGameTime.TotalMilliseconds / 500) % 3)), 0, 16, 16),
-                        Color,//Var.EffectTransparency(transparency, color),
-                        rotation,
-                        new Vector2(8),
-                        SpriteEffects.None,
-                        0
-                    );
+                    Color tempColor = Image.Color;
+                    Image.Color = Var.EffectTransparency(transparency, Image.Color);
+                    base.Draw(gameTime, Var.FRAME_SPEED);
+                    Image.Color = tempColor;
                 }
-                #endregion Spawning
+                #endregion Spawning / Despawning
                 else
                 {
-                    Rectangle drawOff = Rectangle;
-                    drawOff.X += Width / 2;
-                    drawOff.Y += Height / 2;
-
-                    sprBtch.Draw(
-                        Texture,
-                        drawOff,
-                        new Rectangle(0 + (16 * ((int)(gameTime.TotalGameTime.TotalMilliseconds / 500) % 3)),0, 16, 16),
-                        Color,
-                        rotation,
-                        new Vector2(8),
-                        SpriteEffects.None,
-                        0
-                    );
+                    base.Draw(gameTime, Var.FRAME_SPEED);
                 }
             }
         }
