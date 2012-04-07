@@ -37,7 +37,6 @@ namespace CakeDefense
         #endregion Constructor
 
         #region Propeties
-
         /// <summary> Where the tile is located in tile Array </summary>
         public Point TileNum
         {
@@ -51,7 +50,6 @@ namespace CakeDefense
 
             set { }
         }
-
         #endregion Propeties
     }
 }

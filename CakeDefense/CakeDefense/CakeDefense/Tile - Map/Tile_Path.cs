@@ -18,13 +18,17 @@ namespace CakeDefense
 {
     class Tile_Path:Tile
     {
+        #region Attributes
         protected int pathNum;
+        #endregion Attributes
 
+        #region Constructor
         public Tile_Path(int x, int y, int w, int h, Point tileNum, int pathType)
             : base(x, y, w, h, tileNum)
         {
             pathNum = pathType;
         }
+        #endregion Constructor
 
         #region Properties
         public int Type
