@@ -16,20 +16,14 @@ using System.IO;
 
 namespace CakeDefense
 {
-    class Bullet
+    class Bullet:GameObject
     {
         #region Attributes
-        private int locX, locY, direction, SPEED;
-        private bool isActive;
-        private Texture2D texture;
+        private int locX, locY, direction;
+        Texture2D tex;
         #endregion Attributes
 
         #region Properties
-        public bool IsActive
-        {
-            get { return isActive; }
-            set { isActive = value; }
-        }
         public int LocX
         {
             get { return locX; }
@@ -47,12 +41,12 @@ namespace CakeDefense
         #region Constructor
         public Bullet(int dir, int lx, int ly, Texture2D texture)
         {
-            isActive = true;
+            IsActive = true;
             direction = dir;
             locX = lx;
             locY = ly;
-            SPEED = Var.BULLET_SPEED;
-            this.texture = texture;
+            Speed = Var.BULLET_SPEED;
+            tex = texture;
         }
         #endregion Constructor
 
@@ -62,40 +56,42 @@ namespace CakeDefense
             switch (direction)
             {
                 case 0: //North
-                    locY -= SPEED;
+                    locY -= Speed;
                     break;
                 case 1: //North East
-                    locY -= (SPEED / 2);
-                    locX += (SPEED / 2);
+                    locY -= (Speed / 2);
+                    locX += (Speed / 2);
                     break;
                 case 2: //East
-                    locX += SPEED;
+                    locX += Speed;
                     break;
                 case 3: //South East
-                    locY += (SPEED / 2);
-                    locX += (SPEED / 2);
+                    locY += (Speed / 2);
+                    locX += (Speed / 2);
                     break;
                 case 4: //South
-                    locY += SPEED;
+                    locY += Speed;
                     break;
                 case 5: //South West
-                    locY += (SPEED / 2);
-                    locX -= (SPEED / 2);
+                    locY += (Speed / 2);
+                    locX -= (Speed / 2);
                     break;
                 case 6: //West
-                    locX -= SPEED;
+                    locX -= Speed;
                     break;
                 case 7: //North West
-                    locY -= (SPEED / 2);
-                    locX -= (SPEED / 2);
+                    locY -= (Speed / 2);
+                    locX -= (Speed / 2);
                     break;
             }
         }
         #endregion Methods
 
+        #region Draw
         public void draw(SpriteBatch spr)
         {
-            spr.Draw(texture, new Rectangle(locX, locY, 5, 5), null, Color.Purple);
+            spr.Draw(tex, new Rectangle(locX, locY, 5, 5), null, Color.Purple);
         }
+        #endregion Draw
     }
 }
