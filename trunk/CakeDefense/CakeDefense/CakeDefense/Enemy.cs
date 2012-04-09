@@ -21,7 +21,7 @@ namespace CakeDefense
         #region Attributes
         private Path path;
         private int currentTile;
-        private TimeSpan time; // hold time when anm action started.
+        private TimeSpan time; // hold time when an action started.
 
         private bool spawning, despawning;
         private float transparency;
@@ -51,26 +51,29 @@ namespace CakeDefense
         #region Move
         public void Move(GameTime gameTime)
         {
-            if (spawning == false && despawning == false)
+            if (IsActive)
             {
-                MoveBy(Speed * Var.GAME_SPEED); // move the enemy (properly)
-
-                if (path.GetTile(currentTile) == path.End)
+                if (spawning == false && despawning == false)
                 {
-                    despawning = true;
-                    time = new TimeSpan(0, 0, 0, 0, (int)gameTime.TotalGameTime.TotalMilliseconds);
-                    Move(gameTime);
-                    return;
+                    MoveBy(Speed * Var.GAME_SPEED); // move the enemy (properly)
+
+                    if (path.GetTile(currentTile) == path.End)
+                    {
+                        despawning = true;
+                        time = new TimeSpan(0, 0, 0, 0, (int)gameTime.TotalGameTime.TotalMilliseconds);
+                        Move(gameTime);
+                        return;
+                    }
+                    // check attack stuff/etc here
                 }
-                // check attack stuff/etc here
-            }
-            else if (spawning == true)
-            {
-                Spawning(gameTime);
-            }
-            else if (despawning == true)
-            {
-                Despawning(gameTime);
+                else if (spawning == true)
+                {
+                    Spawning(gameTime);
+                }
+                else if (despawning == true)
+                {
+                    Despawning(gameTime);
+                }
             }
         }
 
@@ -163,7 +166,6 @@ namespace CakeDefense
                     }
                 }
             }
-            Image.Center = Center;
         }
         #endregion Move
 

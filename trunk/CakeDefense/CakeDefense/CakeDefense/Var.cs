@@ -24,6 +24,7 @@ namespace CakeDefense
         public static int TOTAL_WIDTH = 1280;
         public static int TOTAL_HEIGHT = 720;
         public static Rectangle SCREEN_SIZE = new Rectangle(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT);
+        public static Rectangle GAME_AREA = new Rectangle(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT);
 
         public static int TILE_SIZE = 40;
 
@@ -43,6 +44,7 @@ namespace CakeDefense
         public const int SPAWN_SPINS = 1;
         public static TimeSpan TIME_BETWEEN_SPAWNS = new TimeSpan(0, 0, 1);
         public static TimeSpan TIME_BETWEEN_WAVES = new TimeSpan(0, 0, 10);
+        public const int ENEMY_SIZE = 25;
 
         #endregion Enemy
 
@@ -61,9 +63,14 @@ namespace CakeDefense
         }
         #endregion Time Stuff
 
+        #region Enums
+        public enum EnemyType { Spider }
+        public enum TowerType { Basic }
+        #endregion Enums
+
         #region Colors
 
-        //--
+        public static Color PLACING_TOWER_COLOR = Color.FromNonPremultiplied(255, 255, 255, 150);
 
         public static Color EffectTransparency(float percent, Color clr)
         {

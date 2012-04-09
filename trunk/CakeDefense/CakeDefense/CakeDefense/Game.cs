@@ -19,29 +19,44 @@ namespace CakeDefense
     public class Game : Microsoft.Xna.Framework.Game
     {
         #region Attributes
+
+        #region Graphic Stuff (Texture2D, SpriteFont, SpriteBatch, GraphicsDeviceManager)
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
         Texture2D blankTex, cursorTex, mainMenu, instructions, credits, enemyAnimationTest;
-        ImageObject testanimationImage;
+        #endregion Graphic Stuff
 
+        #region General Game Stuff (GameState, music stuff, Map, HUD)
         public enum GameState { Menu, Instructions, Credits, Game, GameOver }
-        public enum ButtonType { Menu }
         private GameState gameState;
+        bool musicOn, soundEffectsOn;
+        Map map;
+        HUD hud;
+        #endregion General Game Stuff
+
+        #region Keyboard / Mouse Stuff (KeyboardState, MouseState, Button Dictionary)
         KeyboardState kbState, previouskbState;
         MouseState mouseState, previousMouseState;
+        Rectangle mouseRect;
+        Vector2 mousePoint;
+        bool singlePress;
 
-        Rectangle mouseLoc;
+        public enum ButtonType { Menu }
         Dictionary<ButtonType, Rectangle[]> buttons;
-        bool singlePress, musicOn, soundEffectsOn;
-        TimeSpan lastSpawnTime;
+        #endregion Keyboard / Mouse Stuff
 
-        Map map;
-        GameObject testTower;
-        Enemy testEnemy;
+        #region Enemy Stuff (spawn stuff, enemies wave list / active list)
         List<Enemy> enemies;
-
         List<Queue<Enemy>> waves;
+        TimeSpan lastSpawnTime;
+        #endregion Enemy Stuff
+
+        #region Tower Stuff (Tower List, heldTower)
+        Tower heldTower;
+        List<Tower> towers;
+        #endregion Tower Stuff
+
         #endregion Attributes
 
         #region Initialize
@@ -80,38 +95,7 @@ namespace CakeDefense
         /// </summary>
         protected void InitializeAfterLoadContent()
         {
-            map = new Map(32, 18, spriteBatch);
-            Path path0 = map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1);
-
-            testanimationImage = new ImageObject(enemyAnimationTest, 0, 0, Var.TILE_SIZE, Var.TILE_SIZE, 3, 0, 0, 16, 16, 0, 0, Color.White, ImageObject.RIGHT, Vector2.Zero, SpriteEffects.None, spriteBatch);
-            testanimationImage.CenterOrigin();
-
-            testEnemy = new Enemy(testanimationImage, Var.MAX_ENEMY_HEALTH, 2, 2, path0);
-
-            Queue<Enemy> wave1 = new Queue<Enemy>();
-            wave1.Enqueue(testEnemy);
-            wave1.Enqueue(new Enemy(new ImageObject(enemyAnimationTest, 0, 0, Var.TILE_SIZE, Var.TILE_SIZE, 3, 0, 0, 16, 16, 0, 0, Color.White, ImageObject.RIGHT, Vector2.Zero, SpriteEffects.None, spriteBatch), Var.MAX_ENEMY_HEALTH, 2, 2, path0));
-            wave1.Enqueue(new Enemy(new ImageObject(enemyAnimationTest, 0, 0, Var.TILE_SIZE, Var.TILE_SIZE, 3, 0, 0, 16, 16, 0, 0, Color.White, ImageObject.RIGHT, Vector2.Zero, SpriteEffects.None, spriteBatch), Var.MAX_ENEMY_HEALTH, 2, 2, path0));
-            wave1.Enqueue(new Enemy(new ImageObject(enemyAnimationTest, 0, 0, Var.TILE_SIZE, Var.TILE_SIZE, 3, 0, 0, 16, 16, 0, 0, Color.White, ImageObject.RIGHT, Vector2.Zero, SpriteEffects.None, spriteBatch), Var.MAX_ENEMY_HEALTH, 2, 2, path0));
-            foreach (Enemy bla in wave1)
-            {
-                bla.Image.CenterOrigin();
-            }
-
-            waves.Add(wave1);
-
-            Queue<Enemy> wave2 = new Queue<Enemy>();
-            wave2.Enqueue(new Enemy(new ImageObject(enemyAnimationTest, 0, 0, Var.TILE_SIZE, Var.TILE_SIZE, 3, 0, 0, 16, 16, 0, 0, Color.White, ImageObject.RIGHT, Vector2.Zero, SpriteEffects.None, spriteBatch), Var.MAX_ENEMY_HEALTH, 2, 5, path0));
-            wave2.Enqueue(new Enemy(new ImageObject(enemyAnimationTest, 0, 0, Var.TILE_SIZE, Var.TILE_SIZE, 3, 0, 0, 16, 16, 0, 0, Color.White, ImageObject.RIGHT, Vector2.Zero, SpriteEffects.None, spriteBatch), Var.MAX_ENEMY_HEALTH, 2, 5, path0));
-            wave2.Enqueue(new Enemy(new ImageObject(enemyAnimationTest, 0, 0, Var.TILE_SIZE, Var.TILE_SIZE, 3, 0, 0, 16, 16, 0, 0, Color.White, ImageObject.RIGHT, Vector2.Zero, SpriteEffects.None, spriteBatch), Var.MAX_ENEMY_HEALTH, 2, 5, path0));
-            foreach (Enemy bla in wave2)
-            {
-                bla.Image.CenterOrigin();
-            }
-
-            waves.Add(wave2);
-
-            testTower = new Tower(Var.MAX_TOWER_HEALTH, 2, 2, 640, 80, Var.TILE_SIZE, Var.TILE_SIZE, spriteBatch, Color.Blue, blankTex);
+            hud = new HUD(spriteBatch, 0);
         }
 
         protected override void LoadContent()
@@ -153,13 +137,18 @@ namespace CakeDefense
             previousMouseState = mouseState;
             mouseState = Mouse.GetState();
 
-            mouseLoc = new Rectangle(mouseState.X, mouseState.Y, 1, 1);
+            mouseRect = new Rectangle(mouseState.X, mouseState.Y, 1, 1);
+            mousePoint = new Vector2(mouseState.X, mouseState.Y);
             #endregion Kb/MouseState
 
             switch (gameState)
             {
                 #region GameState.Game
                 case GameState.Game:
+
+                    QuickKeys();
+
+                    #region Wave Stuff
                     if (waves.Count > 0 && waves[0].Count > 0 && (lastSpawnTime + Var.TIME_BETWEEN_SPAWNS).TotalMilliseconds < gameTime.TotalGameTime.TotalMilliseconds)
                     {
                         enemies.Add(waves[0].Dequeue());
@@ -169,16 +158,60 @@ namespace CakeDefense
                     else if (waves.Count > 0 && waves[0].Count == 0 &&  (lastSpawnTime + Var.TIME_BETWEEN_WAVES).TotalMilliseconds < gameTime.TotalGameTime.TotalMilliseconds)
                     {
                         waves.RemoveAt(0);
+                    }else if (waves.Count == 0){
+                        gameState = GameState.GameOver;
                     }
+                    #endregion Wave Stuff
 
+                    enemies.ForEach(enemy => enemy.Move(gameTime));
 
-                    foreach(Enemy enemy in enemies)
+                    if (heldTower != null)
+                        heldTower.Point = mousePoint;
+
+                    #region If Mouse Clicked
+                    if (CheckIfClicked(Var.GAME_AREA))
                     {
-                        if (enemy.IsActive)
+                        singlePress = false;
+                        foreach (Tower tower in towers)
                         {
-                            enemy.Move(gameTime);
+                            if (CheckIfClicked(tower.Rectangle))
+                            {
+                                // Info
+                                break;
+                            }
+                        }
+
+                        foreach (Enemy enemy in enemies)
+                        {
+                            if (enemy.IsActive && CheckIfClicked(enemy.Rectangle))
+                            {
+                                // Info
+                                break;
+                            }
+                        }
+
+                        foreach (Tile tile in map.Tiles)
+                        {
+                            if (CheckIfClicked(tile.Rectangle))
+                            {
+                                if(tile is Tile_Tower)
+                                {
+                                    if (heldTower != null && tile.OccupiedBy == null) {
+                                        heldTower.Place((Tile_Tower)tile);
+                                        towers.Add(heldTower);
+                                        heldTower = null;
+                                    }
+                                }
+                                else if(tile is Tile_Path)
+                                {
+
+                                }
+                                break;
+                            }
                         }
                     }
+                    #endregion If Mouse Clicked
+
                     break;
                 #endregion GameState.Game
 
@@ -186,6 +219,7 @@ namespace CakeDefense
                 case GameState.Menu:
                     if (CheckIfClicked(buttons[ButtonType.Menu][0]))
                     {
+                        NewGame();
                         gameState = GameState.Game;
                     }
                     else if (CheckIfClicked(buttons[ButtonType.Menu][1]))
@@ -206,7 +240,8 @@ namespace CakeDefense
                         gameState = GameState.Menu;
                     break;
                 case GameState.GameOver:
-
+                    if (SingleMouseClick() || SingleKeyPress(Keys.Space))
+                        gameState = GameState.Menu;
                     break;
                 #endregion Everything else
             }
@@ -225,9 +260,14 @@ namespace CakeDefense
                 case GameState.Game:
 
                     map.DrawMap(blankTex, smallFont);
-                    foreach(Enemy enemy in enemies)
+
+                    foreach (Enemy enemy in enemies)
                         enemy.Draw(gameTime);
-                    testTower.Draw();
+
+                    foreach (Tower tower in towers)
+                        tower.Draw();
+                    if (heldTower != null)
+                        heldTower.Draw();
 
                     break;
                 #endregion GameState.Game
@@ -245,11 +285,11 @@ namespace CakeDefense
                     spriteBatch.DrawString(mediumFont, "Right click to return", new Vector2(15, Var.TOTAL_HEIGHT - mediumFont.MeasureString("-").Y - 10), Color.DarkGreen);
                     break;
                 case GameState.GameOver:
-
+                    spriteBatch.DrawString(mediumFont, "Click or Press Space to continue", new Vector2(15, Var.TOTAL_HEIGHT - mediumFont.MeasureString("-").Y - 10), Color.Blue);
                     break;
                 #endregion Everything else
             }
-            spriteBatch.Draw(cursorTex, new Rectangle(mouseLoc.X, mouseLoc.Y, 25, 25), Color.White);
+            spriteBatch.Draw(cursorTex, new Rectangle(mouseRect.X, mouseRect.Y, 25, 25), Color.White);
 
             spriteBatch.End();
             base.Draw(gameTime);
@@ -257,12 +297,21 @@ namespace CakeDefense
 
         #region Mouse / Keyboard Stuff
 
+        #region Quick Keys
+        public void QuickKeys()
+        {
+            if (SingleKeyPress(Keys.D1)) {
+                heldTower = NewTower(Var.TowerType.Basic);
+            }
+        }
+        #endregion Quick Keys
+
         #region Single Press / Click
         /// <summary> Processes a singular mouse click </summary>
         /// <returns>If the current button press is the same as the last</returns>
         public bool SingleMouseClick()
         {
-            if (mouseState.LeftButton == ButtonState.Released && previousMouseState.LeftButton == ButtonState.Pressed && singlePress == false)
+            if (singlePress == false && mouseState.LeftButton == ButtonState.Released && previousMouseState.LeftButton == ButtonState.Pressed)
             {
                 singlePress = true;
                 return true;
@@ -275,11 +324,11 @@ namespace CakeDefense
         /// <returns>If the current key press is the same as the last</returns>
         public bool SingleKeyPress(Keys key)
         {
-            if (kbState.IsKeyDown(key) == previouskbState.IsKeyDown(key) || kbState.IsKeyUp(key))
+            if (kbState.IsKeyUp(key) && previouskbState.IsKeyDown(key))
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
         #endregion Single Press / Click
 
@@ -289,13 +338,12 @@ namespace CakeDefense
         /// <returns>If clicked</returns>
         public bool CheckIfClicked(Rectangle area)
         {
-            bool ValueOn = false;
-            if (area.Intersects(mouseLoc))
+            if (area.Intersects(mouseRect))
             {
                 if (SingleMouseClick())
-                    ValueOn = true;
+                    return true;
             }
-            return ValueOn;
+            return false;
         }
 
         /// <summary> Checks if your mouse has clicked a specific Rectangle AND if it's a SingleClick(). </summary>
@@ -309,27 +357,88 @@ namespace CakeDefense
 
         #endregion Mouse / Keyboard Stuff
 
-        #region Draw Rectangle
-        /// <summary> Draws an outline around a rectangle. </summary>
-        /// <param name="rect">The Rectangle To Be Outlined</param>
-        private void DrawRectangleOutline(Rectangle rect, Color color)//, int borderSize)
+        #region New Game / LoadGame / SaveGame
+        public void NewGame()
         {
-            int borderSize = 1;
-            int cB = borderSize / 2 + 1; // Center By
+            map = new Map(32, 18, spriteBatch);
+            Path path0 = map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1);
 
-            // Draw the 4 lines as 4 thin boxes:
-            // Top, right, bottom, left
-            DrawBox(rect.X - cB, rect.Y - cB, rect.Width, borderSize, color);
-            DrawBox(rect.X + rect.Width - cB, rect.Y - cB, borderSize, rect.Height + borderSize, color);
-            DrawBox(rect.X - cB, rect.Y + rect.Height - cB, rect.Width + borderSize, borderSize, color);
-            DrawBox(rect.X - cB, rect.Y - cB, borderSize, rect.Height, color);
+            Queue<Enemy> wave1 = new Queue<Enemy>();
+            wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 2));
+            wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 2));
+            wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 2));
+            wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 2));
+            waves.Add(wave1);
+
+            Queue<Enemy> wave2 = new Queue<Enemy>();
+            wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 5));
+            wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 5));
+            wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 5));
+            waves.Add(wave2);
+
+            towers = new List<Tower>();
+            towers.Add(NewTower(Var.TowerType.Basic));
+            towers.ForEach(t => t.Place((Tile_Tower)map.Tiles[16, 2]));
+        }
+        #endregion New Game / LoadGame / SaveGame
+
+        #region New Enemy / Tower
+        private Enemy NewEnemy(Var.EnemyType type, Path path, int speed)
+        {
+            #region Spider
+            if (type == Var.EnemyType.Spider)
+            {
+                ImageObject image = new ImageObject(
+                        enemyAnimationTest,
+                        0,
+                        0,
+                        Var.ENEMY_SIZE,
+                        Var.ENEMY_SIZE,
+                        3,
+                        0,
+                        0,
+                        16,
+                        16,
+                        0,
+                        0,
+                        Color.White,
+                        ImageObject.RIGHT,
+                        Vector2.Zero,
+                        SpriteEffects.None,
+                        spriteBatch);
+                image.CenterOrigin();
+
+                return new Enemy(
+                    image,
+                    Var.MAX_ENEMY_HEALTH,
+                    2,
+                    speed,
+                    path);
+            }
+            #endregion Spider
+
+            return null;
         }
 
-        private void DrawBox(int x, int y, int width, int height, Color color)
+        private Tower NewTower(Var.TowerType type)
         {
-            // Draw the box
-            spriteBatch.Draw(blankTex, new Rectangle(x, y, width, height), color);
+            #region Basic
+            if (type == Var.TowerType.Basic)
+            {
+                return new Tower(
+                    Var.MAX_TOWER_HEALTH,
+                    2,
+                    2,
+                    Var.TILE_SIZE,
+                    Var.TILE_SIZE,
+                    spriteBatch,
+                    Color.Blue,
+                    blankTex);
+            }
+            #endregion Basic
+
+            return null;
         }
-        #endregion Draw Rectangle
+        #endregion New Enemy / Tower
     }
 }

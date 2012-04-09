@@ -89,14 +89,14 @@ namespace CakeDefense
         {
             get { return point.X; }
 
-            set { point.X = value; }
+            set { point.X = value; CenterImage(); }
         }
 
         public float Y
         {
             get { return point.Y; }
 
-            set { point.Y = value; }
+            set { point.Y = value; CenterImage(); }
         }
 
         public int Width
@@ -117,7 +117,7 @@ namespace CakeDefense
         {
             get { return point; }
 
-            set { point = value; }
+            set { point = value; CenterImage(); }
         }
 
         public Rectangle Rectangle
@@ -129,6 +129,7 @@ namespace CakeDefense
                 X = value.X;
                 Y = value.Y;
                 size = new Point(value.Width, value.Height);
+                CenterImage();
             }
         }
 
@@ -140,6 +141,7 @@ namespace CakeDefense
             {
                 X = (int)value.X - (Width / 2);
                 Y = (int)value.Y - (Height / 2);
+                CenterImage();
             }
         }
         #endregion Position Properties
@@ -189,16 +191,22 @@ namespace CakeDefense
 
             Image.Center = Center;
         }
+
+        public void CenterImage()
+        {
+            if (Image != null)
+                Image.Center = Center;
+        }
         #endregion Methods
 
         #region Draw
-        public void Draw()
+        public virtual void Draw()
         {
             if (isActive)
                 Image.Draw();
         }
 
-        public void Draw(GameTime gameTime, int frameSpeed)
+        public virtual void Draw(GameTime gameTime, int frameSpeed)
         {
             if (isActive)
                 Image.Draw(gameTime, frameSpeed);
