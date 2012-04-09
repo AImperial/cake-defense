@@ -21,6 +21,7 @@ namespace CakeDefense
         #region Attributes
         protected Point tileNum; // Where the tile is located in tile Array
         protected Tile[] neighbors;
+        protected GameObject occupiedBy;
         #endregion Attributes
 
         #region Constructor
@@ -49,6 +50,13 @@ namespace CakeDefense
             get { return neighbors; }
 
             set { }
+        }
+
+        public GameObject OccupiedBy
+        {
+            get { return occupiedBy; }
+
+            set { occupiedBy = value; }
         }
         #endregion Propeties
     }
