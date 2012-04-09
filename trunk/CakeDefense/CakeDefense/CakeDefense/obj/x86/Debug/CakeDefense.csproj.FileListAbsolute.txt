@@ -30,3 +30,19 @@ C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\obj\x86\D
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\obj\x86\Debug\CakeDefense.pdb
 C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\SpiderSprite.xnb
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\SpiderSprite.xnb
+\\banner.main.ad.rit.edu\students\dtk5634\IGMProfile\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Blank.xnb
+\\banner.main.ad.rit.edu\students\dtk5634\IGMProfile\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Credits.xnb
+\\banner.main.ad.rit.edu\students\dtk5634\IGMProfile\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Instructions.xnb
+\\banner.main.ad.rit.edu\students\dtk5634\IGMProfile\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\MainMenu.xnb
+\\banner.main.ad.rit.edu\students\dtk5634\IGMProfile\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Cursor.xnb
+\\banner.main.ad.rit.edu\students\dtk5634\IGMProfile\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\SpiderSprite.xnb
+\\banner.main.ad.rit.edu\students\dtk5634\IGMProfile\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Large.xnb
+\\banner.main.ad.rit.edu\students\dtk5634\IGMProfile\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Medium.xnb
+\\banner.main.ad.rit.edu\students\dtk5634\IGMProfile\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Normal.xnb
+\\banner.main.ad.rit.edu\students\dtk5634\IGMProfile\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Small.xnb
+\\banner.main.ad.rit.edu\students\dtk5634\IGMProfile\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\CakeDefense.exe
+\\banner.main.ad.rit.edu\students\dtk5634\IGMProfile\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\CakeDefense.pdb
+\\banner.main.ad.rit.edu\students\dtk5634\IGMProfile\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\CakeDefense\obj\x86\Debug\ResolveAssemblyReference.cache
+\\banner.main.ad.rit.edu\students\dtk5634\IGMProfile\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\CakeDefense\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+\\banner.main.ad.rit.edu\students\dtk5634\IGMProfile\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\CakeDefense\obj\x86\Debug\CakeDefense.exe
+\\banner.main.ad.rit.edu\students\dtk5634\IGMProfile\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\CakeDefense\obj\x86\Debug\CakeDefense.pdb

@@ -21,8 +21,8 @@ namespace CakeDefense
         #region Attributes
         protected bool placing, canFire;
         protected Tile_Tower occupiedTile;
-        private Bullet bullet;
         private Stopwatch timer = new Stopwatch();
+        private List<Bullet> bullets;
         #endregion Attributes
 
         #region Constructor
@@ -31,6 +31,7 @@ namespace CakeDefense
         {
             Image.Color = c;
             canFire = true; placing = true;
+            bullets = new List<Bullet>();
         }
         #endregion Constructor
 
@@ -54,11 +55,6 @@ namespace CakeDefense
             get { return canFire; }
             set { canFire = value; }
         }
-
-        public Bullet TowerBullet
-        {
-            get { return bullet; }
-        }
         #endregion Properties
 
         #region Methods
@@ -74,7 +70,7 @@ namespace CakeDefense
         public void fire(Texture2D texture)
         {
             Random rand = new Random();
-            bullet = new Bullet(rand.Next(8), (int)Center.X, (int)Center.Y, texture);
+            bullets.Add(new Bullet(rand.Next(8), (int)Center.X, (int)Center.Y, texture));
         }
 
         public bool isDead()
@@ -110,16 +106,24 @@ namespace CakeDefense
                 else
                 {
                     base.Draw();
-                    if (bullet != null)
+                    if (bullets.Count > 0)
                     {
-                        if (timer.ElapsedMilliseconds >= 2000)
+                        if (timer.ElapsedMilliseconds >= 500)
                         {
                             timer.Restart();
                             fire(Image.Texture);
                         }
 
-                        bullet.draw(Image.SpriteBatch);
-                        bullet.move();
+                        foreach (Bullet bullet in bullets)
+                        {
+                            bullet.draw(Image.SpriteBatch);
+                            bullet.move();
+                        }
+
+                        if (bullets.Count > 10)
+                        {
+                            bullets.RemoveRange(0, 1);
+                        }
                     }
                 }
             }
