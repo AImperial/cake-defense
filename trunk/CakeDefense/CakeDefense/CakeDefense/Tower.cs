@@ -22,6 +22,7 @@ namespace CakeDefense
         protected bool placing, canFire;
         protected Tile_Tower occupiedTile;
         private Bullet bullet;
+        private Stopwatch timer = new Stopwatch();
         #endregion Attributes
 
         #region Constructor
@@ -34,7 +35,6 @@ namespace CakeDefense
         #endregion Constructor
 
         #region Properties
-
         public bool Placing
         {
             get { return placing; }
@@ -48,11 +48,13 @@ namespace CakeDefense
 
             set { occupiedTile = value; }
         }
+
         public bool CanFire
         {
             get { return canFire; }
             set { canFire = value; }
         }
+
         public Bullet TowerBullet
         {
             get { return bullet; }
@@ -62,6 +64,7 @@ namespace CakeDefense
         #region Methods
         public void Place(Tile_Tower tile)
         {
+            timer.Start();
             placing = false;
             occupiedTile = tile;
             occupiedTile.OccupiedBy = this;
@@ -70,7 +73,8 @@ namespace CakeDefense
         }
         public void fire(Texture2D texture)
         {
-            bullet = new Bullet(6, (int)Center.X, (int)Center.Y, texture);
+            Random rand = new Random();
+            bullet = new Bullet(rand.Next(8), (int)Center.X, (int)Center.Y, texture);
         }
 
         public bool isDead()
@@ -102,13 +106,15 @@ namespace CakeDefense
                     Image.Color = tempColor;
                 }
                 #endregion Placing
+
                 else
                 {
                     base.Draw();
                     if (bullet != null)
                     {
-                        if (!new Rectangle(bullet.LocX, bullet.LocY, 5, 5).Intersects(Var.GAME_AREA))
+                        if (timer.ElapsedMilliseconds >= 2000)
                         {
+                            timer.Restart();
                             fire(Image.Texture);
                         }
 
