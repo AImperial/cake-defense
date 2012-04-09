@@ -2,7 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Media;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+using System.Diagnostics;
+using System.IO;
 #endregion Using Statements
 
 namespace CakeDefense
@@ -12,6 +21,7 @@ namespace CakeDefense
         #region Attributes
         private int locX, locY, direction, SPEED;
         private bool isActive;
+        private Texture2D texture;
         #endregion Attributes
 
         #region Properties
@@ -35,15 +45,16 @@ namespace CakeDefense
         #endregion Properties
 
         #region Constructor
-        public Bullet(int dir, int lx, int ly)
+        public Bullet(int dir, int lx, int ly, Texture2D texture)
         {
             isActive = true;
             direction = dir;
             locX = lx;
             locY = ly;
             SPEED = Var.BULLET_SPEED;
+            this.texture = texture;
         }
-        #endregion Constructo
+        #endregion Constructor
 
         #region Methods
         public void move()
@@ -81,5 +92,10 @@ namespace CakeDefense
             }
         }
         #endregion Methods
+
+        public void draw(SpriteBatch spr)
+        {
+            spr.Draw(texture, new Rectangle(locX, locY, 5, 5), null, Color.Purple);
+        }
     }
 }

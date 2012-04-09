@@ -48,7 +48,6 @@ namespace CakeDefense
 
             set { occupiedTile = value; }
         }
-
         public bool CanFire
         {
             get { return canFire; }
@@ -58,7 +57,6 @@ namespace CakeDefense
         {
             get { return bullet; }
         }
-
         #endregion Properties
 
         #region Methods
@@ -68,6 +66,11 @@ namespace CakeDefense
             occupiedTile = tile;
             occupiedTile.OccupiedBy = this;
             Center = tile.Center;
+            fire(Image.Texture);
+        }
+        public void fire(Texture2D texture)
+        {
+            bullet = new Bullet(6, (int)Center.X, (int)Center.Y, texture);
         }
 
         public bool isDead()
@@ -102,6 +105,16 @@ namespace CakeDefense
                 else
                 {
                     base.Draw();
+                    if (bullet != null)
+                    {
+                        if (!new Rectangle(bullet.LocX, bullet.LocY, 5, 5).Intersects(Var.GAME_AREA))
+                        {
+                            fire(Image.Texture);
+                        }
+
+                        bullet.draw(Image.SpriteBatch);
+                        bullet.move();
+                    }
                 }
             }
         }
