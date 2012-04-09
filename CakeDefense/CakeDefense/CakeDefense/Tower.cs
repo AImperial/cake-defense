@@ -19,8 +19,9 @@ namespace CakeDefense
     class Tower:GameObject
     {
         #region Attributes
-        protected bool placing;
+        protected bool placing, canFire;
         protected Tile_Tower occupiedTile;
+        private Bullet bullet;
         #endregion Attributes
 
         #region Constructor
@@ -28,7 +29,7 @@ namespace CakeDefense
             : base(t, 0, 0, w, h, spB, health, damage, speed)
         {
             Image.Color = c;
-            placing = true;
+            canFire = true; placing = true;
         }
         #endregion Constructor
 
@@ -48,6 +49,16 @@ namespace CakeDefense
             set { occupiedTile = value; }
         }
 
+        public bool CanFire
+        {
+            get { return canFire; }
+            set { canFire = value; }
+        }
+        public Bullet TowerBullet
+        {
+            get { return bullet; }
+        }
+
         #endregion Properties
 
         #region Methods
@@ -57,6 +68,20 @@ namespace CakeDefense
             occupiedTile = tile;
             occupiedTile.OccupiedBy = this;
             Center = tile.Center;
+        }
+
+        public bool isDead()
+        {
+            if (CurrentHealth <= 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void takeDamage()
+        {
+            CurrentHealth--;
         }
         #endregion Methods
 

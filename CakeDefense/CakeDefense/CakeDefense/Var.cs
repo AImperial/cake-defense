@@ -36,6 +36,10 @@ namespace CakeDefense
 
         #endregion Tower
 
+        #region Bullet
+        public static int BULLET_SPEED = 2;
+        #endregion Bullet
+
         #region Enemy
 
         public static int MAX_ENEMY_HEALTH = 10;
