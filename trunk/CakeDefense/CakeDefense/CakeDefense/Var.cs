@@ -26,7 +26,7 @@ namespace CakeDefense
         #endregion Screen/Map Stuff
 
         #region Tower
-        public static int MAX_TOWER_HEALTH = 10;
+        public static int MAX_TOWER_HEALTH = 10, START_MONEY = 1000;
         #endregion Tower
 
         #region Bullet
