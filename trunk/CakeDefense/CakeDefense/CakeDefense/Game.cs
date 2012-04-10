@@ -55,7 +55,6 @@ namespace CakeDefense
         #region Tower Stuff (Tower List, heldTower)
         Tower heldTower;
         List<Tower> towers;
-        int remainingMoney;
         #endregion Tower Stuff
 
         #endregion Attributes
@@ -79,7 +78,6 @@ namespace CakeDefense
             lastSpawnTime = TimeSpan.Zero;
             enemies = new List<Enemy>();
             waves = new List<Queue<Enemy>>();
-            remainingMoney = Var.START_MONEY;
 
             buttons = new Dictionary<ButtonType, Rectangle[]>{
                 { ButtonType.Menu, new Rectangle[]{
@@ -199,12 +197,12 @@ namespace CakeDefense
                             {
                                 if(tile is Tile_Tower)
                                 {
-                                    if (heldTower != null && tile.OccupiedBy == null && remainingMoney >= 100) 
+                                    if (heldTower != null && tile.OccupiedBy == null && hud.CanSpendMoney(heldTower.Cost)) 
                                     {
+                                        hud.Money -= heldTower.Cost;
                                         heldTower.Place((Tile_Tower)tile);
                                         towers.Add(heldTower);
                                         heldTower = null;
-                                        remainingMoney -= 100; //eventually change to tower.cost
                                     }
                                 }
                                 else if(tile is Tile_Path)
@@ -308,7 +306,8 @@ namespace CakeDefense
         #region Quick Keys
         public void QuickKeys()
         {
-            if (SingleKeyPress(Keys.D1)) {
+            if (SingleKeyPress(Keys.D1)) 
+            {
                 heldTower = NewTower(Var.TowerType.Basic);
             }
         }
@@ -433,15 +432,7 @@ namespace CakeDefense
             #region Basic
             if (type == Var.TowerType.Basic)
             {
-                return new Tower(
-                    Var.MAX_TOWER_HEALTH,
-                    2,
-                    2,
-                    Var.TILE_SIZE,
-                    Var.TILE_SIZE,
-                    spriteBatch,
-                    Color.Blue,
-                    blankTex);
+                return new Tower(Var.MAX_TOWER_HEALTH, 100, 2, 2, Var.TILE_SIZE, Var.TILE_SIZE, spriteBatch, Color.Blue, blankTex);
             }
             #endregion Basic
 

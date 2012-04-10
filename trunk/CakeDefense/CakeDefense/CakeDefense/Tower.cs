@@ -22,15 +22,17 @@ namespace CakeDefense
         protected bool placing, canFire;
         protected Tile_Tower occupiedTile;
         private Stopwatch timer = new Stopwatch();
+        private int cost;
         private List<Bullet> bullets;
         #endregion Attributes
 
         #region Constructor
-        public Tower(int health, int damage, int speed, int w, int h, SpriteBatch spB, Color c, Texture2D t)
+        public Tower(int health, int co, int damage, int speed, int w, int h, SpriteBatch spB, Color c, Texture2D t)
             : base(t, 0, 0, w, h, spB, health, damage, speed)
         {
             Image.Color = c;
             canFire = true; placing = true;
+            cost = co;
             bullets = new List<Bullet>();
         }
         #endregion Constructor
@@ -39,14 +41,12 @@ namespace CakeDefense
         public bool Placing
         {
             get { return placing; }
-
             set { placing = value; }
         }
 
         public Tile_Tower OccupiedTile
         {
             get { return occupiedTile; }
-
             set { occupiedTile = value; }
         }
 
@@ -54,6 +54,12 @@ namespace CakeDefense
         {
             get { return canFire; }
             set { canFire = value; }
+        }
+
+        public int Cost
+        {
+            get { return cost; }
+            set { cost = value; }
         }
         #endregion Properties
 
