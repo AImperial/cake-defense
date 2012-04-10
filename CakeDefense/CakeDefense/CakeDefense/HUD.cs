@@ -67,7 +67,13 @@ namespace CakeDefense
         #endregion Methods
 
         #region Draw
-
+        public void Draw(Texture2D infoBox, SpriteFont font)
+        {
+            Rectangle moneyInfoBox = new Rectangle(2, 2, 120, 40);
+            spriteBatch.Draw(infoBox, moneyInfoBox, Color.DarkKhaki);
+            ImageObject.DrawRectangleOutline(moneyInfoBox, 2, Color.DarkGray, infoBox, spriteBatch);
+            spriteBatch.DrawString(font, "$" + money, new Vector2(moneyInfoBox.X + (moneyInfoBox.Width - font.MeasureString("$" + money).X) / 2, moneyInfoBox.Y + (moneyInfoBox.Height - font.MeasureString("-").Y) / 2), Color.Black);
+        }
         #endregion Draw
     }
 }

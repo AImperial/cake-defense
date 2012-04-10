@@ -43,7 +43,19 @@ namespace CakeDefense
         #endregion Constructor
 
         #region Properties
+        public Path Path
+        {
+            get { return path; }
 
+            set { path = value; }
+        }
+
+        public bool IsSpawning
+        {
+            get { return spawning; }
+
+            set { spawning = value; }
+        }
         #endregion Properties
 
         #region Methods
@@ -91,7 +103,7 @@ namespace CakeDefense
                     {
                         currentTile++;
                         // How far off it went over center
-                        int distOff = (int)(path.GetNextTile(currentTile).Center.X - Center.X);
+                        int distOff = num - (int)(Center.X - path.GetTile(currentTile).Center.X);
                         X -= num - distOff;
                         MoveBy(distOff);
                     }
@@ -112,7 +124,7 @@ namespace CakeDefense
                     {
                         currentTile++;
                         // How far off it went over center
-                        int distOff = (int)(path.GetNextTile(currentTile).Center.Y - Center.Y);
+                        int distOff = num - (int)(Center.Y - path.GetTile(currentTile).Center.Y);
                         Y -= num - distOff;
                         MoveBy(distOff);
                     }
@@ -133,7 +145,8 @@ namespace CakeDefense
                     {
                         currentTile++;
                         // How far off it went over center
-                        int distOff = (int)(Center.X - path.GetNextTile(currentTile).Center.X);
+                        float bla = path.GetTile(currentTile).Center.X;
+                        int distOff = num - (int)(path.GetTile(currentTile).Center.X - Center.X);
                         X += num - distOff;
                         MoveBy(distOff);
                     }
@@ -154,7 +167,7 @@ namespace CakeDefense
                     {
                         currentTile++;
                         // How far off it went over center
-                        int distOff = (int)(Center.Y - path.GetNextTile(currentTile).Center.Y);
+                        int distOff = num - (int)(path.GetTile(currentTile).Center.Y - Center.Y);
                         Y += num - distOff;
                         MoveBy(distOff);
                     }
