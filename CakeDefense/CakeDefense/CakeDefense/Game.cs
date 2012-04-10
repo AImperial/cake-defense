@@ -168,6 +168,13 @@ namespace CakeDefense
 
                     if (heldTower != null)
                         heldTower.Point = mousePoint;
+                    foreach(Tower tower in towers)
+                    {
+                        foreach(Enemy enemy in enemies)
+                        {
+                            tower.CheckCollision(enemy);
+                        }
+                    }
 
                     #region If Mouse Clicked
                     if (CheckIfClicked(Var.GAME_AREA))
@@ -248,7 +255,6 @@ namespace CakeDefense
                     break;
                 #endregion Everything else
             }
-
             base.Update(gameTime);
         }
         #endregion Update

@@ -65,6 +65,7 @@ namespace CakeDefense
                         return;
                     }
                     // check attack stuff/etc here
+                    Dead();
                 }
                 else if (spawning == true)
                 {
@@ -73,6 +74,7 @@ namespace CakeDefense
                 else if (despawning == true)
                 {
                     Despawning(gameTime);
+                    Dead();
                 }
             }
         }
@@ -214,6 +216,14 @@ namespace CakeDefense
                 IsActive = false;
 
                 // something here handling getting cake to the end
+            }
+        }
+
+        private void Dead()
+        {
+            if (CurrentHealth <= 0)
+            {
+                IsActive = false;
             }
         }
         #endregion Spawning / Despawning Stuff
