@@ -27,7 +27,7 @@ namespace CakeDefense
         public HUD(SpriteBatch spriteBatch, int money)
         {
             this.spriteBatch = spriteBatch;
-            this.money = money;
+            this.money = Var.START_MONEY;
         }
         #endregion Constructor
 
