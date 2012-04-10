@@ -273,12 +273,18 @@ namespace CakeDefense
                     map.DrawMap(blankTex, smallFont);
 
                     foreach (Enemy enemy in enemies)
+                    {
                         enemy.Draw(gameTime);
+                        enemy.Image.DrawRectangleOutline(1, Color.LawnGreen, blankTex);
+                        ImageObject.DrawRectangleOutline(enemy.Rectangle, 2, Color.OrangeRed, blankTex, spriteBatch);
+                    }
 
                     foreach (Tower tower in towers)
                         tower.Draw();
                     if (heldTower != null)
                         heldTower.Draw();
+
+                    hud.Draw(blankTex, mediumFont);
 
                     break;
                 #endregion GameState.Game
@@ -376,6 +382,14 @@ namespace CakeDefense
             map = new Map(32, 18, spriteBatch);
             Path path0 = map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1);
 
+            int temp = Var.ENEMY_SIZE;
+            Var.ENEMY_SIZE *= 2;
+            Queue<Enemy> wave3 = new Queue<Enemy>();
+            wave3.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 7));
+            wave3.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 3));
+            Var.ENEMY_SIZE = temp;
+            waves.Add(wave3);
+
             Queue<Enemy> wave1 = new Queue<Enemy>();
             wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 2));
             wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 2));
@@ -384,10 +398,15 @@ namespace CakeDefense
             waves.Add(wave1);
 
             Queue<Enemy> wave2 = new Queue<Enemy>();
-            wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 5));
-            wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 5));
-            wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 5));
+            wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 4));
+            wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 4));
+            wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 4));
             waves.Add(wave2);
+
+            Queue<Enemy> wave4 = new Queue<Enemy>();
+            wave4.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 6));
+            wave4.ElementAt(0).Image.Color = Color.Green;
+            waves.Add(wave4);
 
             towers = new List<Tower>();
             towers.Add(NewTower(Var.TowerType.Basic));
