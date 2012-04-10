@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.Diagnostics;
 using System.IO;
-#endregion using
+#endregion Using Statements
 
 namespace CakeDefense
 {
@@ -72,19 +72,19 @@ namespace CakeDefense
         #region Methods
 
         #region Move
-        public void Move(GameTime gameTime)
+        public void Move(TimeSpan gameTime, List<Trap> traps)
         {
             if (IsActive)
             {
                 if (spawning == false && despawning == false && IsDying == false)
                 {
-                    MoveBy(Speed * Var.GAME_SPEED); // move the enemy (properly)
+                    MoveBy(Speed * Var.GAME_SPEED * slowEffect, traps); // move the enemy (properly)
 
                     if (path.GetTile(currentTile) == path.End)
                     {
                         despawning = true;
-                        time = new TimeSpan(0, 0, 0, 0, (int)gameTime.TotalGameTime.TotalMilliseconds);
-                        Move(gameTime);
+                        time = new TimeSpan(gameTime.Ticks);
+                        Move(gameTime, traps);
                         return;
                     }
 
@@ -107,8 +107,10 @@ namespace CakeDefense
             }
         }
 
-        private void MoveBy(int num)
+        private void MoveBy(float num, List<Trap> traps)
         {
+            traps.ForEach(trap => trap.AttackIfCan(this));
+
             if (path.InRange(currentTile + 1))
             {
                 // Move Left
@@ -119,9 +121,9 @@ namespace CakeDefense
                     {
                         currentTile++;
                         // How far off it went over center
-                        int distOff = num - (int)(Center.X - path.GetTile(currentTile).Center.X);
+                        float distOff = num - (Center.X - path.GetTile(currentTile).Center.X);
                         X -= num - distOff;
-                        MoveBy(distOff);
+                        MoveBy(distOff, traps);
                     }
                     // Otherwise move normally
                     else
@@ -140,9 +142,9 @@ namespace CakeDefense
                     {
                         currentTile++;
                         // How far off it went over center
-                        int distOff = num - (int)(Center.Y - path.GetTile(currentTile).Center.Y);
+                        float distOff = num - (Center.Y - path.GetTile(currentTile).Center.Y);
                         Y -= num - distOff;
-                        MoveBy(distOff);
+                        MoveBy(distOff, traps);
                     }
                     // Otherwise move normally
                     else
@@ -161,10 +163,9 @@ namespace CakeDefense
                     {
                         currentTile++;
                         // How far off it went over center
-                        float bla = path.GetTile(currentTile).Center.X;
-                        int distOff = num - (int)(path.GetTile(currentTile).Center.X - Center.X);
+                        float distOff = num - (path.GetTile(currentTile).Center.X - Center.X);
                         X += num - distOff;
-                        MoveBy(distOff);
+                        MoveBy(distOff, traps);
                     }
                     // Otherwise move normally
                     else
@@ -183,9 +184,9 @@ namespace CakeDefense
                     {
                         currentTile++;
                         // How far off it went over center
-                        int distOff = num - (int)(path.GetTile(currentTile).Center.Y - Center.Y);
+                        float distOff = num - (path.GetTile(currentTile).Center.Y - Center.Y);
                         Y += num - distOff;
-                        MoveBy(distOff);
+                        MoveBy(distOff, traps);
                     }
                     // Otherwise move normally
                     else
@@ -201,19 +202,19 @@ namespace CakeDefense
         #endregion Move
 
         #region Spawning / Despawning Stuff
-        public void Start(GameTime gameTime)
+        public void Start(TimeSpan gameTime)
         {
             IsActive = true;
             transparency = 0;
             Image.Rotation = ImageObject.RIGHT;
             spawning = true;
-            time = new TimeSpan(0, 0, 0, 0, (int)gameTime.TotalGameTime.TotalMilliseconds);
+            time = new TimeSpan(gameTime.Ticks);
         }
 
         /// <summary> Called in Move. Controls enemy's behavior when spawning. </summary>
-        private void Spawning(GameTime gameTime)
+        private void Spawning(TimeSpan gameTime)
         {
-            if ((time + TimeSpan.FromTicks(Var.SPAWN_TIME.Ticks / Var.GAME_SPEED)).TotalMilliseconds > gameTime.TotalGameTime.TotalMilliseconds)
+            if ((time + TimeSpan.FromTicks(Var.SPAWN_TIME.Ticks / Var.GAME_SPEED)) > gameTime)
             {
                 float percComplete = Var.TimePercentTillComplete(time, TimeSpan.FromTicks(Var.SPAWN_TIME.Ticks / Var.GAME_SPEED), gameTime);
                 transparency = percComplete;
@@ -230,9 +231,9 @@ namespace CakeDefense
         }
 
         /// <summary> Called in Move. Controls enemy's behavior when despawning. </summary>
-        private void Despawning(GameTime gameTime)
+        private void Despawning(TimeSpan gameTime)
         {
-            if ((time + TimeSpan.FromTicks(Var.DESPAWN_TIME.Ticks / Var.GAME_SPEED)).TotalMilliseconds > gameTime.TotalGameTime.TotalMilliseconds)
+            if ((time + TimeSpan.FromTicks(Var.DESPAWN_TIME.Ticks / Var.GAME_SPEED)) > gameTime)
             {
                 transparency = 1 - Var.TimePercentTillComplete(time, TimeSpan.FromTicks(Var.DESPAWN_TIME.Ticks / Var.GAME_SPEED), gameTime);
             }
@@ -248,20 +249,20 @@ namespace CakeDefense
             }
         }
 
-        private void KillIfCan(GameTime gameTime)
+        private void KillIfCan(TimeSpan gameTime)
         {
             if (CurrentHealth <= 0)
             {
                 dying = true;
                 despawning = false;
-                time = new TimeSpan(0, 0, 0, 0, (int)gameTime.TotalGameTime.TotalMilliseconds);
-                Move(gameTime);
+                time = new TimeSpan(0, 0, 0, 0, (int)gameTime.TotalMilliseconds);
+                Move(gameTime, null);
             }
         }
 
-        private void Dying(GameTime gameTime)
+        private void Dying(TimeSpan gameTime)
         {
-            if ((time + TimeSpan.FromTicks(Var.DYING_TIME.Ticks / Var.GAME_SPEED)).TotalMilliseconds > gameTime.TotalGameTime.TotalMilliseconds)
+            if ((time + TimeSpan.FromTicks(Var.DYING_TIME.Ticks / Var.GAME_SPEED)) > gameTime)
             {
                 float percComplete = Var.TimePercentTillComplete(time, TimeSpan.FromTicks(Var.DYING_TIME.Ticks / Var.GAME_SPEED), gameTime);
                 transparency = percComplete;

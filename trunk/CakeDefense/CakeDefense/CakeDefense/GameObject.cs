@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.Diagnostics;
 using System.IO;
-#endregion using
+#endregion Using Statements
 
 namespace CakeDefense
 {
@@ -151,6 +151,13 @@ namespace CakeDefense
             get { return isActive; }
 
             set { isActive = value; }
+        }
+
+        public float Direction
+        {
+            get { return Image.Rotation; }
+
+            set { Image.Rotation = value; }
         }
 
         public int StartHealth
