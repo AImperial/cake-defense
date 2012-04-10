@@ -29,8 +29,13 @@ namespace CakeDefense
         public static int MAX_TOWER_HEALTH = 10, START_MONEY = 1000;
         #endregion Tower
 
+        #region Trap
+        public const int TRAP_SIZE = 30;
+        #endregion Trap
+
         #region Bullet
         public static int BULLET_SPEED = 4;
+        public const int BULLET_SIZE = 10;
         #endregion Bullet
 
         #region Enemy
@@ -44,14 +49,14 @@ namespace CakeDefense
         public static int GAME_SPEED = 1;
         public static int FRAME_SPEED = 500;
 
-        public static TimeSpan TIME_BETWEEN_SPAWNS = new TimeSpan(0, 0, 1);
-        public static TimeSpan TIME_BETWEEN_WAVES = new TimeSpan(0, 0, 10);
+        public static TimeSpan TIME_BETWEEN_SPAWNS = new TimeSpan(0, 0, 0, 0, 500);
+        public static TimeSpan TIME_BETWEEN_WAVES = new TimeSpan(0, 0, 3);
 
         private static double timeDif;
 
-        public static float TimePercentTillComplete(TimeSpan startTime, TimeSpan plusTime, GameTime gameTime)
+        public static float TimePercentTillComplete(TimeSpan startTime, TimeSpan plusTime, TimeSpan gameTime)
         {
-            timeDif = gameTime.TotalGameTime.TotalMilliseconds - startTime.TotalMilliseconds;
+            timeDif = (gameTime - startTime).TotalMilliseconds;
             // returns a number 0-1 if GameTime in not over endtime / under start time.
             return (float)(timeDif / plusTime.TotalMilliseconds);
         }
@@ -60,10 +65,13 @@ namespace CakeDefense
         #region Enums
         public enum EnemyType { Spider }
         public enum TowerType { Basic }
+        public enum TrapType { Basic }
         #endregion Enums
 
         #region Colors
-        public static Color PLACING_TOWER_COLOR = Color.FromNonPremultiplied(255, 255, 255, 150);
+        public static Color PLACING_COLOR = Color.FromNonPremultiplied(255, 255, 255, 150);
+        public static Color PAUSE_GRAY = Color.FromNonPremultiplied(50, 50, 50, 200);
+        
         public static Color EffectTransparency(float percent, Color clr)
         {
             return Color.FromNonPremultiplied(clr.R, clr.G, clr.B, (byte)(clr.A * percent));

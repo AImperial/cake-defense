@@ -24,11 +24,12 @@ namespace CakeDefense
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
-        Texture2D blankTex, cursorTex, mainMenu, instructions, credits, enemyAnimationTest;
+        Texture2D blankTex, cursorTex, mainMenu, instructions, credits, bulletTex, enemyAnimationTest;
+        TimeSpan animationTotalTime, pausedTime;
         #endregion Graphic Stuff
 
         #region General Game Stuff (GameState, music stuff, Map, HUD)
-        public enum GameState { Menu, Instructions, Credits, Game, GameOver }
+        public enum GameState { Menu, Instructions, Credits, Game, Paused, GameOver }
         private GameState gameState;
         bool musicOn, soundEffectsOn;
         Map map;
@@ -52,10 +53,11 @@ namespace CakeDefense
         TimeSpan lastSpawnTime;
         #endregion Enemy Stuff
 
-        #region Tower Stuff (Tower List, heldTower)
-        Tower heldTower;
+        #region Tower/Trap Stuff (Tower List, heldItem)
+        GameObject heldItem;
         List<Tower> towers;
-        #endregion Tower Stuff
+        List<Trap> traps;
+        #endregion Tower/Trap Stuff
 
         #endregion Attributes
 
@@ -75,9 +77,6 @@ namespace CakeDefense
             gameState = GameState.Menu;
 
             singlePress = false; musicOn = true; soundEffectsOn = true;
-            lastSpawnTime = TimeSpan.Zero;
-            enemies = new List<Enemy>();
-            waves = new List<Queue<Enemy>>();
 
             buttons = new Dictionary<ButtonType, Rectangle[]>{
                 { ButtonType.Menu, new Rectangle[]{
@@ -95,7 +94,7 @@ namespace CakeDefense
         /// </summary>
         protected void InitializeAfterLoadContent()
         {
-            hud = new HUD(spriteBatch, 0);
+            // Most of these are in NewGame()
         }
 
         protected override void LoadContent()
@@ -119,6 +118,7 @@ namespace CakeDefense
 
             #region Sprites
             enemyAnimationTest = this.Content.Load<Texture2D>("Sprites/SpiderSprite");
+            bulletTex = this.Content.Load<Texture2D>("Sprites/Bullet");
             #endregion Sprites
 
             InitializeAfterLoadContent();
@@ -141,6 +141,7 @@ namespace CakeDefense
             mouseRect = new Rectangle(mouseState.X, mouseState.Y, 1, 1);
             mousePoint = new Vector2(mouseState.X, mouseState.Y);
             #endregion Kb/MouseState
+            animationTotalTime = gameTime.TotalGameTime - pausedTime;
 
             switch (gameState)
             {
@@ -150,17 +151,17 @@ namespace CakeDefense
                     QuickKeys();
 
                     #region Wave Stuff
-                    if (waves.Count > 0 && waves[0].Count > 0 && (lastSpawnTime + Var.TIME_BETWEEN_SPAWNS).TotalMilliseconds < gameTime.TotalGameTime.TotalMilliseconds)
+                    if (waves.Count > 0 && waves[0].Count > 0 && (lastSpawnTime + Var.TIME_BETWEEN_SPAWNS) < animationTotalTime)
                     {
                         enemies.Add(waves[0].Dequeue());
-                        enemies[enemies.Count - 1].Start(gameTime);
-                        lastSpawnTime = new TimeSpan(0, 0, 0, 0, (int)gameTime.TotalGameTime.TotalMilliseconds);
+                        enemies[enemies.Count - 1].Start(animationTotalTime);
+                        lastSpawnTime = new TimeSpan(animationTotalTime.Ticks);
                         if (waves.Count == 1 && waves[0].Count == 0)
                         {
                             waves.RemoveAt(0);
                         }
                     }
-                    else if (waves.Count > 0 && waves[0].Count == 0 &&  (lastSpawnTime + Var.TIME_BETWEEN_WAVES).TotalMilliseconds < gameTime.TotalGameTime.TotalMilliseconds)
+                    else if (waves.Count > 0 && waves[0].Count == 0 && (lastSpawnTime + Var.TIME_BETWEEN_WAVES) < animationTotalTime)
                     {
                         waves.RemoveAt(0);
                     }
@@ -170,11 +171,9 @@ namespace CakeDefense
                     }
                     #endregion Wave Stuff
 
-                    //enemies.ForEach(enemy => enemy.Move(gameTime));
-
                     for (int i = 0; i < enemies.Count; i++)
                     {
-                        enemies[i].Move(gameTime);
+                        enemies[i].Move(animationTotalTime, traps);
                         if (enemies[i].IsActive == false)
                         {
                             enemies.RemoveAt(i);
@@ -182,15 +181,19 @@ namespace CakeDefense
                         }
                     }
 
-                        if (heldTower != null)
-                            heldTower.Point = mousePoint;
+                    towers.ForEach(tower => tower.Fire());
+                    traps.ForEach(trap => traps.Remove(trap.Remove()));
+
+                    if (heldItem != null)
+                        heldItem.Point = mousePoint;
+
+                    #region Collision
                     foreach(Tower tower in towers)
                     {
                         foreach(Enemy enemy in enemies)
-                        {
                             tower.CheckCollision(enemy);
-                        }
                     }
+                    #endregion Collision
 
                     #region If Mouse Clicked
                     if (CheckIfClicked(Var.GAME_AREA))
@@ -220,17 +223,23 @@ namespace CakeDefense
                             {
                                 if(tile is Tile_Tower)
                                 {
-                                    if (heldTower != null && tile.OccupiedBy == null && hud.CanSpendMoney(heldTower.Cost)) 
+                                    if (heldItem != null && heldItem is Tower && tile.OccupiedBy == null && hud.CanSpendMoney(((Tower)heldItem).Cost)) 
                                     {
-                                        hud.Money -= heldTower.Cost;
-                                        heldTower.Place((Tile_Tower)tile);
-                                        towers.Add(heldTower);
-                                        heldTower = null;
+                                        hud.Money -= ((Tower)heldItem).Cost;
+                                        ((Tower)heldItem).Place((Tile_Tower)tile);
+                                        towers.Add(((Tower)heldItem));
+                                        heldItem = null;
                                     }
                                 }
                                 else if(tile is Tile_Path)
                                 {
-
+                                    if (heldItem != null && heldItem is Trap && tile.OccupiedBy == null && hud.CanSpendMoney(((Trap)heldItem).Cost))
+                                    {
+                                        hud.Money -= ((Trap)heldItem).Cost;
+                                        ((Trap)heldItem).Place((Tile_Path)tile);
+                                        traps.Add(((Trap)heldItem));
+                                        heldItem = null;
+                                    }
                                 }
                                 break;
                             }
@@ -242,6 +251,13 @@ namespace CakeDefense
                 #endregion GameState.Game
 
                 #region Everything else
+                case GameState.Paused:
+                    pausedTime += gameTime.ElapsedGameTime;
+                    if (SingleKeyPress(Keys.P))
+                    {
+                        gameState = GameState.Game;
+                    }
+                    break;
                 case GameState.Menu:
                     if (CheckIfClicked(buttons[ButtonType.Menu][0]))
                     {
@@ -284,22 +300,35 @@ namespace CakeDefense
             switch (gameState)
             {
                 #region GameState.Game
-                case GameState.Game:
+                case GameState.Game: case GameState.Paused:
 
                     map.DrawMap(blankTex, smallFont);
 
-                    enemies.ForEach(enemy => enemy.Draw(gameTime));
                     towers.ForEach(tower => tower.Draw());
+                    traps.ForEach(trap => trap.Draw());
+                    enemies.ForEach(enemy => enemy.Draw(gameTime));
 
-                    if (heldTower != null)
-                        heldTower.Draw();
+                    if (heldItem != null)
+                        heldItem.Draw();
 
                     hud.Draw(blankTex, mediumFont);
 
-                    break;
+                    // break; is in Pause.
+
                 #endregion GameState.Game
 
                 #region Everything else
+
+                #region GameState.Paused
+                // Draws everything in GameState.Game (from above) plus this
+                if (gameState == GameState.Paused)
+                {
+                    spriteBatch.Draw(blankTex, Var.SCREEN_SIZE, Var.PAUSE_GRAY);
+                }
+                break;
+
+                #endregion GameState.Paused
+
                 case GameState.Menu:
                     spriteBatch.Draw(mainMenu, Var.SCREEN_SIZE, Color.White);
                     break;
@@ -326,11 +355,28 @@ namespace CakeDefense
         #region Mouse / Keyboard Stuff
 
         #region Quick Keys
+        /// <summary> Called in GameState.Game </summary>
         public void QuickKeys()
         {
-            if (SingleKeyPress(Keys.D1)) 
+            if (SingleKeyPress(Keys.D1))
             {
-                heldTower = NewTower(Var.TowerType.Basic);
+                heldItem = NewTower(Var.TowerType.Basic);
+            }
+            if (SingleKeyPress(Keys.D0))
+            {
+                heldItem = NewTrap(Var.TrapType.Basic);
+            }
+            if (SingleKeyPress(Keys.M))
+            {
+                musicOn = soundEffectsOn = !musicOn;
+            }
+            if (SingleKeyPress(Keys.P))
+            {
+                gameState = GameState.Paused;
+            }
+            if (SingleKeyPress(Keys.R))
+            {
+                NewGame();
             }
         }
         #endregion Quick Keys
@@ -389,13 +435,18 @@ namespace CakeDefense
         #region New Game / LoadGame / SaveGame
         public void NewGame()
         {
+            lastSpawnTime = animationTotalTime = pausedTime = TimeSpan.Zero;
+            enemies = new List<Enemy>();
+            traps = new List<Trap>();
+            waves = new List<Queue<Enemy>>();
+
             map = new Map(32, 18, spriteBatch);
             Path path0 = map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1);
 
             int temp = Var.ENEMY_SIZE;
             Var.ENEMY_SIZE *= 2;
             Queue<Enemy> wave3 = new Queue<Enemy>();
-            wave3.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 7));
+            wave3.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 3));
             wave3.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 3));
             Var.ENEMY_SIZE = temp;
             waves.Add(wave3);
@@ -414,40 +465,43 @@ namespace CakeDefense
             waves.Add(wave2);
 
             Queue<Enemy> wave4 = new Queue<Enemy>();
-            wave4.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 6));
+            wave4.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 7));
             wave4.ElementAt(0).Image.Color = Color.Green;
             waves.Add(wave4);
 
             towers = new List<Tower>();
             towers.Add(NewTower(Var.TowerType.Basic));
             towers.ForEach(t => t.Place((Tile_Tower)map.Tiles[16, 2]));
+
+            hud = new HUD(spriteBatch, Var.START_MONEY);
         }
         #endregion New Game / LoadGame / SaveGame
 
-        #region New Enemy / Tower
+        #region New Enemy / Tower / Trap
         private Enemy NewEnemy(Var.EnemyType type, Path path, int speed)
         {
             #region Spider
             if (type == Var.EnemyType.Spider)
             {
                 ImageObject image = new ImageObject(
-                        enemyAnimationTest,
-                        0,
-                        0,
-                        Var.ENEMY_SIZE,
-                        Var.ENEMY_SIZE,
-                        3,
-                        0,
-                        0,
-                        16,
-                        16,
-                        0,
-                        0,
-                        Color.White,
-                        ImageObject.RIGHT,
-                        Vector2.Zero,
-                        SpriteEffects.None,
-                        spriteBatch);
+                    enemyAnimationTest,
+                    0,
+                    0,
+                    Var.ENEMY_SIZE,
+                    Var.ENEMY_SIZE,
+                    3,
+                    0,
+                    0,
+                    16,
+                    16,
+                    0,
+                    0,
+                    Color.White,
+                    ImageObject.RIGHT,
+                    Vector2.Zero,
+                    SpriteEffects.None,
+                    spriteBatch
+                );
                 image.CenterOrigin();
 
                 return new Enemy(
@@ -455,7 +509,8 @@ namespace CakeDefense
                     Var.MAX_ENEMY_HEALTH,
                     2,
                     speed,
-                    path);
+                    path
+                );
             }
             #endregion Spider
 
@@ -467,12 +522,46 @@ namespace CakeDefense
             #region Basic
             if (type == Var.TowerType.Basic)
             {
-                return new Tower(Var.MAX_TOWER_HEALTH, 100, 2, 2, Var.TILE_SIZE, Var.TILE_SIZE, spriteBatch, Color.Blue, blankTex);
+                return new Tower(
+                    Var.MAX_TOWER_HEALTH,
+                    100,
+                    2,
+                    2,
+                    Var.TILE_SIZE,
+                    Var.TILE_SIZE,
+                    spriteBatch,
+                    blankTex,
+                    bulletTex
+                );
             }
             #endregion Basic
 
             return null;
         }
-        #endregion New Enemy / Tower
+
+        private Trap NewTrap(Var.TrapType type)
+        {
+            #region Basic
+            if (type == Var.TrapType.Basic)
+            {
+                ImageObject image = new ImageObject(
+                    blankTex,
+                    0, 0,
+                    Var.TRAP_SIZE, Var.TRAP_SIZE,
+                    spriteBatch
+                );
+
+                return new Trap(
+                    2,
+                    5,
+                    50,
+                    image
+                );
+            }
+            #endregion Basic
+
+            return null;
+        }
+        #endregion New Enemy / Tower / Trap
     }
 }

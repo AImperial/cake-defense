@@ -21,18 +21,23 @@ namespace CakeDefense
         #region Attributes
         protected bool placing, canFire;
         protected Tile_Tower occupiedTile;
-        private Stopwatch timer = new Stopwatch();
+        private Stopwatch timer;
+        private Random rand;
         private int cost;
         private List<Bullet> bullets;
+        private Texture2D bulletTexture;
         #endregion Attributes
 
         #region Constructor
-        public Tower(int health, int co, int damage, int speed, int w, int h, SpriteBatch spB, Color c, Texture2D t)
+        public Tower(int health, int co, int damage, int speed, int w, int h, SpriteBatch spB, Texture2D t, Texture2D bt)
             : base(t, 0, 0, w, h, spB, health, damage, speed)
         {
-            Image.Color = c;
+            Image.Color = Color.Blue;
             canFire = true; placing = true;
+            timer = new Stopwatch();
+            rand = new Random();
             cost = co;
+            bulletTexture = bt;
             bullets = new List<Bullet>();
         }
         #endregion Constructor
@@ -71,13 +76,26 @@ namespace CakeDefense
             occupiedTile = tile;
             occupiedTile.OccupiedBy = this;
             Center = tile.Center;
-            fire(Image.Texture);
+            Fire();
         }
 
-        public void fire(Texture2D texture)
+        public void Fire()
         {
-            Random rand = new Random();
-            bullets.Add(new Bullet(rand.Next(8), (int)Center.X, (int)Center.Y, texture));
+            if (placing == false && IsActive)
+            {
+                if (timer.ElapsedMilliseconds >= 500)
+                {
+                    timer.Restart();
+                    bullets.Add(new Bullet(rand.Next(8), Damage, Var.BULLET_SPEED, (int)Center.X, (int)Center.Y, Var.BULLET_SIZE, Var.BULLET_SIZE, bulletTexture, Image.SpriteBatch));
+                }
+
+                bullets.ForEach(bullet => bullet.Move());
+
+                if (bullets.Count > 10)
+                {
+                    bullets.RemoveRange(0, 1);
+                }
+            }
         }
 
         public void CheckCollision(GameObject GO)
@@ -119,7 +137,7 @@ namespace CakeDefense
                 if (placing)
                 {
                     Color tempColor = Image.Color;
-                    Image.Color = Var.PLACING_TOWER_COLOR;
+                    Image.Color = Var.PLACING_COLOR;
                     base.Draw();
                     Image.Color = tempColor;
                 }
@@ -128,25 +146,7 @@ namespace CakeDefense
                 else
                 {
                     base.Draw();
-                    if (bullets.Count > 0)
-                    {
-                        if (timer.ElapsedMilliseconds >= 500)
-                        {
-                            timer.Restart();
-                            fire(Image.Texture);
-                        }
-
-                        foreach (Bullet bullet in bullets)
-                        {
-                            bullet.draw(Image.SpriteBatch);
-                            bullet.move();
-                        }
-
-                        if (bullets.Count > 10)
-                        {
-                            bullets.RemoveRange(0, 1);
-                        }
-                    }
+                    bullets.ForEach(bullet => bullet.Draw());
                 }
             }
         }

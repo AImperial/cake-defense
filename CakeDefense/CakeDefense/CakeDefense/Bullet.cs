@@ -19,71 +19,27 @@ namespace CakeDefense
     class Bullet:GameObject
     {
         #region Attributes
-        private int direction;
-        Texture2D tex;
         #endregion Attributes
 
-        #region Properties
-        public int Direction
-        {
-            get { return direction; }
-        }
-        #endregion Properties
-
         #region Constructor
-        public Bullet(int dir, int lx, int ly, Texture2D texture)
+        public Bullet(int dir, int dmg, int sp, int x, int y, int w, int h, Texture2D texture, SpriteBatch sprite)
+            :base(new ImageObject(texture, x, y, w, h, sprite), 0, dmg, sp)
         {
             IsActive = true;
-            direction = dir;
-            X = lx;
-            Y = ly;
-            Speed = Var.BULLET_SPEED;
-            tex = texture;
+            Direction = dir;
         }
         #endregion Constructor
 
+        #region Properties
+
+        #endregion Properties
+
         #region Methods
-        public void move()
+        public void Move()
         {
-            switch (direction)
-            {
-                case 0: //North
-                    Y -= Speed;
-                    break;
-                case 1: //North East
-                    Y -= (Speed / 2);
-                    X += (Speed / 2);
-                    break;
-                case 2: //East
-                    X += Speed;
-                    break;
-                case 3: //South East
-                    Y += (Speed / 2);
-                    X += (Speed / 2);
-                    break;
-                case 4: //South
-                    Y += Speed;
-                    break;
-                case 5: //South West
-                    Y += (Speed / 2);
-                    X -= (Speed / 2);
-                    break;
-                case 6: //West
-                    X -= Speed;
-                    break;
-                case 7: //North West
-                    Y -= (Speed / 2);
-                    X -= (Speed / 2);
-                    break;
-            }
+            X += (float)Math.Cos(Direction) * Speed;
+            Y += (float)Math.Sin(Direction) * Speed;
         }
         #endregion Methods
-
-        #region Draw
-        public void draw(SpriteBatch spr)
-        {
-            spr.Draw(tex, new Rectangle((int)X, (int)Y, 5, 5), null, Color.Purple);
-        }
-        #endregion Draw
     }
 }
