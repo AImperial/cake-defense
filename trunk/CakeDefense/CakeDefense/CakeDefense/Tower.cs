@@ -73,10 +73,27 @@ namespace CakeDefense
             Center = tile.Center;
             fire(Image.Texture);
         }
+
         public void fire(Texture2D texture)
         {
             Random rand = new Random();
             bullets.Add(new Bullet(rand.Next(8), (int)Center.X, (int)Center.Y, texture));
+        }
+
+        public void CheckCollision(GameObject GO)
+        {
+            for (int i = 0; i < bullets.Count; i++ )
+            {
+                if (bullets[i].IsActive)
+                {
+                    if (GO.Rectangle.Intersects(bullets[i].Rectangle) && GO.IsActive)
+                    {
+                        GO.CurrentHealth -= Damage;
+                        bullets.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
         }
 
         public bool isDead()
@@ -86,11 +103,6 @@ namespace CakeDefense
                 return true;
             }
             return false;
-        }
-
-        public void takeDamage()
-        {
-            CurrentHealth--;
         }
         #endregion Methods
 

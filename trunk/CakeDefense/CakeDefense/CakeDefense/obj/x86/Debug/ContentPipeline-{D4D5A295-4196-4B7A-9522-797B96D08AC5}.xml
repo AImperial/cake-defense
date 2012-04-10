@@ -7,8 +7,13 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
+<<<<<<< .mine
+      <Output>\\banner.main.ad.rit.edu\students\amm4108\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Blank.xnb</Output>
+      <Time>2012-04-09T20:00:54.660505-04:00</Time>
+=======
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Blank.xnb</Output>
       <Time>2012-04-07T17:22:41.5319439-04:00</Time>
+>>>>>>> .r22
     </Item>
     <Item>
       <Source>Menu\Credits.png</Source>
@@ -16,8 +21,13 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
+<<<<<<< .mine
+      <Output>\\banner.main.ad.rit.edu\students\amm4108\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Credits.xnb</Output>
+      <Time>2012-04-09T20:00:53.993105-04:00</Time>
+=======
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Credits.xnb</Output>
       <Time>2012-04-07T17:22:41.4695438-04:00</Time>
+>>>>>>> .r22
     </Item>
     <Item>
       <Source>Menu\Instructions.png</Source>
@@ -25,8 +35,13 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
+<<<<<<< .mine
+      <Output>\\banner.main.ad.rit.edu\students\amm4108\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Instructions.xnb</Output>
+      <Time>2012-04-09T20:00:54.041453-04:00</Time>
+=======
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Instructions.xnb</Output>
       <Time>2012-04-07T17:22:41.4851439-04:00</Time>
+>>>>>>> .r22
     </Item>
     <Item>
       <Source>Menu\MainMenu.png</Source>
@@ -34,8 +49,13 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
+<<<<<<< .mine
+      <Output>\\banner.main.ad.rit.edu\students\amm4108\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\MainMenu.xnb</Output>
+      <Time>2012-04-09T20:00:54.093021-04:00</Time>
+=======
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\MainMenu.xnb</Output>
       <Time>2012-04-07T17:22:41.4851439-04:00</Time>
+>>>>>>> .r22
     </Item>
     <Item>
       <Source>Cursor.png</Source>
@@ -43,8 +63,13 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
+<<<<<<< .mine
+      <Output>\\banner.main.ad.rit.edu\students\amm4108\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Cursor.xnb</Output>
+      <Time>2012-04-09T20:00:53.945984-04:00</Time>
+=======
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Cursor.xnb</Output>
       <Time>2012-04-07T17:22:41.4695438-04:00</Time>
+>>>>>>> .r22
     </Item>
     <Item>
       <Source>Sprites\SpiderSprite.png</Source>
@@ -52,8 +77,13 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
+<<<<<<< .mine
+      <Output>\\banner.main.ad.rit.edu\students\amm4108\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\SpiderSprite.xnb</Output>
+      <Time>2012-04-09T20:00:54.868241-04:00</Time>
+=======
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\SpiderSprite.xnb</Output>
       <Time>2012-04-07T17:22:41.563144-04:00</Time>
+>>>>>>> .r22
     </Item>
     <Item>
       <Source>Spritefonts\Large.spritefont</Source>
@@ -61,8 +91,13 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
+<<<<<<< .mine
+      <Output>\\banner.main.ad.rit.edu\students\amm4108\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Large.xnb</Output>
+      <Time>2012-04-09T20:00:53.535044-04:00</Time>
+=======
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Large.xnb</Output>
       <Time>2012-04-07T17:22:41.4071437-04:00</Time>
+>>>>>>> .r22
     </Item>
     <Item>
       <Source>Spritefonts\Medium.spritefont</Source>
@@ -70,8 +105,13 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
+<<<<<<< .mine
+      <Output>\\banner.main.ad.rit.edu\students\amm4108\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Medium.xnb</Output>
+      <Time>2012-04-09T20:00:53.583711-04:00</Time>
+=======
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Medium.xnb</Output>
       <Time>2012-04-07T17:22:41.4071437-04:00</Time>
+>>>>>>> .r22
     </Item>
     <Item>
       <Source>Spritefonts\Normal.spritefont</Source>
@@ -79,8 +119,13 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
+<<<<<<< .mine
+      <Output>\\banner.main.ad.rit.edu\students\amm4108\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Normal.xnb</Output>
+      <Time>2012-04-09T20:00:53.135533-04:00</Time>
+=======
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Normal.xnb</Output>
       <Time>2012-04-07T17:22:41.3915437-04:00</Time>
+>>>>>>> .r22
     </Item>
     <Item>
       <Source>Spritefonts\Small.spritefont</Source>
@@ -88,8 +133,13 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
+<<<<<<< .mine
+      <Output>\\banner.main.ad.rit.edu\students\amm4108\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Small.xnb</Output>
+      <Time>2012-04-09T20:00:53.179607-04:00</Time>
+=======
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Small.xnb</Output>
       <Time>2012-04-07T17:22:41.4071437-04:00</Time>
+>>>>>>> .r22
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -98,10 +148,17 @@
       <TargetProfile>Reach</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
+<<<<<<< .mine
+      <RootDirectory>\\banner.main.ad.rit.edu\students\amm4108\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefenseContent\</RootDirectory>
+      <LoggerRootDirectory>\\banner.main.ad.rit.edu\students\amm4108\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\</LoggerRootDirectory>
+      <IntermediateDirectory>\\banner.main.ad.rit.edu\students\amm4108\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>\\banner.main.ad.rit.edu\students\amm4108\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\</OutputDirectory>
+=======
       <RootDirectory>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefenseContent\</RootDirectory>
       <LoggerRootDirectory>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\</LoggerRootDirectory>
       <IntermediateDirectory>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\obj\x86\Debug\</IntermediateDirectory>
       <OutputDirectory>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\</OutputDirectory>
+>>>>>>> .r22
     </Settings>
     <Assemblies>
       <Assembly>
