@@ -23,8 +23,8 @@ namespace CakeDefense
         private int currentTile;
         private TimeSpan time; // hold time when an action started.
 
-        private bool spawning, despawning;
-        private float transparency;
+        private bool spawning, despawning, dying;
+        private float transparency, slowEffect;
         #endregion Attributes
 
         #region Constructor
@@ -35,7 +35,7 @@ namespace CakeDefense
             this.path = path;
             Image.Center = Center = path.Start.Center;
             currentTile = 0;
-
+            slowEffect = 1;
             transparency = 0;
             Image.Rotation = ImageObject.RIGHT;
             spawning = true;
@@ -53,8 +53,19 @@ namespace CakeDefense
         public bool IsSpawning
         {
             get { return spawning; }
+        }
 
-            set { spawning = value; }
+        public bool IsDying
+        {
+            get { return dying; }
+        }
+
+        /// <summary> Ranges from 0-1. One is normal speed. </summary>
+        public float SlowEffect
+        {
+            get { return slowEffect; }
+
+            set { slowEffect = value; if (value < 0) { slowEffect = 0; } if (value > 1) { slowEffect = 1; } }
         }
         #endregion Properties
 
@@ -65,7 +76,7 @@ namespace CakeDefense
         {
             if (IsActive)
             {
-                if (spawning == false && despawning == false)
+                if (spawning == false && despawning == false && IsDying == false)
                 {
                     MoveBy(Speed * Var.GAME_SPEED); // move the enemy (properly)
 
@@ -76,17 +87,22 @@ namespace CakeDefense
                         Move(gameTime);
                         return;
                     }
+
+                    KillIfCan(gameTime);
                     // check attack stuff/etc here
-                    Dead();
                 }
-                else if (spawning == true)
-                {
-                    Spawning(gameTime);
-                }
-                else if (despawning == true)
+                else if (despawning)
                 {
                     Despawning(gameTime);
-                    Dead();
+                    KillIfCan(gameTime);
+                }
+                else if (IsDying)
+                {
+                    Dying(gameTime);
+                }
+                else if (spawning)
+                {
+                    Spawning(gameTime);
                 }
             }
         }
@@ -197,9 +213,9 @@ namespace CakeDefense
         /// <summary> Called in Move. Controls enemy's behavior when spawning. </summary>
         private void Spawning(GameTime gameTime)
         {
-            if ((time + Var.SPAWN_TIME).TotalMilliseconds > gameTime.TotalGameTime.TotalMilliseconds)
+            if ((time + TimeSpan.FromTicks(Var.SPAWN_TIME.Ticks / Var.GAME_SPEED)).TotalMilliseconds > gameTime.TotalGameTime.TotalMilliseconds)
             {
-                float percComplete = Var.TimePercentTillComplete(time, Var.SPAWN_TIME, gameTime);
+                float percComplete = Var.TimePercentTillComplete(time, TimeSpan.FromTicks(Var.SPAWN_TIME.Ticks / Var.GAME_SPEED), gameTime);
                 transparency = percComplete;
                 Image.Rotation = (float)(Var.SPAWN_SPINS * (Math.PI * 2) * percComplete);
             }
@@ -216,9 +232,9 @@ namespace CakeDefense
         /// <summary> Called in Move. Controls enemy's behavior when despawning. </summary>
         private void Despawning(GameTime gameTime)
         {
-            if ((time + Var.DESPAWN_TIME).TotalMilliseconds > gameTime.TotalGameTime.TotalMilliseconds)
+            if ((time + TimeSpan.FromTicks(Var.DESPAWN_TIME.Ticks / Var.GAME_SPEED)).TotalMilliseconds > gameTime.TotalGameTime.TotalMilliseconds)
             {
-                transparency = 1 - Var.TimePercentTillComplete(time, Var.DESPAWN_TIME, gameTime);
+                transparency = 1 - Var.TimePercentTillComplete(time, TimeSpan.FromTicks(Var.DESPAWN_TIME.Ticks / Var.GAME_SPEED), gameTime);
             }
             else
             {
@@ -232,10 +248,32 @@ namespace CakeDefense
             }
         }
 
-        private void Dead()
+        private void KillIfCan(GameTime gameTime)
         {
             if (CurrentHealth <= 0)
             {
+                dying = true;
+                despawning = false;
+                time = new TimeSpan(0, 0, 0, 0, (int)gameTime.TotalGameTime.TotalMilliseconds);
+                Move(gameTime);
+            }
+        }
+
+        private void Dying(GameTime gameTime)
+        {
+            if ((time + TimeSpan.FromTicks(Var.DYING_TIME.Ticks / Var.GAME_SPEED)).TotalMilliseconds > gameTime.TotalGameTime.TotalMilliseconds)
+            {
+                float percComplete = Var.TimePercentTillComplete(time, TimeSpan.FromTicks(Var.DYING_TIME.Ticks / Var.GAME_SPEED), gameTime);
+                transparency = percComplete;
+                Image.Rotation = (float)(Var.DEATH_SPINS * (Math.PI * 2) * percComplete);
+                Image.Resize = new Vector2(1 - percComplete);
+                CenterImage();
+            }
+            else
+            {
+                transparency = 100;
+                Image.Rotation = ImageObject.RIGHT;
+                time = TimeSpan.Zero;
                 IsActive = false;
             }
         }
@@ -248,15 +286,15 @@ namespace CakeDefense
         {
             if (IsActive)
             {
-                #region Spawning / Despawning
-                if (spawning || despawning)
+                #region Spawning / Despawning / Dying
+                if (spawning || despawning || IsDying)
                 {
                     Color tempColor = Image.Color;
                     Image.Color = Var.EffectTransparency(transparency, Image.Color);
                     base.Draw(gameTime, Var.FRAME_SPEED);
                     Image.Color = tempColor;
                 }
-                #endregion Spawning / Despawning
+                #endregion Spawning / Despawning / Dying
                 else
                 {
                     base.Draw(gameTime, Var.FRAME_SPEED);

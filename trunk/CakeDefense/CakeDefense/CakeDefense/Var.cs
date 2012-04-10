@@ -34,15 +34,19 @@ namespace CakeDefense
         #endregion Bullet
 
         #region Enemy
-        public static int MAX_ENEMY_HEALTH = 4, SPAWN_SPINS = 1, ENEMY_SIZE = 25;
+        public static int MAX_ENEMY_HEALTH = 4, SPAWN_SPINS = 1, DEATH_SPINS = 3, ENEMY_SIZE = 25;
         public static TimeSpan SPAWN_TIME = new TimeSpan(0, 0, 0, 0, 500);
         public static TimeSpan DESPAWN_TIME = new TimeSpan(0, 0, 1);
-        public static TimeSpan TIME_BETWEEN_SPAWNS = new TimeSpan(0, 0, 1);
-        public static TimeSpan TIME_BETWEEN_WAVES = new TimeSpan(0, 0, 10);
+        public static TimeSpan DYING_TIME = new TimeSpan(0, 0, 1);
         #endregion Enemy
 
         #region Time Stuff
-        public static int GAME_SPEED = 1, FRAME_SPEED = 500;
+        public static int GAME_SPEED = 1;
+        public static int FRAME_SPEED = 500;
+
+        public static TimeSpan TIME_BETWEEN_SPAWNS = new TimeSpan(0, 0, 1);
+        public static TimeSpan TIME_BETWEEN_WAVES = new TimeSpan(0, 0, 10);
+
         private static double timeDif;
 
         public static float TimePercentTillComplete(TimeSpan startTime, TimeSpan plusTime, GameTime gameTime)

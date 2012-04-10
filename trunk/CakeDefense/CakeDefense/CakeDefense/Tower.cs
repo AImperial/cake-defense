@@ -82,15 +82,19 @@ namespace CakeDefense
 
         public void CheckCollision(GameObject GO)
         {
-            for (int i = 0; i < bullets.Count; i++ )
+            if (GO is Enemy)
             {
-                if (bullets[i].IsActive)
+                Enemy curEnemy = (Enemy)GO;
+                for (int i = 0; i < bullets.Count; i++)
                 {
-                    if (GO.Rectangle.Intersects(bullets[i].Rectangle) && GO.IsActive)
+                    if (bullets[i].IsActive)
                     {
-                        GO.CurrentHealth -= Damage;
-                        bullets.RemoveAt(i);
-                        i--;
+                        if (curEnemy.Rectangle.Intersects(bullets[i].Rectangle) && curEnemy.IsActive && curEnemy.IsSpawning == false)
+                        {
+                            curEnemy.CurrentHealth -= Damage;
+                            bullets.RemoveAt(i);
+                            i--;
+                        }
                     }
                 }
             }

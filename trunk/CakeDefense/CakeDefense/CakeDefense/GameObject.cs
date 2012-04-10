@@ -194,8 +194,11 @@ namespace CakeDefense
 
         public void CenterImage()
         {
-            if (Image != null)
+            if (Image != null) {
                 Image.Center = Center;
+                Image.X = (int)(Image.X + ((Image.Resize.X * Image.Width) - Image.Width) / 2);
+                Image.Y = (int)(Image.Y + ((Image.Resize.Y * Image.Height) - Image.Height) / 2);
+            }
         }
         #endregion Methods
 
