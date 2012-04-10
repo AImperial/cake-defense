@@ -155,19 +155,35 @@ namespace CakeDefense
                         enemies.Add(waves[0].Dequeue());
                         enemies[enemies.Count - 1].Start(gameTime);
                         lastSpawnTime = new TimeSpan(0, 0, 0, 0, (int)gameTime.TotalGameTime.TotalMilliseconds);
+                        if (waves.Count == 1 && waves[0].Count == 0)
+                        {
+                            waves.RemoveAt(0);
+                        }
                     }
                     else if (waves.Count > 0 && waves[0].Count == 0 &&  (lastSpawnTime + Var.TIME_BETWEEN_WAVES).TotalMilliseconds < gameTime.TotalGameTime.TotalMilliseconds)
                     {
                         waves.RemoveAt(0);
-                    }else if (waves.Count == 0){
+                    }
+                    else if (waves.Count == 0 && enemies.Count == 0)
+                    {
                         gameState = GameState.GameOver;
                     }
                     #endregion Wave Stuff
 
-                    enemies.ForEach(enemy => enemy.Move(gameTime));
+                    //enemies.ForEach(enemy => enemy.Move(gameTime));
 
-                    if (heldTower != null)
-                        heldTower.Point = mousePoint;
+                    for (int i = 0; i < enemies.Count; i++)
+                    {
+                        enemies[i].Move(gameTime);
+                        if (enemies[i].IsActive == false)
+                        {
+                            enemies.RemoveAt(i);
+                            i--;
+                        }
+                    }
+
+                        if (heldTower != null)
+                            heldTower.Point = mousePoint;
                     foreach(Tower tower in towers)
                     {
                         foreach(Enemy enemy in enemies)
@@ -272,15 +288,9 @@ namespace CakeDefense
 
                     map.DrawMap(blankTex, smallFont);
 
-                    foreach (Enemy enemy in enemies)
-                    {
-                        enemy.Draw(gameTime);
-                        enemy.Image.DrawRectangleOutline(1, Color.LawnGreen, blankTex);
-                        ImageObject.DrawRectangleOutline(enemy.Rectangle, 2, Color.OrangeRed, blankTex, spriteBatch);
-                    }
+                    enemies.ForEach(enemy => enemy.Draw(gameTime));
+                    towers.ForEach(tower => tower.Draw());
 
-                    foreach (Tower tower in towers)
-                        tower.Draw();
                     if (heldTower != null)
                         heldTower.Draw();
 
