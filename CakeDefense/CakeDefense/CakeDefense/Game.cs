@@ -25,7 +25,8 @@ namespace CakeDefense
         SpriteBatch spriteBatch;
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
         Texture2D blankTex, cursorTex, mainMenu, instructions, credits, bulletTex, enemyAnimationTest;
-        TimeSpan animationTotalTime, pausedTime;
+        GameTime animationTotalTime;
+        TimeSpan pausedTime;
         #endregion Graphic Stuff
 
         #region General Game Stuff (GameState, music stuff, Map, HUD)
@@ -52,7 +53,7 @@ namespace CakeDefense
         List<Path> paths;
         List<Enemy> enemies;
         List<Queue<Enemy>> waves;
-        TimeSpan lastSpawnTime;
+        Timer spawnTimer;
         #endregion Enemy Stuff
 
         #region Tower/Trap Stuff (Tower List, heldItem)
@@ -143,7 +144,7 @@ namespace CakeDefense
             mouseRect = new Rectangle(mouseState.X, mouseState.Y, 1, 1);
             mousePoint = new Vector2(mouseState.X, mouseState.Y);
             #endregion Kb/MouseState
-            animationTotalTime = gameTime.TotalGameTime - pausedTime;
+            animationTotalTime = new GameTime(gameTime.TotalGameTime - pausedTime, TimeSpan.Zero);
 
             switch (gameState)
             {
@@ -151,19 +152,25 @@ namespace CakeDefense
                 case GameState.Game:
 
                     QuickKeys();
+                    spawnTimer.Update(animationTotalTime);
 
                     #region Wave Stuff
-                    if (waves.Count > 0 && waves[0].Count > 0 && (lastSpawnTime + Var.TIME_BETWEEN_SPAWNS) < animationTotalTime)
+                    if (waves.Count > 0 && waves[0].Count > 0 && spawnTimer.Finished)
                     {
                         enemies.Add(waves[0].Dequeue());
                         enemies[enemies.Count - 1].Start(animationTotalTime);
-                        lastSpawnTime = new TimeSpan(animationTotalTime.Ticks);
+
+                        if (waves[0].Count > 0)
+                            spawnTimer.Start(animationTotalTime, Var.TIME_BETWEEN_SPAWNS);
+                        else
+                            spawnTimer.Start(animationTotalTime, Var.TIME_BETWEEN_WAVES);
+
                         if (waves.Count == 1 && waves[0].Count == 0)
                         {
                             waves.RemoveAt(0);
                         }
                     }
-                    else if (waves.Count > 0 && waves[0].Count == 0 && (lastSpawnTime + Var.TIME_BETWEEN_WAVES) < animationTotalTime)
+                    else if (waves.Count > 0 && waves[0].Count == 0 && spawnTimer.Finished)
                     {
                         waves.RemoveAt(0);
                     }
@@ -437,42 +444,20 @@ namespace CakeDefense
         #endregion Mouse / Keyboard Stuff
 
         #region New Game / LoadGame / SaveGame
+
+        #region NewGame
         public void NewGame()
         {
-            lastSpawnTime = animationTotalTime = pausedTime = TimeSpan.Zero;
+            pausedTime = TimeSpan.Zero;
+            animationTotalTime = new GameTime(TimeSpan.Zero, TimeSpan.Zero);
             enemies = new List<Enemy>();
             traps = new List<Trap>();
             waves = new List<Queue<Enemy>>();
+            spawnTimer = new Timer(Var.GAME_SPEED);
 
             map = new Map(32, 18, spriteBatch);
             paths = new List<Path>();
             paths.Add(map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1));
-
-            //int temp = Var.ENEMY_SIZE;
-            //Var.ENEMY_SIZE *= 2;
-            //Queue<Enemy> wave3 = new Queue<Enemy>();
-            //wave3.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 3, Var.MAX_ENEMY_HEALTH, 2));
-            //wave3.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 3, Var.MAX_ENEMY_HEALTH, 2));
-            //Var.ENEMY_SIZE = temp;
-            //waves.Add(wave3);
-
-            //Queue<Enemy> wave1 = new Queue<Enemy>();
-            //wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 2, Var.MAX_ENEMY_HEALTH, 2));
-            //wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 2, Var.MAX_ENEMY_HEALTH, 2));
-            //wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 2, Var.MAX_ENEMY_HEALTH, 2));
-            //wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 2, Var.MAX_ENEMY_HEALTH, 2));
-            //waves.Add(wave1);
-
-            //Queue<Enemy> wave2 = new Queue<Enemy>();
-            //wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 4, Var.MAX_ENEMY_HEALTH, 2));
-            //wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 4, Var.MAX_ENEMY_HEALTH, 2));
-            //wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 4, Var.MAX_ENEMY_HEALTH, 2));
-            //waves.Add(wave2);
-
-            //Queue<Enemy> wave4 = new Queue<Enemy>();
-            //wave4.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 7, Var.MAX_ENEMY_HEALTH, 2));
-            //wave4.ElementAt(0).Image.Color = Color.Green;
-            //waves.Add(wave4);
 
             LoadWaves(0, 0);
 
@@ -482,7 +467,9 @@ namespace CakeDefense
 
             hud = new HUD(spriteBatch, Var.START_MONEY, cake.CurrentHealth);
         }
+        #endregion NewGame
 
+        #region Load (waves / file)
         /// <summary> Loads wave data from a .lvl file. </summary>
         /// <param name="level">default = 0</param>
         /// <param name="waveNum">default = 0</param>
@@ -526,6 +513,8 @@ namespace CakeDefense
                 wave++;
             }
         }
+        #endregion Load
+
         #endregion New Game / LoadGame / SaveGame
 
         #region New Enemy / Tower / Trap
