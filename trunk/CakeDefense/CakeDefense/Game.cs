@@ -179,10 +179,11 @@ namespace CakeDefense
                         gameState = GameState.GameOver;
                     }
                     #endregion Wave Stuff
-
+                    
                     for (int i = 0; i < enemies.Count; i++)
                     {
-                        enemies[i].Move(animationTotalTime, traps);
+                        enemies[i].Update(animationTotalTime, traps);
+
                         if (enemies[i].IsActive == false)
                         {
                             if (enemies[i].HasCake)
@@ -193,7 +194,7 @@ namespace CakeDefense
                     }
 
                     towers.ForEach(tower => tower.Fire());
-                    traps.ForEach(trap => traps.Remove(trap.Remove()));
+                    traps.ForEach(trap => traps.Remove(trap.RemoveIfCan()));
 
                     if (heldItem != null)
                         heldItem.Point = mousePoint;
@@ -573,7 +574,8 @@ namespace CakeDefense
                     health,
                     damage,
                     speed,
-                    path
+                    path,
+                    blankTex
                 );
             }
             #endregion Spider

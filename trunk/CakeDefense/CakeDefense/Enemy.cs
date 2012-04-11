@@ -21,7 +21,8 @@ namespace CakeDefense
         #region Attributes
         private Path path;
         private int currentTile;
-        //private TimeSpan time; // hold time when an action started.
+        private HealthBar healthBar;
+        private GameTime time;
         Timer timer;
 
         private bool spawning, despawning, dying, hasCake;
@@ -29,9 +30,10 @@ namespace CakeDefense
         #endregion Attributes
 
         #region Constructor
-        public Enemy(ImageObject imageObject, int health, int damage, float speed, Path path)
+        public Enemy(ImageObject imageObject, int health, int damage, float speed, Path path, Texture2D healthTex)
             : base(imageObject, health, damage, speed)
         {
+            healthBar = new HealthBar(healthTex, health, imageObject.SpriteBatch);
             IsActive = false;
             this.path = path;
             Image.Center = Center = path.Start.Center;
@@ -76,12 +78,15 @@ namespace CakeDefense
         #endregion Properties
 
         #region Methods
-        
-        #region Move
-        public void Move(GameTime gameTime, List<Trap> traps)
+
+        #region Update
+        public void Update(GameTime gameTime, List<Trap> traps)
         {
-            if (timer != null)
-                timer.Update(gameTime);
+            time = gameTime;
+            timer.Update(gameTime);
+            if (dying == false && IsActive)
+                healthBar.Update(gameTime, CurrentHealth, Center.X, Y);
+
             if (IsActive)
             {
                 if (spawning == false && despawning == false && IsDying == false)
@@ -98,17 +103,14 @@ namespace CakeDefense
                     {
                         despawning = true;
                         timer.Start(gameTime, Var.DESPAWN_TIME);
-                        Move(gameTime, traps);
-                        return;
+                        Despawning();
                     }
 
-                    KillIfCan(gameTime);
                     // check attack stuff/etc here
                 }
                 else if (despawning)
                 {
                     Despawning();
-                    KillIfCan(gameTime);
                 }
                 else if (IsDying)
                 {
@@ -120,7 +122,9 @@ namespace CakeDefense
                 }
             }
         }
+        #endregion Update
 
+        #region Move
         private void MoveBy(float num, List<Trap> traps)
         {
             traps.ForEach(trap => trap.AttackIfCan(this));
@@ -260,17 +264,6 @@ namespace CakeDefense
             }
         }
 
-        private void KillIfCan(GameTime gameTime)
-        {
-            if (CurrentHealth <= 0)
-            {
-                dying = true;
-                despawning = false;
-                timer.Start(gameTime, Var.DYING_TIME);
-                Move(gameTime, null);
-            }
-        }
-
         private void Dying()
         {
             if (timer.Finished == false)
@@ -290,6 +283,23 @@ namespace CakeDefense
         }
         #endregion Spawning / Despawning Stuff
 
+        public void Hit(int hitDmg)
+        {
+            if (IsActive && IsSpawning == false)
+            {
+                CurrentHealth -= hitDmg;
+                healthBar.Show(time);
+
+                if (CurrentHealth <= 0)
+                {
+                    dying = true;
+                    despawning = false;
+                    healthBar.Hide();
+                    timer.Start(time, Var.DYING_TIME);
+                }
+            }
+        }
+
         #endregion Methods
 
         #region Draw
@@ -304,14 +314,124 @@ namespace CakeDefense
                     Image.Color = Var.EffectTransparency(transparency, Image.Color);
                     base.Draw(gameTime, Var.FRAME_SPEED);
                     Image.Color = tempColor;
+
+                    if (despawning)
+                        healthBar.Draw();
                 }
                 #endregion Spawning / Despawning / Dying
                 else
                 {
                     base.Draw(gameTime, Var.FRAME_SPEED);
+                    healthBar.Draw();
                 }
             }
         }
         #endregion Draw
     }
+
+    #region Health Bar
+    class HealthBar
+    {
+        #region Attributes
+        Texture2D texture;
+        SpriteBatch spriteBatch;
+
+        Timer timer;
+        int originalWidth, heightUpExtra, maxHealth, health;
+        Rectangle position;
+        #endregion Attributes
+
+        #region Constructor
+        public HealthBar(Texture2D texture, int maxHealth, SpriteBatch sprite)
+        {
+            this.texture = texture;
+            spriteBatch = sprite;
+
+            timer = new Timer(Var.GAME_SPEED);
+            this.maxHealth = maxHealth;
+            heightUpExtra = 2;
+
+            if (maxHealth <= Var.HEALTHBAR_SIZE_MAX.X)
+                originalWidth = maxHealth;
+            else
+                originalWidth = Var.HEALTHBAR_SIZE_MAX.X;
+
+            position = new Rectangle(0, 0, originalWidth, Var.HEALTHBAR_SIZE_MAX.Y);
+        }
+        #endregion Constructor
+
+        #region Properties
+        public int OriginalWidth
+        {
+            get { return originalWidth; }
+
+            set { originalWidth = value; }
+        }
+
+        public Texture2D Texture
+        {
+            get { return texture; }
+
+            set { texture = value; }
+        }
+        #endregion Properties
+
+        #region Methods
+        public void Show(GameTime gameTime)
+        {
+            timer.Start(gameTime, Var.SHOW_HEALTH_TIME);
+        }
+
+        public void Update(GameTime gameTime, int hp, float centerX, float yVal)
+        {
+            timer.Update(gameTime);
+            health = hp;
+            position.X = (int)centerX - (originalWidth / 2);
+            position.Y = (int)yVal - position.Height - heightUpExtra;
+            position.Width = (int)(originalWidth * ((float)hp / maxHealth));
+        }
+
+        public void Hide()
+        {
+            timer.End();
+        }
+        #endregion Methods
+
+        #region Draw
+        public void Draw()
+        {
+            if (timer.Finished == false)
+            {
+                Color colorBar = Color.Red;
+                Color colorCaps = Color.OrangeRed;
+                int capsWidth = 2;
+
+                if (timer.Percent >= .8)
+                {
+                    colorBar = Var.EffectTransparency(1 - Timer.GetPercentRelative(.8f, timer.Percent, 1f), colorBar);
+                    colorCaps = Var.EffectTransparency(1 - Timer.GetPercentRelative(.8f, timer.Percent, 1f), colorCaps);
+                }
+
+                spriteBatch.Draw(texture, position, colorBar);
+
+                if (originalWidth > position.Height)
+                {
+                    spriteBatch.Draw(texture, new Rectangle(position.X - capsWidth, position.Y - capsWidth, capsWidth, position.Height + (capsWidth * 2)), colorCaps);
+                    spriteBatch.Draw(texture, new Rectangle(position.X, position.Y - capsWidth, position.Height, capsWidth), colorCaps);
+                    spriteBatch.Draw(texture, new Rectangle(position.X, position.Y + position.Height, position.Height, capsWidth), colorCaps);
+
+                    spriteBatch.Draw(texture, new Rectangle(position.X + originalWidth, position.Y - capsWidth, capsWidth, position.Height + (capsWidth * 2)), colorCaps);
+                    spriteBatch.Draw(texture, new Rectangle(position.X + originalWidth - position.Height, position.Y - capsWidth, position.Height, capsWidth), colorCaps);
+                    spriteBatch.Draw(texture, new Rectangle(position.X + originalWidth - position.Height, position.Y + position.Height, position.Height, capsWidth), colorCaps);
+
+                }
+                else
+                {
+                    ImageObject.DrawRectangleOutline(new Rectangle(position.X, position.Y, originalWidth, position.Height), capsWidth, colorCaps, texture, spriteBatch);
+                }
+            }
+        }
+        #endregion Draw
+    }
+    #endregion Health Bar
 }

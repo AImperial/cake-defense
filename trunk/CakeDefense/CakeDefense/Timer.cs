@@ -161,7 +161,8 @@ namespace CakeDefense
         /// <returns>A relative percent.</returns>
         public static float GetPercentRelative(float start, float current, float finish)
         {
-            return 1 - ((finish - start) / (finish - current));
+            // (current - start) / TimeTillEnd
+            return (current - start) / (finish - start);
         }
 
         #endregion Static

@@ -47,6 +47,9 @@ namespace CakeDefense
         public static TimeSpan SPAWN_TIME = new TimeSpan(0, 0, 0, 0, 500);
         public static TimeSpan DESPAWN_TIME = new TimeSpan(0, 0, 1);
         public static TimeSpan DYING_TIME = new TimeSpan(0, 0, 1);
+
+        public static TimeSpan SHOW_HEALTH_TIME = new TimeSpan(0, 0, 5);
+        public static Point HEALTHBAR_SIZE_MAX = new Point(75, 5);
         #endregion Enemy
 
         #region Time Stuff
@@ -55,15 +58,6 @@ namespace CakeDefense
 
         public static TimeSpan TIME_BETWEEN_SPAWNS = new TimeSpan(0, 0, 0, 0, 1000);
         public static TimeSpan TIME_BETWEEN_WAVES = new TimeSpan(0, 0, 10);
-
-        private static double timeDif;
-
-        public static float TimePercentTillComplete(TimeSpan startTime, TimeSpan plusTime, TimeSpan gameTime)
-        {
-            timeDif = (gameTime - startTime).TotalMilliseconds;
-            // returns a number 0-1 if GameTime in not over endtime / under start time.
-            return (float)(timeDif / plusTime.TotalMilliseconds);
-        }
         #endregion Time Stuff
 
         #region Enums
