@@ -79,3 +79,4 @@ C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\D
 \\banner.main.ad.rit.edu\students\amm4108\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\obj\x86\Debug\CakeDefense.exe
 \\banner.main.ad.rit.edu\students\amm4108\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\obj\x86\Debug\CakeDefense.pdb
 C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\Bullet.xnb
+C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\Bullet.xnb

@@ -25,6 +25,10 @@ namespace CakeDefense
         public static Rectangle GAME_AREA = new Rectangle(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT);
         #endregion Screen/Map Stuff
 
+        #region Cake
+        public static int MAX_CAKE_HEALTH = 10;
+        #endregion Cake
+
         #region Tower
         public static int MAX_TOWER_HEALTH = 10, START_MONEY = 1000;
         #endregion Tower
