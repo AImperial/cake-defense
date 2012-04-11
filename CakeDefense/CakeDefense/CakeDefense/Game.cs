@@ -48,6 +48,7 @@ namespace CakeDefense
         #endregion Keyboard / Mouse Stuff
 
         #region Enemy Stuff (spawn stuff, enemies wave list / active list)
+        List<Path> paths;
         List<Enemy> enemies;
         List<Queue<Enemy>> waves;
         TimeSpan lastSpawnTime;
@@ -441,44 +442,89 @@ namespace CakeDefense
             waves = new List<Queue<Enemy>>();
 
             map = new Map(32, 18, spriteBatch);
-            Path path0 = map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1);
+            paths = new List<Path>();
+            paths.Add(map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1));
 
-            int temp = Var.ENEMY_SIZE;
-            Var.ENEMY_SIZE *= 2;
-            Queue<Enemy> wave3 = new Queue<Enemy>();
-            wave3.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 3));
-            wave3.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 3));
-            Var.ENEMY_SIZE = temp;
-            waves.Add(wave3);
+            //int temp = Var.ENEMY_SIZE;
+            //Var.ENEMY_SIZE *= 2;
+            //Queue<Enemy> wave3 = new Queue<Enemy>();
+            //wave3.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 3, Var.MAX_ENEMY_HEALTH, 2));
+            //wave3.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 3, Var.MAX_ENEMY_HEALTH, 2));
+            //Var.ENEMY_SIZE = temp;
+            //waves.Add(wave3);
 
-            Queue<Enemy> wave1 = new Queue<Enemy>();
-            wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 2));
-            wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 2));
-            wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 2));
-            wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 2));
-            waves.Add(wave1);
+            //Queue<Enemy> wave1 = new Queue<Enemy>();
+            //wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 2, Var.MAX_ENEMY_HEALTH, 2));
+            //wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 2, Var.MAX_ENEMY_HEALTH, 2));
+            //wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 2, Var.MAX_ENEMY_HEALTH, 2));
+            //wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 2, Var.MAX_ENEMY_HEALTH, 2));
+            //waves.Add(wave1);
 
-            Queue<Enemy> wave2 = new Queue<Enemy>();
-            wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 4));
-            wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 4));
-            wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 4));
-            waves.Add(wave2);
+            //Queue<Enemy> wave2 = new Queue<Enemy>();
+            //wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 4, Var.MAX_ENEMY_HEALTH, 2));
+            //wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 4, Var.MAX_ENEMY_HEALTH, 2));
+            //wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 4, Var.MAX_ENEMY_HEALTH, 2));
+            //waves.Add(wave2);
 
-            Queue<Enemy> wave4 = new Queue<Enemy>();
-            wave4.Enqueue(NewEnemy(Var.EnemyType.Spider, path0, 7));
-            wave4.ElementAt(0).Image.Color = Color.Green;
-            waves.Add(wave4);
+            //Queue<Enemy> wave4 = new Queue<Enemy>();
+            //wave4.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 7, Var.MAX_ENEMY_HEALTH, 2));
+            //wave4.ElementAt(0).Image.Color = Color.Green;
+            //waves.Add(wave4);
+
+            LoadWaves(0, 0);
 
             towers = new List<Tower>();
-            towers.Add(NewTower(Var.TowerType.Basic));
-            towers.ForEach(t => t.Place((Tile_Tower)map.Tiles[16, 2]));
 
             hud = new HUD(spriteBatch, Var.START_MONEY);
+        }
+
+        /// <summary> Loads wave data from a .lvl file. </summary>
+        /// <param name="level">default = 0</param>
+        /// <param name="waveNum">default = 0</param>
+        private void LoadWaves(int level, int waveNum)
+        {
+            int wave = waveNum;
+            string[] infoArray = null;
+            string firstLine = null;
+
+            while (File.Exists("Game Levels/Level" + level + "/wave" + wave + ".lvl"))
+            {
+                Queue<Enemy> thisWave = new Queue<Enemy>();
+                StreamReader reader = new StreamReader("Game Levels/Level" + level + "/wave" + wave + ".lvl");
+                infoArray = null;
+                firstLine = null;
+                while ((firstLine = reader.ReadLine()) != null)
+                {
+                    // 0-Type ||| 1-PathType ||| 2-speed ||| 3-health ||| 4-damage
+                    if (firstLine.Contains("//"))
+                        firstLine.Remove(firstLine.IndexOf("//"));
+                    infoArray = firstLine.Split('-');
+
+                    thisWave.Enqueue(
+                        NewEnemy(
+                            
+                        (Var.EnemyType)Enum.Parse(typeof(Var.EnemyType),
+                        infoArray[0], true),
+
+                        paths[Int32.Parse(infoArray[1])],
+
+                        float.Parse(infoArray[2]),
+
+                        Int32.Parse(infoArray[3]),
+
+                        Int32.Parse(infoArray[4])
+                        )
+                    );
+                }
+                if(thisWave.Count > 0)
+                    waves.Add(thisWave);
+                wave++;
+            }
         }
         #endregion New Game / LoadGame / SaveGame
 
         #region New Enemy / Tower / Trap
-        private Enemy NewEnemy(Var.EnemyType type, Path path, int speed)
+        private Enemy NewEnemy(Var.EnemyType type, Path path, float speed, int health, int damage)
         {
             #region Spider
             if (type == Var.EnemyType.Spider)
@@ -506,8 +552,8 @@ namespace CakeDefense
 
                 return new Enemy(
                     image,
-                    Var.MAX_ENEMY_HEALTH,
-                    2,
+                    health,
+                    damage,
                     speed,
                     path
                 );

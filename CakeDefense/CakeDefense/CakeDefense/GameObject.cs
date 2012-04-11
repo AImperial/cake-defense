@@ -23,7 +23,8 @@ namespace CakeDefense
         private Vector2 point;
         private Point size;
         private bool isActive;
-        private int strtHlth, currHealth, dmgDn, speed;
+        private int strtHlth, currHealth, dmgDn;
+        private float speed;
         #endregion Attributes
 
         #region Constructors
@@ -49,7 +50,7 @@ namespace CakeDefense
             strtHlth = currHealth = 0;
         }
 
-        public GameObject(ImageObject io, int health, int damage, int speed)
+        public GameObject(ImageObject io, int health, int damage, float speed)
         {
             Image = io;
             point = new Vector2(io.X, io.Y);
@@ -60,7 +61,7 @@ namespace CakeDefense
             this.speed = speed;
         }
 
-        public GameObject(Texture2D texture, float x, float y, int width, int height, SpriteBatch spriteBatch, int health, int damage, int speed)
+        public GameObject(Texture2D texture, float x, float y, int width, int height, SpriteBatch spriteBatch, int health, int damage, float speed)
         {
             Image = new ImageObject(texture, (int)x, (int)y, width, height, spriteBatch);
             point = new Vector2(x, y);
@@ -71,7 +72,7 @@ namespace CakeDefense
             this.speed = speed;
         }
 
-        public GameObject(ImageObject io, float x, float y, int width, int height, int health, int damage, int speed)
+        public GameObject(ImageObject io, float x, float y, int width, int height, int health, int damage, float speed)
             : this(io)
         {
             point = new Vector2(x, y);
@@ -181,7 +182,7 @@ namespace CakeDefense
             set { dmgDn = value; }
         }
 
-        public int Speed
+        public float Speed
         {
             get { return speed; }
 

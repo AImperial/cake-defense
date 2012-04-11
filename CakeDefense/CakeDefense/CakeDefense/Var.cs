@@ -34,7 +34,7 @@ namespace CakeDefense
         #endregion Trap
 
         #region Bullet
-        public static int BULLET_SPEED = 4;
+        public static float BULLET_SPEED = 4;
         public const int BULLET_SIZE = 10;
         #endregion Bullet
 
@@ -49,8 +49,8 @@ namespace CakeDefense
         public static int GAME_SPEED = 1;
         public static int FRAME_SPEED = 500;
 
-        public static TimeSpan TIME_BETWEEN_SPAWNS = new TimeSpan(0, 0, 0, 0, 500);
-        public static TimeSpan TIME_BETWEEN_WAVES = new TimeSpan(0, 0, 3);
+        public static TimeSpan TIME_BETWEEN_SPAWNS = new TimeSpan(0, 0, 0, 0, 1000);
+        public static TimeSpan TIME_BETWEEN_WAVES = new TimeSpan(0, 0, 10);
 
         private static double timeDif;
 

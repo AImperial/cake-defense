@@ -22,7 +22,7 @@ namespace CakeDefense
         #endregion Attributes
 
         #region Constructor
-        public Bullet(int dir, int dmg, int sp, int x, int y, int w, int h, Texture2D texture, SpriteBatch sprite)
+        public Bullet(int dir, int dmg, float sp, int x, int y, int w, int h, Texture2D texture, SpriteBatch sprite)
             :base(new ImageObject(texture, x, y, w, h, sprite), 0, dmg, sp)
         {
             IsActive = true;

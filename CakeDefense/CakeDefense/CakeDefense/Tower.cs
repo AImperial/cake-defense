@@ -29,7 +29,7 @@ namespace CakeDefense
         #endregion Attributes
 
         #region Constructor
-        public Tower(int health, int co, int damage, int speed, int w, int h, SpriteBatch spB, Texture2D t, Texture2D bt)
+        public Tower(int health, int co, int damage, float speed, int w, int h, SpriteBatch spB, Texture2D t, Texture2D bt)
             : base(t, 0, 0, w, h, spB, health, damage, speed)
         {
             Image.Color = Color.Blue;
