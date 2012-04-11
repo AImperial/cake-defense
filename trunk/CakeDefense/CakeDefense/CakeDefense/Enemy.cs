@@ -28,7 +28,7 @@ namespace CakeDefense
         #endregion Attributes
 
         #region Constructor
-        public Enemy(ImageObject imageObject, int health, int damage, int speed, Path path)
+        public Enemy(ImageObject imageObject, int health, int damage, float speed, Path path)
             : base(imageObject, health, damage, speed)
         {
             IsActive = false;
