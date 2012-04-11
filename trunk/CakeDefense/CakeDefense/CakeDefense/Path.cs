@@ -30,7 +30,6 @@ namespace CakeDefense
         #endregion Constructor
 
         #region Properties
-
         /// <summary> A List of Tiles in order of the Path. </summary>
         public List<Tile> Tiles
         {
@@ -53,7 +52,6 @@ namespace CakeDefense
         {
             get { return tiles.Count; }
         }
-
         #endregion Properties
 
         #region Methods
