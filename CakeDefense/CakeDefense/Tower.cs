@@ -107,9 +107,9 @@ namespace CakeDefense
                 {
                     if (bullets[i].IsActive)
                     {
-                        if (curEnemy.Rectangle.Intersects(bullets[i].Rectangle) && curEnemy.IsActive && curEnemy.IsSpawning == false)
+                        if (curEnemy.Rectangle.Intersects(bullets[i].Rectangle))
                         {
-                            curEnemy.CurrentHealth -= Damage;
+                            curEnemy.Hit(Damage);
                             bullets.RemoveAt(i);
                             i--;
                         }

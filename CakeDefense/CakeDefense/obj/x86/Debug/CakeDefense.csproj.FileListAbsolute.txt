@@ -80,3 +80,20 @@ C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\D
 \\banner.main.ad.rit.edu\students\amm4108\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\obj\x86\Debug\CakeDefense.pdb
 C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\Bullet.xnb
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\Bullet.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\obj\x86\Debug\CakeDefense.exe
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\obj\x86\Debug\CakeDefense.pdb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Blank.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Credits.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Instructions.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\MainMenu.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Cursor.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\SpiderSprite.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\Bullet.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Large.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Medium.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Normal.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Small.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\CakeDefense.exe
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\CakeDefense.pdb

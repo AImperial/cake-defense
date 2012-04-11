@@ -76,7 +76,7 @@
     <Compile Include="Cake.cs" />
     <Compile Include="HUD.cs" />
     <Compile Include="ImageObject.cs" />
-    <Compile Include="Path.cs" />
+    <Compile Include="Tile - Map\Path.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Tile - Map\Map.cs" />

@@ -61,13 +61,14 @@ namespace CakeDefense
             if(enemy.Center == Center && IsActive)
             {
                 CurrentHealth--;
-                enemy.CurrentHealth -= Damage;
+                enemy.Hit(Damage);
                 if (CurrentHealth <= 0)
                     IsActive = false;
             }
         }
 
-        public Trap Remove()
+        /// <summary> If it should be removed, returns itself; else retruns null </summary>
+        public Trap RemoveIfCan()
         {
             if (IsActive == false)
                 return this;
