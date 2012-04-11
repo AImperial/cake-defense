@@ -21,7 +21,8 @@ namespace CakeDefense
         #region Attributes
         private Path path;
         private int currentTile;
-        private TimeSpan time; // hold time when an action started.
+        //private TimeSpan time; // hold time when an action started.
+        Timer timer;
 
         private bool spawning, despawning, dying;
         private float transparency, slowEffect;
@@ -39,6 +40,7 @@ namespace CakeDefense
             transparency = 0;
             Image.Rotation = ImageObject.RIGHT;
             spawning = true;
+            timer = new Timer(Var.GAME_SPEED);
         }
         #endregion Constructor
 
@@ -72,8 +74,10 @@ namespace CakeDefense
         #region Methods
 
         #region Move
-        public void Move(TimeSpan gameTime, List<Trap> traps)
+        public void Move(GameTime gameTime, List<Trap> traps)
         {
+            if (timer != null)
+                timer.Update(gameTime);
             if (IsActive)
             {
                 if (spawning == false && despawning == false && IsDying == false)
@@ -83,7 +87,7 @@ namespace CakeDefense
                     if (path.GetTile(currentTile) == path.End)
                     {
                         despawning = true;
-                        time = new TimeSpan(gameTime.Ticks);
+                        timer.Start(gameTime, Var.DESPAWN_TIME);
                         Move(gameTime, traps);
                         return;
                     }
@@ -93,16 +97,16 @@ namespace CakeDefense
                 }
                 else if (despawning)
                 {
-                    Despawning(gameTime);
+                    Despawning();
                     KillIfCan(gameTime);
                 }
                 else if (IsDying)
                 {
-                    Dying(gameTime);
+                    Dying();
                 }
                 else if (spawning)
                 {
-                    Spawning(gameTime);
+                    Spawning();
                 }
             }
         }
@@ -202,46 +206,45 @@ namespace CakeDefense
         #endregion Move
 
         #region Spawning / Despawning Stuff
-        public void Start(TimeSpan gameTime)
+        public void Start(GameTime gameTime)
         {
             IsActive = true;
             transparency = 0;
             Image.Rotation = ImageObject.RIGHT;
             spawning = true;
-            time = new TimeSpan(gameTime.Ticks);
+            timer.Start(gameTime, Var.SPAWN_TIME);
         }
 
         /// <summary> Called in Move. Controls enemy's behavior when spawning. </summary>
-        private void Spawning(TimeSpan gameTime)
+        private void Spawning()
         {
-            if ((time + TimeSpan.FromTicks(Var.SPAWN_TIME.Ticks / Var.GAME_SPEED)) > gameTime)
+            if (timer.Finished == false)
             {
-                float percComplete = Var.TimePercentTillComplete(time, TimeSpan.FromTicks(Var.SPAWN_TIME.Ticks / Var.GAME_SPEED), gameTime);
-                transparency = percComplete;
-                Image.Rotation = (float)(Var.SPAWN_SPINS * (Math.PI * 2) * percComplete);
+                transparency = timer.Percent;
+                Image.Rotation = (float)(Var.SPAWN_SPINS * (Math.PI * 2) * timer.Percent);//percComplete);
             }
             else
             {
                 transparency = 100;
                 Image.Rotation = ImageObject.RIGHT;
-                time = TimeSpan.Zero;
+                timer.End();
                 spawning = false;
                 IsActive = true;
             }
         }
 
         /// <summary> Called in Move. Controls enemy's behavior when despawning. </summary>
-        private void Despawning(TimeSpan gameTime)
+        private void Despawning()
         {
-            if ((time + TimeSpan.FromTicks(Var.DESPAWN_TIME.Ticks / Var.GAME_SPEED)) > gameTime)
+            if (timer.Finished == false)
             {
-                transparency = 1 - Var.TimePercentTillComplete(time, TimeSpan.FromTicks(Var.DESPAWN_TIME.Ticks / Var.GAME_SPEED), gameTime);
+                transparency = 1 - timer.Percent;
             }
             else
             {
                 transparency = 100;
                 Image.Rotation = ImageObject.RIGHT;
-                time = TimeSpan.Zero;
+                timer.End();
                 despawning = false;
                 IsActive = false;
 
@@ -249,32 +252,31 @@ namespace CakeDefense
             }
         }
 
-        private void KillIfCan(TimeSpan gameTime)
+        private void KillIfCan(GameTime gameTime)
         {
             if (CurrentHealth <= 0)
             {
                 dying = true;
                 despawning = false;
-                time = new TimeSpan(0, 0, 0, 0, (int)gameTime.TotalMilliseconds);
+                timer.Start(gameTime, Var.DYING_TIME);
                 Move(gameTime, null);
             }
         }
 
-        private void Dying(TimeSpan gameTime)
+        private void Dying()
         {
-            if ((time + TimeSpan.FromTicks(Var.DYING_TIME.Ticks / Var.GAME_SPEED)) > gameTime)
+            if (timer.Finished == false)
             {
-                float percComplete = Var.TimePercentTillComplete(time, TimeSpan.FromTicks(Var.DYING_TIME.Ticks / Var.GAME_SPEED), gameTime);
-                transparency = percComplete;
-                Image.Rotation = (float)(Var.DEATH_SPINS * (Math.PI * 2) * percComplete);
-                Image.Resize = new Vector2(1 - percComplete);
+                transparency = timer.Percent;
+                Image.Rotation = (float)(Var.DEATH_SPINS * (Math.PI * 2) * timer.Percent);
+                Image.Resize = new Vector2(1 - timer.Percent);
                 CenterImage();
             }
             else
             {
                 transparency = 100;
                 Image.Rotation = ImageObject.RIGHT;
-                time = TimeSpan.Zero;
+                timer.End();
                 IsActive = false;
             }
         }
