@@ -185,6 +185,8 @@ namespace CakeDefense
                         enemies[i].Move(animationTotalTime, traps);
                         if (enemies[i].IsActive == false)
                         {
+                            if (enemies[i].HasCake)
+                                cake.CurrentHealth--;
                             enemies.RemoveAt(i);
                             i--;
                         }
@@ -315,6 +317,7 @@ namespace CakeDefense
 
                     map.DrawMap(blankTex, smallFont);
 
+                    cake.Draw();
                     towers.ForEach(tower => tower.Draw());
                     traps.ForEach(trap => trap.Draw());
                     enemies.ForEach(enemy => enemy.Draw(gameTime));
@@ -459,12 +462,38 @@ namespace CakeDefense
             paths = new List<Path>();
             paths.Add(map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1));
 
+            #region Old map
+            //int temp = Var.ENEMY_SIZE;
+            //Var.ENEMY_SIZE *= 2;
+            //Queue<Enemy> wave3 = new Queue<Enemy>();
+            //wave3.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 3, Var.MAX_ENEMY_HEALTH, 2));
+            //wave3.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 3, Var.MAX_ENEMY_HEALTH, 2));
+            //Var.ENEMY_SIZE = temp;
+            //waves.Add(wave3);
+
+            //Queue<Enemy> wave1 = new Queue<Enemy>();
+            //wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 2, Var.MAX_ENEMY_HEALTH, 2));
+            //wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 2, Var.MAX_ENEMY_HEALTH, 2));
+            //wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 2, Var.MAX_ENEMY_HEALTH, 2));
+            //wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 2, Var.MAX_ENEMY_HEALTH, 2));
+            //waves.Add(wave1);
+
+            //Queue<Enemy> wave2 = new Queue<Enemy>();
+            //wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 4, Var.MAX_ENEMY_HEALTH, 2));
+            //wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 4, Var.MAX_ENEMY_HEALTH, 2));
+            //wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 4, Var.MAX_ENEMY_HEALTH, 2));
+            //waves.Add(wave2);
+
+            //Queue<Enemy> wave4 = new Queue<Enemy>();
+            //wave4.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 7, Var.MAX_ENEMY_HEALTH, 2));
+            //wave4.ElementAt(0).Image.Color = Color.Green;
+            //waves.Add(wave4);
+            #endregion Old map
+
             LoadWaves(0, 0);
 
             towers = new List<Tower>();
-
-            cake = new Cake(Var.MAX_CAKE_HEALTH, 10, 10, 40, 40, spriteBatch, blankTex);
-
+            cake = new Cake(Var.MAX_CAKE_HEALTH, 600, 80, 120, 120, spriteBatch, blankTex);
             hud = new HUD(spriteBatch, Var.START_MONEY, cake.CurrentHealth);
         }
         #endregion NewGame
@@ -494,16 +523,11 @@ namespace CakeDefense
 
                     thisWave.Enqueue(
                         NewEnemy(
-                            
                         (Var.EnemyType)Enum.Parse(typeof(Var.EnemyType),
                         infoArray[0], true),
-
                         paths[Int32.Parse(infoArray[1])],
-
                         float.Parse(infoArray[2]),
-
                         Int32.Parse(infoArray[3]),
-
                         Int32.Parse(infoArray[4])
                         )
                     );

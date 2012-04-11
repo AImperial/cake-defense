@@ -26,7 +26,7 @@ namespace CakeDefense
         #endregion Screen/Map Stuff
 
         #region Cake
-        public static int MAX_CAKE_HEALTH = 10;
+        public static int MAX_CAKE_HEALTH = 9;
         #endregion Cake
 
         #region Tower

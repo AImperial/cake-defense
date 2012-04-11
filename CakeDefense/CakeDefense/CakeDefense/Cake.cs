@@ -25,5 +25,16 @@ namespace CakeDefense
 
         }
         #endregion Constructor
+
+        #region Draw
+        public override void Draw()
+        {
+            if (IsActive)
+            {
+                Image.Color = Color.Green;
+                base.Draw();
+            }
+        }
+        #endregion Draw
     }
 }

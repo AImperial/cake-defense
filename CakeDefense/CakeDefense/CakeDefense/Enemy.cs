@@ -24,7 +24,7 @@ namespace CakeDefense
         //private TimeSpan time; // hold time when an action started.
         Timer timer;
 
-        private bool spawning, despawning, dying;
+        private bool spawning, despawning, dying, hasCake;
         private float transparency, slowEffect;
         #endregion Attributes
 
@@ -40,6 +40,7 @@ namespace CakeDefense
             transparency = 0;
             Image.Rotation = ImageObject.RIGHT;
             spawning = true;
+            hasCake = false;
             timer = new Timer(Var.GAME_SPEED);
         }
         #endregion Constructor
@@ -48,7 +49,6 @@ namespace CakeDefense
         public Path Path
         {
             get { return path; }
-
             set { path = value; }
         }
 
@@ -62,17 +62,21 @@ namespace CakeDefense
             get { return dying; }
         }
 
+        public bool HasCake
+        {
+            get { return hasCake; }
+        }
+
         /// <summary> Ranges from 0-1. One is normal speed. </summary>
         public float SlowEffect
         {
             get { return slowEffect; }
-
             set { slowEffect = value; if (value < 0) { slowEffect = 0; } if (value > 1) { slowEffect = 1; } }
         }
         #endregion Properties
 
         #region Methods
-
+        
         #region Move
         public void Move(GameTime gameTime, List<Trap> traps)
         {
@@ -83,6 +87,12 @@ namespace CakeDefense
                 if (spawning == false && despawning == false && IsDying == false)
                 {
                     MoveBy(Speed * Var.GAME_SPEED * slowEffect, traps); // move the enemy (properly)
+
+                    //if path tile is adjacent to cake tiles, take a slice
+                    //if(path.GetTile(currentTile) == path.)
+                    //{
+                        //play animation
+                    //}
 
                     if (path.GetTile(currentTile) == path.End)
                     {
@@ -247,8 +257,6 @@ namespace CakeDefense
                 timer.End();
                 despawning = false;
                 IsActive = false;
-
-                // something here handling getting cake to the end
             }
         }
 
