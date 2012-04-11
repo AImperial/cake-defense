@@ -33,6 +33,7 @@ namespace CakeDefense
         private GameState gameState;
         bool musicOn, soundEffectsOn;
         Map map;
+        Cake cake;
         HUD hud;
         #endregion General Game Stuff
 
@@ -247,6 +248,8 @@ namespace CakeDefense
                         }
                     }
                     #endregion If Mouse Clicked
+
+                    hud.Health = cake.CurrentHealth;
 
                     break;
                 #endregion GameState.Game
@@ -475,7 +478,9 @@ namespace CakeDefense
 
             towers = new List<Tower>();
 
-            hud = new HUD(spriteBatch, Var.START_MONEY);
+            cake = new Cake(Var.MAX_CAKE_HEALTH, 10, 10, 40, 40, spriteBatch, blankTex);
+
+            hud = new HUD(spriteBatch, Var.START_MONEY, cake.CurrentHealth);
         }
 
         /// <summary> Loads wave data from a .lvl file. </summary>
