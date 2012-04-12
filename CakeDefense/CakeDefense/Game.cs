@@ -24,7 +24,7 @@ namespace CakeDefense
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
-        Texture2D blankTex, cursorTex, mainMenu, instructions, credits, gameOver, bulletTex, enemyAnimationTest, pixel;
+        Texture2D blankTex, cursorTex, mainMenu, instructions, credits, gameOver, bulletTex, enemyAnimationTest, pixel, towerTex;
         GameTime animationTotalTime;
         TimeSpan pausedTime;
         #endregion Graphic Stuff
@@ -135,6 +135,7 @@ namespace CakeDefense
             #region Sprites
             enemyAnimationTest = this.Content.Load<Texture2D>("Sprites/SpiderSprite");
             bulletTex = this.Content.Load<Texture2D>("Sprites/Bullet");
+            towerTex = this.Content.Load<Texture2D>("Sprites/can");
             #endregion Sprites
 
             InitializeAfterLoadContent();
@@ -643,7 +644,6 @@ namespace CakeDefense
         public void ContinueGame()
         {
             NewGame();
-
             LoadGame();
 
             map = new Map(32, 18, spriteBatch);
@@ -858,7 +858,7 @@ namespace CakeDefense
                     Var.TILE_SIZE,
                     Var.TILE_SIZE,
                     spriteBatch,
-                    blankTex,
+                    towerTex,
                     bulletTex
                 );
             }

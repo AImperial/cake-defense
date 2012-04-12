@@ -33,7 +33,7 @@ namespace CakeDefense
         public Tower(float fireRadius, int health, int cost, int damage, float speed, float bSpeed, int w, int h, SpriteBatch spB, Texture2D t, Texture2D bt)
             : base(t, 0, 0, w, h, spB, health, damage, speed)
         {
-            Image.Color = Color.Blue;
+            Image.Color = Color.White;
             this.fireRadius = fireRadius;
             bulletSpeed = bSpeed;
             canFire = true; placing = true;
@@ -109,7 +109,6 @@ namespace CakeDefense
                             // maybe check for fastest, strongest, etc)
                             fireAngle = enemy.CheckWhereIWillBe(this);
                         }
-
                     }
 
                     if (fireAngle != -1000)

@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Blank.xnb</Output>
-      <Time>2012-04-07T17:22:41.5319439-04:00</Time>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Blank.xnb</Output>
+      <Time>2012-04-12T01:36:05.7252515-04:00</Time>
     </Item>
     <Item>
       <Source>Menu\Credits.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Credits.xnb</Output>
-      <Time>2012-04-07T17:22:41.4695438-04:00</Time>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Credits.xnb</Output>
+      <Time>2012-04-12T01:36:05.6316514-04:00</Time>
     </Item>
     <Item>
       <Source>Menu\Instructions.png</Source>
@@ -25,8 +25,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Instructions.xnb</Output>
-      <Time>2012-04-07T17:22:41.4851439-04:00</Time>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Instructions.xnb</Output>
+      <Time>2012-04-12T01:36:05.6472514-04:00</Time>
     </Item>
     <Item>
       <Source>Menu\MainMenu.png</Source>
@@ -34,8 +34,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\MainMenu.xnb</Output>
-      <Time>2012-04-07T17:22:41.4851439-04:00</Time>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\MainMenu.xnb</Output>
+      <Time>2012-04-12T14:22:33.1640452-04:00</Time>
     </Item>
     <Item>
       <Source>Cursor.png</Source>
@@ -43,8 +43,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Cursor.xnb</Output>
-      <Time>2012-04-07T17:22:41.4695438-04:00</Time>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Cursor.xnb</Output>
+      <Time>2012-04-12T01:36:05.6004513-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\SpiderSprite.png</Source>
@@ -52,44 +52,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\SpiderSprite.xnb</Output>
-      <Time>2012-04-07T17:22:41.563144-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Spritefonts\Large.spritefont</Source>
-      <Name>Spritefonts\Large</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Large.xnb</Output>
-      <Time>2012-04-07T17:22:41.4071437-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Spritefonts\Medium.spritefont</Source>
-      <Name>Spritefonts\Medium</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Medium.xnb</Output>
-      <Time>2012-04-07T17:22:41.4071437-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Spritefonts\Normal.spritefont</Source>
-      <Name>Spritefonts\Normal</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Normal.xnb</Output>
-      <Time>2012-04-07T17:22:41.3915437-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Spritefonts\Small.spritefont</Source>
-      <Name>Spritefonts\Small</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Small.xnb</Output>
-      <Time>2012-04-07T17:22:41.4071437-04:00</Time>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\SpiderSprite.xnb</Output>
+      <Time>2012-04-12T01:36:05.7876517-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\Bullet.png</Source>
@@ -97,8 +61,62 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\Bullet.xnb</Output>
-      <Time>2012-04-10T15:50:41.4395914-04:00</Time>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\Bullet.xnb</Output>
+      <Time>2012-04-12T01:36:05.8032517-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Menu\GameOver.png</Source>
+      <Name>Menu\GameOver</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\GameOver.xnb</Output>
+      <Time>2012-04-12T01:36:05.6472514-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Spritefonts\Large.spritefont</Source>
+      <Name>Spritefonts\Large</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Large.xnb</Output>
+      <Time>2012-04-12T01:36:05.4600511-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Spritefonts\Medium.spritefont</Source>
+      <Name>Spritefonts\Medium</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Medium.xnb</Output>
+      <Time>2012-04-12T01:36:05.4756511-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Spritefonts\Normal.spritefont</Source>
+      <Name>Spritefonts\Normal</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Normal.xnb</Output>
+      <Time>2012-04-12T01:36:05.397651-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Spritefonts\Small.spritefont</Source>
+      <Name>Spritefonts\Small</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Small.xnb</Output>
+      <Time>2012-04-12T01:36:05.413251-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sprites\can.png</Source>
+      <Name>Sprites\can</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\can.xnb</Output>
+      <Time>2012-04-12T14:51:57.3599583-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -107,10 +125,10 @@
       <TargetProfile>Reach</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefenseContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefense\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefenseContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
