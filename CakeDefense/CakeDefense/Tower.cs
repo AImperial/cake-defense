@@ -24,19 +24,22 @@ namespace CakeDefense
         private Stopwatch timer;
         private Random rand;
         private int cost;
+        private float fireRadius, bulletSpeed;
         private List<Bullet> bullets;
         private Texture2D bulletTexture;
         #endregion Attributes
 
         #region Constructor
-        public Tower(int health, int co, int damage, float speed, int w, int h, SpriteBatch spB, Texture2D t, Texture2D bt)
+        public Tower(float fireRadius, int health, int cost, int damage, float speed, float bSpeed, int w, int h, SpriteBatch spB, Texture2D t, Texture2D bt)
             : base(t, 0, 0, w, h, spB, health, damage, speed)
         {
             Image.Color = Color.Blue;
+            this.fireRadius = fireRadius;
+            bulletSpeed = bSpeed;
             canFire = true; placing = true;
             timer = new Stopwatch();
             rand = new Random();
-            cost = co;
+            this.cost = cost;
             bulletTexture = bt;
             bullets = new List<Bullet>();
         }
@@ -66,6 +69,20 @@ namespace CakeDefense
             get { return cost; }
             set { cost = value; }
         }
+
+        public float BulletSpeed
+        {
+            get { return bulletSpeed; }
+
+            set { bulletSpeed = value; }
+        }
+
+        public float FireRadius
+        {
+            get { return fireRadius; }
+
+            set { fireRadius = value; }
+        }
         #endregion Properties
 
         #region Methods
@@ -76,17 +93,30 @@ namespace CakeDefense
             occupiedTile = tile;
             occupiedTile.OccupiedBy = this;
             Center = tile.Center;
-            Fire();
         }
 
-        public void Fire()
+        public void Fire(List<Enemy> enemies)
         {
             if (placing == false && IsActive)
             {
-                if (timer.ElapsedMilliseconds >= 500)
+                if (timer.ElapsedMilliseconds >= Speed)
                 {
-                    timer.Restart();
-                    bullets.Add(new Bullet(rand.Next(8), Damage, Var.BULLET_SPEED, (int)Center.X, (int)Center.Y, Var.BULLET_SIZE, Var.BULLET_SIZE, bulletTexture, Image.SpriteBatch));
+                    float fireAngle = -1000; // random number to make sure it should fire.
+                    foreach(Enemy enemy in enemies)
+                    {
+                        if (enemy.IsDying == false && enemy.IsSpawning == false && fireRadius >= Vector2.Distance(enemy.Center, Center))
+                        {
+                            // maybe check for fastest, strongest, etc)
+                            fireAngle = enemy.CheckWhereIWillBe(this);
+                        }
+
+                    }
+
+                    if (fireAngle != -1000)
+                    {
+                        timer.Restart();
+                        bullets.Add(new Bullet(fireAngle, Damage, bulletSpeed, (int)Center.X, (int)Center.Y, Var.BULLET_SIZE, Var.BULLET_SIZE, bulletTexture, Image.SpriteBatch));
+                    }
                 }
 
                 bullets.ForEach(bullet => bullet.Move());
