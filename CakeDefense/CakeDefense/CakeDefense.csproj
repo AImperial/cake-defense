@@ -75,6 +75,7 @@
     <Compile Include="Bullet.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="Cake.cs" />
+    <Compile Include="HealthBar.cs" />
     <Compile Include="HUD.cs" />
     <Compile Include="ImageObject.cs" />
     <Compile Include="Tile - Map\Path.cs" />

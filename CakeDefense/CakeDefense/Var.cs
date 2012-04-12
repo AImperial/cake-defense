@@ -36,6 +36,7 @@ namespace CakeDefense
 
         #region Trap
         public const int TRAP_SIZE = 30;
+        public static TimeSpan TRAP_SHOW_HEALTH_TIME = new TimeSpan(0, 0, 1);
         #endregion Trap
 
         #region Bullet
@@ -50,7 +51,7 @@ namespace CakeDefense
         public static TimeSpan DESPAWN_TIME = new TimeSpan(0, 0, 1);
         public static TimeSpan DYING_TIME = new TimeSpan(0, 0, 1);
 
-        public static TimeSpan SHOW_HEALTH_TIME = new TimeSpan(0, 0, 5);
+        public static TimeSpan ENEMY_SHOW_HEALTH_TIME = new TimeSpan(0, 0, 5);
         public static Point HEALTHBAR_SIZE_MAX = new Point(75, 5);
         #endregion Enemy
 

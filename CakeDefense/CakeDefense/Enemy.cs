@@ -34,7 +34,7 @@ namespace CakeDefense
         public Enemy(ImageObject imageObject, int health, int damage, float speed, Path path, Texture2D healthTex, HUD hud)
             : base(imageObject, health, damage, speed)
         {
-            healthBar = new HealthBar(healthTex, health, imageObject.SpriteBatch);
+            healthBar = new HealthBar(healthTex, health, imageObject.SpriteBatch, 2, Var.ENEMY_SHOW_HEALTH_TIME, .8f, Color.Red, Color.OrangeRed);
             IsActive = false;
             this.path = path;
             Image.Center = Center = path.Start.Center;
@@ -135,7 +135,7 @@ namespace CakeDefense
         #region Move
         private void MoveBy(float num, List<Trap> traps)
         {
-            traps.ForEach(trap => trap.AttackIfCan(this));
+            traps.ForEach(trap => trap.AttackIfCan(this, time));
 
             if (path.InRange(currentTile + 1))
             {
@@ -371,110 +371,4 @@ namespace CakeDefense
         }
         #endregion Draw
     }
-
-    #region Health Bar
-    class HealthBar
-    {
-        #region Attributes
-        Texture2D texture;
-        SpriteBatch spriteBatch;
-
-        Timer timer;
-        int originalWidth, heightUpExtra, maxHealth, health;
-        Rectangle position;
-        #endregion Attributes
-
-        #region Constructor
-        public HealthBar(Texture2D texture, int maxHealth, SpriteBatch sprite)
-        {
-            this.texture = texture;
-            spriteBatch = sprite;
-
-            timer = new Timer(Var.GAME_SPEED);
-            this.maxHealth = maxHealth;
-            heightUpExtra = 2;
-
-            if (maxHealth <= Var.HEALTHBAR_SIZE_MAX.X)
-                originalWidth = maxHealth;
-            else
-                originalWidth = Var.HEALTHBAR_SIZE_MAX.X;
-
-            position = new Rectangle(0, 0, originalWidth, Var.HEALTHBAR_SIZE_MAX.Y);
-        }
-        #endregion Constructor
-
-        #region Properties
-        public int OriginalWidth
-        {
-            get { return originalWidth; }
-
-            set { originalWidth = value; }
-        }
-
-        public Texture2D Texture
-        {
-            get { return texture; }
-
-            set { texture = value; }
-        }
-        #endregion Properties
-
-        #region Methods
-        public void Show(GameTime gameTime)
-        {
-            timer.Start(gameTime, Var.SHOW_HEALTH_TIME);
-        }
-
-        public void Update(GameTime gameTime, int hp, float centerX, float yVal)
-        {
-            timer.Update(gameTime);
-            health = hp;
-            position.X = (int)centerX - (originalWidth / 2);
-            position.Y = (int)yVal - position.Height - heightUpExtra;
-            position.Width = (int)(originalWidth * ((float)hp / maxHealth));
-        }
-
-        public void Hide()
-        {
-            timer.End();
-        }
-        #endregion Methods
-
-        #region Draw
-        public void Draw()
-        {
-            if (timer.Finished == false)
-            {
-                Color colorBar = Color.Red;
-                Color colorCaps = Color.OrangeRed;
-                int capsWidth = 2;
-
-                if (timer.Percent >= .8)
-                {
-                    colorBar = Var.EffectTransparency(1 - Timer.GetPercentRelative(.8f, timer.Percent, 1f), colorBar);
-                    colorCaps = Var.EffectTransparency(1 - Timer.GetPercentRelative(.8f, timer.Percent, 1f), colorCaps);
-                }
-
-                spriteBatch.Draw(texture, position, colorBar);
-
-                if (originalWidth > position.Height)
-                {
-                    spriteBatch.Draw(texture, new Rectangle(position.X - capsWidth, position.Y - capsWidth, capsWidth, position.Height + (capsWidth * 2)), colorCaps);
-                    spriteBatch.Draw(texture, new Rectangle(position.X, position.Y - capsWidth, position.Height, capsWidth), colorCaps);
-                    spriteBatch.Draw(texture, new Rectangle(position.X, position.Y + position.Height, position.Height, capsWidth), colorCaps);
-
-                    spriteBatch.Draw(texture, new Rectangle(position.X + originalWidth, position.Y - capsWidth, capsWidth, position.Height + (capsWidth * 2)), colorCaps);
-                    spriteBatch.Draw(texture, new Rectangle(position.X + originalWidth - position.Height, position.Y - capsWidth, position.Height, capsWidth), colorCaps);
-                    spriteBatch.Draw(texture, new Rectangle(position.X + originalWidth - position.Height, position.Y + position.Height, position.Height, capsWidth), colorCaps);
-
-                }
-                else
-                {
-                    ImageObject.DrawRectangleOutline(new Rectangle(position.X, position.Y, originalWidth, position.Height), capsWidth, colorCaps, texture, spriteBatch);
-                }
-            }
-        }
-        #endregion Draw
-    }
-    #endregion Health Bar
 }

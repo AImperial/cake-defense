@@ -21,13 +21,16 @@ namespace CakeDefense
         #region Attributes
         protected bool placed;
         protected Tile_Path occupiedTile;
+        HealthBar healthBar;
         private int cost;
         #endregion Attributes
 
         #region Constructor
-        public Trap(int health, int damage, int cost, ImageObject io)
+        public Trap(int health, int damage, int cost, ImageObject io, Texture2D healthTex)
             :base(io, health, damage, 0)
         {
+            healthBar = new HealthBar(healthTex, StartHealth, io.SpriteBatch, 5, Var.TRAP_SHOW_HEALTH_TIME, .5f, Color.Green, Color.DarkSeaGreen);
+            healthBar.OriginalWidth = 50;
             placed = false;
             this.cost = cost;
         }
@@ -56,12 +59,13 @@ namespace CakeDefense
             Center = tile.Center;
         }
 
-        public void AttackIfCan(Enemy enemy)
+        public void AttackIfCan(Enemy enemy, GameTime gameTime)
         {
             if(enemy.Center == Center && IsActive)
             {
                 CurrentHealth--;
                 enemy.Hit(Damage);
+                healthBar.Show(gameTime);
                 if (CurrentHealth <= 0)
                     IsActive = false;
             }
@@ -86,7 +90,7 @@ namespace CakeDefense
         #endregion Methods
 
         #region Draw
-        public override void Draw()
+        public void Draw(GameTime gameTime)
         {
             if (IsActive)
             {
@@ -102,7 +106,9 @@ namespace CakeDefense
 
                 else
                 {
-                    base.Draw();
+                    healthBar.Update(gameTime, CurrentHealth, Center.X, Y);
+                    Draw();
+                    healthBar.Draw();
                 }
             }
         }
