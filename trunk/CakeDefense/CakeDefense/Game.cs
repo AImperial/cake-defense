@@ -103,7 +103,7 @@ namespace CakeDefense
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            blankTex = this.Content.Load<Texture2D>("Blank");
+            Var.BLANK_TEX = blankTex = this.Content.Load<Texture2D>("Blank");
             cursorTex = this.Content.Load<Texture2D>("Cursor");
 
             #region Menu
@@ -207,59 +207,113 @@ namespace CakeDefense
                     }
                     #endregion Collision
 
+                    hud.Update(animationTotalTime, cake.CurrentHealth);
+
+                    #region Mouse Over
+
+                    #region Menu Display (note: clicking on it is with other click stuff below)
+                    if (hud.MenuButton.Focused == false && mouseRect.Intersects(hud.MenuButton.Rectangle))
+                    {
+                        hud.StartMenuOpening(animationTotalTime);
+                    }
+                    else if (hud.MenuButton.Focused)
+                    {
+                        // This rectangle is the rectangle from top of menu bttn to bottom of last menu option.
+                        if (mouseRect.Intersects(new Rectangle(hud.MenuButton.X, hud.MenuButton.Y, hud.MenuButton.Width, (hud.MenuButtonList.Last().Y + hud.MenuButtonList.Last().Height) - hud.MenuButton.Y)))
+                            hud.MenuButton.Focused = true;
+                        else
+                            hud.MenuButton.Focused = false;
+                    }
+                    #endregion Menu Display
+
+                    #endregion Mouse Over
+
                     #region If Mouse Clicked
                     if (CheckIfClicked(Var.GAME_AREA))
                     {
                         singlePress = false;
-                        foreach (Tower tower in towers)
-                        {
-                            if (CheckIfClicked(tower.Rectangle))
-                            {
-                                // Info
-                                break;
-                            }
-                        }
 
-                        foreach (Enemy enemy in enemies)
+                        #region Click Something (normally)
+                        if (heldItem == null)
                         {
-                            if (enemy.IsActive && CheckIfClicked(enemy.Rectangle))
+                            #region Menu List Buttons
+                            if (hud.MenuButton.Focused)
                             {
-                                // Info
-                                break;
-                            }
-                        }
-
-                        foreach (Tile tile in map.Tiles)
-                        {
-                            if (CheckIfClicked(tile.Rectangle))
-                            {
-                                if(tile is Tile_Tower)
+                                for (int i = 0; i < hud.MenuButtonList.Count; i++)
                                 {
-                                    if (heldItem != null && heldItem is Tower && tile.OccupiedBy == null && hud.CanSpendMoney(((Tower)heldItem).Cost)) 
+                                    if (CheckIfClicked(hud.MenuButtonList[i].Rectangle))
                                     {
-                                        hud.Money -= ((Tower)heldItem).Cost;
-                                        ((Tower)heldItem).Place((Tile_Tower)tile);
-                                        towers.Add(((Tower)heldItem));
-                                        heldItem = null;
+                                        switch (i)
+                                        {
+                                            case 0://Pause
+                                                gameState = GameState.Paused;
+                                                break;
+                                            case 1://Restart
+                                                NewGame();
+                                                break;
+                                            case 2://Exit
+                                                Environment.Exit(0);
+                                                break;
+                                        }
                                     }
                                 }
-                                else if(tile is Tile_Path)
+                            }
+                            #endregion Menu List Buttons
+
+                            foreach (Tower tower in towers)
+                            {
+                                if (CheckIfClicked(tower.Rectangle))
                                 {
-                                    if (heldItem != null && heldItem is Trap && tile.OccupiedBy == null && hud.CanSpendMoney(((Trap)heldItem).Cost))
-                                    {
-                                        hud.Money -= ((Trap)heldItem).Cost;
-                                        ((Trap)heldItem).Place((Tile_Path)tile);
-                                        traps.Add(((Trap)heldItem));
-                                        heldItem = null;
-                                    }
+                                    // Info
+                                    break;
                                 }
-                                break;
+                            }
+
+                            foreach (Enemy enemy in enemies)
+                            {
+                                if (enemy.IsActive && CheckIfClicked(enemy.Rectangle))
+                                {
+                                    // Info
+                                    break;
+                                }
                             }
                         }
+                        #endregion Click Something (normally)
+
+                        #region Place Something
+                        else
+                        {
+                            foreach (Tile tile in map.Tiles)
+                            {
+                                if (CheckIfClicked(tile.Rectangle))
+                                {
+                                    if (tile is Tile_Tower)
+                                    {
+                                        if (heldItem != null && heldItem is Tower && tile.OccupiedBy == null && hud.CanSpendMoney(((Tower)heldItem).Cost))
+                                        {
+                                            hud.Money -= ((Tower)heldItem).Cost;
+                                            ((Tower)heldItem).Place((Tile_Tower)tile);
+                                            towers.Add(((Tower)heldItem));
+                                            heldItem = null;
+                                        }
+                                    }
+                                    else if (tile is Tile_Path)
+                                    {
+                                        if (heldItem != null && heldItem is Trap && tile.OccupiedBy == null && hud.CanSpendMoney(((Trap)heldItem).Cost))
+                                        {
+                                            hud.Money -= ((Trap)heldItem).Cost;
+                                            ((Trap)heldItem).Place((Tile_Path)tile);
+                                            traps.Add(((Trap)heldItem));
+                                            heldItem = null;
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        #endregion Place Something
                     }
                     #endregion If Mouse Clicked
-
-                    hud.Health = cake.CurrentHealth;
 
                     break;
                 #endregion GameState.Game
@@ -268,6 +322,10 @@ namespace CakeDefense
                 case GameState.Paused:
                     pausedTime += gameTime.ElapsedGameTime;
                     if (SingleKeyPress(Keys.P))
+                    {
+                        gameState = GameState.Game;
+                    }
+                    else if (CheckIfClicked(hud.MenuButtonList[0].Rectangle))
                     {
                         gameState = GameState.Game;
                     }
@@ -326,7 +384,7 @@ namespace CakeDefense
                     if (heldItem != null)
                         heldItem.Draw();
 
-                    hud.Draw(blankTex, mediumFont);
+                    hud.Draw();
 
                     // break; is in Pause.
 
@@ -339,6 +397,8 @@ namespace CakeDefense
                 if (gameState == GameState.Paused)
                 {
                     spriteBatch.Draw(blankTex, Var.SCREEN_SIZE, Var.PAUSE_GRAY);
+                    hud.MenuButtonList[0].Draw();
+                    spriteBatch.DrawString(largeFont, "Press [P] or click \'Pause\'", new Vector2(Var.GAME_AREA.X + (Var.GAME_AREA.Width - largeFont.MeasureString("Press [P] or click \'Pause\'").X) / 2, Var.TOTAL_HEIGHT - largeFont.MeasureString("-").Y - 10), Color.YellowGreen);
                 }
                 break;
 
@@ -495,7 +555,7 @@ namespace CakeDefense
 
             towers = new List<Tower>();
             cake = new Cake(Var.MAX_CAKE_HEALTH, 600, 80, 120, 120, spriteBatch, blankTex);
-            hud = new HUD(spriteBatch, Var.START_MONEY, cake.CurrentHealth);
+            hud = new HUD(spriteBatch, Var.START_MONEY, cake.CurrentHealth, blankTex, mediumFont);
         }
         #endregion NewGame
 

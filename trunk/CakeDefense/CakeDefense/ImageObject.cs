@@ -336,7 +336,7 @@ namespace CakeDefense
 
         #region Draw
         /// <summary> Basic Draw Method of this GameObject. </summary>
-        public void Draw()
+        public virtual void Draw()
         {
             Rectangle position = Resized();
             if (texture != null)
@@ -344,7 +344,7 @@ namespace CakeDefense
         }
 
         /// <summary> Draws an animation (Left to Right on a SpriteSheet). </summary>
-        public void Draw(GameTime gameTime, int frameSpeed)
+        public virtual void Draw(GameTime gameTime, int frameSpeed)
         {
             Rectangle position = Resized();
 

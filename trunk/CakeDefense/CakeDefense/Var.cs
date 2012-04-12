@@ -23,6 +23,7 @@ namespace CakeDefense
         public static int TOTAL_WIDTH = 1280, TOTAL_HEIGHT = 720, TILE_SIZE = 40;
         public static Rectangle SCREEN_SIZE = new Rectangle(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT);
         public static Rectangle GAME_AREA = new Rectangle(0, 0, TOTAL_WIDTH, TOTAL_HEIGHT);
+        public static Texture2D BLANK_TEX;
         #endregion Screen/Map Stuff
 
         #region Cake
@@ -58,6 +59,8 @@ namespace CakeDefense
 
         public static TimeSpan TIME_BETWEEN_SPAWNS = new TimeSpan(0, 0, 0, 0, 1000);
         public static TimeSpan TIME_BETWEEN_WAVES = new TimeSpan(0, 0, 10);
+
+        public static TimeSpan MENU_ACTION_TIME = new TimeSpan(0, 0, 0, 0, 500);
         #endregion Time Stuff
 
         #region Enums
