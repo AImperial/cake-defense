@@ -21,19 +21,24 @@ namespace CakeDefense
         #region Attributes
         protected bool placing, canFire;
         protected Tile_Tower occupiedTile;
-        private Stopwatch timer;
-        private Random rand;
-        private int cost;
-        private float fireRadius, bulletSpeed;
-        private List<Bullet> bullets;
-        private Texture2D bulletTexture;
+        protected Stopwatch timer;
+        protected Random rand;
+        protected int cost;
+        protected float fireRadius, bulletSpeed;
+        protected List<Bullet> bullets;
+        protected Texture2D bulletTexture;
+        protected Var.TowerType type;
+
+        public enum Attacktype { None, Fastest, Slowest, Strongest, Weakest }
+        protected Attacktype attackType;
         #endregion Attributes
 
         #region Constructor
-        public Tower(float fireRadius, int health, int cost, int damage, float speed, float bSpeed, int w, int h, SpriteBatch spB, Texture2D t, Texture2D bt)
+        public Tower(float fireRadius, int health, int cost, int damage, float speed, float bSpeed, int w, int h, SpriteBatch spB, Texture2D t, Texture2D bt, Attacktype attackType)
             : base(t, 0, 0, w, h, spB, health, damage, speed)
         {
-            Image.Color = Color.White;
+            type = Var.TowerType.Basic;
+            this.attackType = attackType;
             this.fireRadius = fireRadius;
             bulletSpeed = bSpeed;
             canFire = true; placing = true;
@@ -83,6 +88,20 @@ namespace CakeDefense
 
             set { fireRadius = value; }
         }
+
+        public Var.TowerType Type
+        {
+            get { return type; }
+
+            set { type = value; }
+        }
+
+        public Attacktype AttackType
+        {
+            get { return attackType; }
+
+            set { attackType = value; }
+        }
         #endregion Properties
 
         #region Methods
@@ -102,14 +121,53 @@ namespace CakeDefense
                 if (timer.ElapsedMilliseconds >= Speed / Var.GAME_SPEED)
                 {
                     float fireAngle = -1000; // random number to make sure it should fire.
-                    foreach(Enemy enemy in enemies)
+
+                    List<Enemy> enemiesInRange = new List<Enemy>();
+                    #region Get Enemies In Range
+                    foreach (Enemy enemy in enemies)
                     {
                         if (enemy.IsDying == false && enemy.IsSpawning == false && fireRadius >= Vector2.Distance(enemy.Center, Center))
                         {
-                            // maybe check for fastest, strongest, etc)
-                            fireAngle = enemy.CheckWhereIWillBe(this);
+                            enemiesInRange.Add(enemy);
                         }
                     }
+                    #endregion Get Enemies In Range
+
+                    #region Attack based on AttackType
+                    switch (attackType)
+                    {
+                        #region Attacktype.None
+                        case Attacktype.None:
+                            if (enemiesInRange.Count > 0)
+                                fireAngle = enemiesInRange[rand.Next(enemiesInRange.Count)].CheckWhereIWillBe(this);
+                            break;
+                        #endregion Attacktype.None
+
+                        #region Attacktype.Fastest
+                        case Attacktype.Fastest:
+
+                            break;
+                        #endregion Attacktype.Fastest
+
+                        #region Attacktype.Slowest
+                        case Attacktype.Slowest:
+
+                            break;
+                        #endregion Attacktype.Slowest
+
+                        #region Attacktype.Strongest
+                        case Attacktype.Strongest:
+
+                            break;
+                        #endregion Attacktype.Strongest
+
+                        #region Attacktype.Weakest
+                        case Attacktype.Weakest:
+
+                            break;
+                        #endregion Attacktype.Weakest
+                    }
+                    #endregion Attack based on AttackType
 
                     if (fireAngle != -1000)
                     {
