@@ -37,8 +37,8 @@ namespace CakeDefense
         #region Methods
         public void Move()
         {
-            X += (float)Math.Cos(Direction) * Speed;
-            Y += (float)Math.Sin(Direction) * Speed;
+            X += (float)Math.Cos(Direction) * (Speed * Var.GAME_SPEED);
+            Y += (float)Math.Sin(Direction) * (Speed * Var.GAME_SPEED);
         }
         #endregion Methods
     }

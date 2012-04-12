@@ -24,6 +24,7 @@ namespace CakeDefense
         protected bool focused;
         protected int outLineThickness;
         protected Color outlineColor;
+        protected List<Button> childButtons;
         #endregion Attributes
 
         #region Constructor
@@ -56,13 +57,23 @@ namespace CakeDefense
             set { focused = value; }
         }
 
+        public List<Button> ChildButtons
+        {
+            get { return childButtons; }
+
+            set { childButtons = value; }
+        }
+
         #endregion Properties
 
         #region Methods
         public void CenterText()
         {
-            message.X = X + (int)((Width - message.Font.MeasureString(message.Message).X) / 2);
-            message.Y = Y + (int)((Height - message.Font.MeasureString(message.Message).Y) / 2);
+            if (message != null)
+            {
+                message.X = X + (int)((Width - message.Font.MeasureString(message.Message).X) / 2);
+                message.Y = Y + (int)((Height - message.Font.MeasureString(message.Message).Y) / 2);
+            }
         }
         #endregion Methods
 

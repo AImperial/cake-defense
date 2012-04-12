@@ -99,7 +99,7 @@ namespace CakeDefense
         {
             if (placing == false && IsActive)
             {
-                if (timer.ElapsedMilliseconds >= Speed)
+                if (timer.ElapsedMilliseconds >= Speed / Var.GAME_SPEED)
                 {
                     float fireAngle = -1000; // random number to make sure it should fire.
                     foreach(Enemy enemy in enemies)

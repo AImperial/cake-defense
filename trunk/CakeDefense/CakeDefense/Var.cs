@@ -26,12 +26,12 @@ namespace CakeDefense
         public static Texture2D BLANK_TEX;
         #endregion Screen/Map Stuff
 
-        #region Cake
-        public static int MAX_CAKE_HEALTH = 9;
-        #endregion Cake
+        #region Cake / HUD
+        public static int MAX_CAKE_HEALTH = 5, START_MONEY = 500;
+        #endregion Cake / HUD
 
         #region Tower
-        public static int MAX_TOWER_HEALTH = 10, START_MONEY = 1000;
+        public static int MAX_TOWER_HEALTH = 10;
         #endregion Tower
 
         #region Trap
@@ -45,6 +45,7 @@ namespace CakeDefense
 
         #region Enemy
         public static int MAX_ENEMY_HEALTH = 4, SPAWN_SPINS = 1, DEATH_SPINS = 3, ENEMY_SIZE = 25;
+        public const float ENEMY_SLOW_CAP = .25f;
         public static TimeSpan SPAWN_TIME = new TimeSpan(0, 0, 0, 0, 500);
         public static TimeSpan DESPAWN_TIME = new TimeSpan(0, 0, 1);
         public static TimeSpan DYING_TIME = new TimeSpan(0, 0, 1);

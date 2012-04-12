@@ -24,7 +24,7 @@ namespace CakeDefense
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
-        Texture2D blankTex, cursorTex, mainMenu, instructions, credits, bulletTex, enemyAnimationTest, pixel;
+        Texture2D blankTex, cursorTex, mainMenu, instructions, credits, gameOver, bulletTex, enemyAnimationTest, pixel;
         GameTime animationTotalTime;
         TimeSpan pausedTime;
         #endregion Graphic Stuff
@@ -85,10 +85,15 @@ namespace CakeDefense
             singlePress = false; debugOn = false; musicOn = true; soundEffectsOn = true;
 
             buttons = new Dictionary<ButtonType, Rectangle[]>{
-                { ButtonType.Menu, new Rectangle[]{
-                    new Rectangle(118, 184, 498, 284),
-                    new Rectangle(762, 80, 420, 145),
-                    new Rectangle(776, 387, 417, 136) } }
+                { ButtonType.Menu,
+                    new Rectangle[] {
+                        new Rectangle(118, 184, 498, 284),
+                        new Rectangle(762, 80, 420, 145),
+                        new Rectangle(776, 387, 417, 136),
+                        new Rectangle(0, 0, 0, 0),
+                        new Rectangle(0, 0, 163, 79)
+                    }
+                }
             };
 
             base.Initialize();
@@ -115,6 +120,7 @@ namespace CakeDefense
             mainMenu = this.Content.Load<Texture2D>("Menu/MainMenu");
             instructions = this.Content.Load<Texture2D>("Menu/Instructions");
             credits = this.Content.Load<Texture2D>("Menu/Credits");
+            gameOver = this.Content.Load<Texture2D>("Menu/GameOver");
             #endregion Menu
 
             #region Spritefonts
@@ -212,7 +218,7 @@ namespace CakeDefense
                     }
                     #endregion Collision
 
-                    hud.Update(animationTotalTime, cake.CurrentHealth);
+                    hud.Update(animationTotalTime);
 
                     #region Mouse Over
 
@@ -224,7 +230,7 @@ namespace CakeDefense
                     else if (hud.MenuButton.Focused)
                     {
                         // This rectangle is the rectangle from top of menu bttn to bottom of last menu option.
-                        if (mouseRect.Intersects(new Rectangle(hud.MenuButton.X, hud.MenuButton.Y, hud.MenuButton.Width, (hud.MenuButtonList.Last().Y + hud.MenuButtonList.Last().Height) - hud.MenuButton.Y)))
+                        if (mouseRect.Intersects(new Rectangle(hud.MenuButton.X, hud.MenuButton.Y, hud.MenuButton.Width, (hud.MenuButton.ChildButtons.Last().Y + hud.MenuButton.ChildButtons.Last().Height) - hud.MenuButton.Y)))
                             hud.MenuButton.Focused = true;
                         else
                             hud.MenuButton.Focused = false;
@@ -244,20 +250,45 @@ namespace CakeDefense
                             #region Menu List Buttons
                             if (hud.MenuButton.Focused)
                             {
-                                for (int i = 0; i < hud.MenuButtonList.Count; i++)
+                                for (int i = 0; i < hud.MenuButton.ChildButtons.Count; i++)
                                 {
-                                    if (CheckIfClicked(hud.MenuButtonList[i].Rectangle))
+                                    if (CheckIfClicked(hud.MenuButton.ChildButtons[i].Rectangle))
                                     {
                                         switch (i)
                                         {
                                             case 0://Pause
                                                 gameState = GameState.Paused;
                                                 break;
-                                            case 1://Restart
+                                            case 1://Change Game Speed
+                                                #region Change Speed
+                                                singlePress = false;
+                                                for (int j = 0; j < hud.MenuButton.ChildButtons[i].ChildButtons.Count; j++)
+                                                {
+                                                    if (CheckIfClicked(hud.MenuButton.ChildButtons[i].ChildButtons[j].Rectangle))
+                                                    {
+                                                        switch (j)
+                                                        {
+                                                            case 0:
+                                                                Var.GAME_SPEED = 1;
+                                                                break;
+                                                            case 1:
+                                                                Var.GAME_SPEED = 2;
+                                                                break;
+                                                            case 2:
+                                                                Var.GAME_SPEED = 4;
+                                                                break;
+                                                        }
+
+                                                    }
+
+                                                }
+                                                break;
+                                                #endregion Change Speed
+                                            case 2://Restart
                                                 NewGame();
                                                 break;
-                                            case 2://Exit
-                                                Environment.Exit(0);
+                                            case 3://Exit
+                                                gameState = GameState.Menu;
                                                 break;
                                         }
                                     }
@@ -318,7 +349,14 @@ namespace CakeDefense
                         }
                         #endregion Place Something
                     }
+                    else if (mouseState.RightButton == ButtonState.Released && previousMouseState.RightButton == ButtonState.Pressed)
+                    {
+                        heldItem = null;
+                    }
                     #endregion If Mouse Clicked
+
+                    if (hud.Health <= 0)
+                        gameState = GameState.GameOver;
 
                     break;
                 #endregion GameState.Game
@@ -330,7 +368,7 @@ namespace CakeDefense
                     {
                         gameState = GameState.Game;
                     }
-                    else if (CheckIfClicked(hud.MenuButtonList[0].Rectangle))
+                    else if (CheckIfClicked(hud.MenuButton.ChildButtons[0].Rectangle))
                     {
                         gameState = GameState.Game;
                     }
@@ -352,6 +390,10 @@ namespace CakeDefense
                     else if (CheckIfClicked(buttons[ButtonType.Menu][2]))
                     {
                         gameState = GameState.Credits;
+                    }
+                    else if (CheckIfClicked(buttons[ButtonType.Menu][4]) || SingleKeyPress(Keys.Escape))
+                    {
+                        Environment.Exit(0);
                     }
                     break;
                 case GameState.Instructions:
@@ -414,7 +456,7 @@ namespace CakeDefense
                 if (gameState == GameState.Paused)
                 {
                     spriteBatch.Draw(blankTex, Var.SCREEN_SIZE, Var.PAUSE_GRAY);
-                    hud.MenuButtonList[0].Draw();
+                    hud.MenuButton.ChildButtons[0].Draw();
                     spriteBatch.DrawString(largeFont, "Press [P] or click \'Pause\'", new Vector2(Var.GAME_AREA.X + (Var.GAME_AREA.Width - largeFont.MeasureString("Press [P] or click \'Pause\'").X) / 2, Var.TOTAL_HEIGHT - largeFont.MeasureString("-").Y - 10), Color.YellowGreen);
 
                     #region Debug
@@ -460,7 +502,8 @@ namespace CakeDefense
                     spriteBatch.DrawString(mediumFont, "Right click to return", new Vector2(15, Var.TOTAL_HEIGHT - mediumFont.MeasureString("-").Y - 10), Color.DarkGreen);
                     break;
                 case GameState.GameOver:
-                    spriteBatch.DrawString(mediumFont, "Click or Press Space to continue", new Vector2(15, Var.TOTAL_HEIGHT - mediumFont.MeasureString("-").Y - 10), Color.Blue);
+                    spriteBatch.Draw(gameOver, Var.SCREEN_SIZE, Color.White);
+                    spriteBatch.DrawString(mediumFont, "Click or Press Space to continue", new Vector2(15, Var.TOTAL_HEIGHT - mediumFont.MeasureString("-").Y - 10), Color.DarkGreen);
                     break;
                 #endregion Everything else
             }
@@ -496,6 +539,10 @@ namespace CakeDefense
             if (SingleKeyPress(Keys.R))
             {
                 NewGame();
+            }
+            if (SingleKeyPress(Keys.Escape))
+            {
+                gameState = GameState.Menu;
             }
         }
         #endregion Quick Keys
@@ -563,43 +610,16 @@ namespace CakeDefense
             waves = new List<Queue<Enemy>>();
             spawnTimer = new Timer(Var.GAME_SPEED);
 
+            cake = new Cake(Var.MAX_CAKE_HEALTH, 600, 80, 120, 120, spriteBatch, blankTex);
+            hud = new HUD(spriteBatch, Var.START_MONEY, blankTex, mediumFont, cake);
             map = new Map(32, 18, spriteBatch);
             paths = new List<Path>();
             paths.Add(map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1));
 
-            #region Old map
-            //int temp = Var.ENEMY_SIZE;
-            //Var.ENEMY_SIZE *= 2;
-            //Queue<Enemy> wave3 = new Queue<Enemy>();
-            //wave3.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 3, Var.MAX_ENEMY_HEALTH, 2));
-            //wave3.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 3, Var.MAX_ENEMY_HEALTH, 2));
-            //Var.ENEMY_SIZE = temp;
-            //waves.Add(wave3);
-
-            //Queue<Enemy> wave1 = new Queue<Enemy>();
-            //wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 2, Var.MAX_ENEMY_HEALTH, 2));
-            //wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 2, Var.MAX_ENEMY_HEALTH, 2));
-            //wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 2, Var.MAX_ENEMY_HEALTH, 2));
-            //wave1.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 2, Var.MAX_ENEMY_HEALTH, 2));
-            //waves.Add(wave1);
-
-            //Queue<Enemy> wave2 = new Queue<Enemy>();
-            //wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 4, Var.MAX_ENEMY_HEALTH, 2));
-            //wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 4, Var.MAX_ENEMY_HEALTH, 2));
-            //wave2.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 4, Var.MAX_ENEMY_HEALTH, 2));
-            //waves.Add(wave2);
-
-            //Queue<Enemy> wave4 = new Queue<Enemy>();
-            //wave4.Enqueue(NewEnemy(Var.EnemyType.Spider, paths[0], 7, Var.MAX_ENEMY_HEALTH, 2));
-            //wave4.ElementAt(0).Image.Color = Color.Green;
-            //waves.Add(wave4);
-            #endregion Old map
-
+            // Gets enemies
             LoadWaves(0, 0);
 
             towers = new List<Tower>();
-            cake = new Cake(Var.MAX_CAKE_HEALTH, 600, 80, 120, 120, spriteBatch, blankTex);
-            hud = new HUD(spriteBatch, Var.START_MONEY, cake.CurrentHealth, blankTex, mediumFont);
         }
         #endregion NewGame
 
@@ -679,7 +699,8 @@ namespace CakeDefense
                     damage,
                     speed,
                     path,
-                    blankTex
+                    blankTex,
+                    hud
                 );
             }
             #endregion Spider
