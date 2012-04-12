@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bullet.cs" />
+    <Compile Include="Button.cs" />
     <Compile Include="Cake.cs" />
     <Compile Include="HUD.cs" />
     <Compile Include="ImageObject.cs" />

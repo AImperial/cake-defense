@@ -71,7 +71,10 @@ namespace CakeDefense
         public Trap RemoveIfCan()
         {
             if (IsActive == false)
+            {
+                occupiedTile.OccupiedBy = null;
                 return this;
+            }
             return null;
         }
 
