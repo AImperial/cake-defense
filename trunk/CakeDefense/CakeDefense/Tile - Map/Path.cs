@@ -39,13 +39,13 @@ namespace CakeDefense
         /// <summary> The first Tile. </summary>
         public Tile Start
         {
-            get { return tiles[0]; }
+            get { return tiles.First(); }
         }
 
         /// <summary> The last Tile. </summary>
         public Tile End
         {
-            get { return tiles[Length - 1]; }
+            get { return tiles.Last(); }
         }
 
         public int Length

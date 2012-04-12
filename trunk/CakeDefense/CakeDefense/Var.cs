@@ -39,7 +39,7 @@ namespace CakeDefense
         #endregion Trap
 
         #region Bullet
-        public static float BULLET_SPEED = 4;
+        public static float BASE_BULLET_SPEED = 4;
         public const int BULLET_SIZE = 10;
         #endregion Bullet
 

@@ -75,6 +75,12 @@ namespace CakeDefense
             get { return slowEffect; }
             set { slowEffect = value; if (value < 0) { slowEffect = 0; } if (value > 1) { slowEffect = 1; } }
         }
+
+        /// <summary> Incorperates speed, slow effect, and game speed. </summary>
+        public float Speed_Actual
+        {
+            get { return Speed * Var.GAME_SPEED * slowEffect; }
+        }
         #endregion Properties
 
         #region Methods
@@ -91,7 +97,7 @@ namespace CakeDefense
             {
                 if (spawning == false && despawning == false && IsDying == false)
                 {
-                    MoveBy(Speed * Var.GAME_SPEED * slowEffect, traps); // move the enemy (properly)
+                    MoveBy(Speed_Actual, traps); // move the enemy (properly)
 
                     //if path tile is adjacent to cake tiles, take a slice
                     //if(path.GetTile(currentTile) == path.)
@@ -219,6 +225,30 @@ namespace CakeDefense
         }
         #endregion Move
 
+        /// <summary> Does NOT WORK on high enemy / game speeds currently. </summary>
+        public float CheckWhereIWillBe(Tower tower)
+        {
+            int ii = 1;
+            Vector2 savedPosition = Point;
+            int tileNum = currentTile;
+            do {
+                if (tower.BulletSpeed * ii > Vector2.Distance(tower.Center, Center))
+                {
+                    //got to do more than this!
+                    break;
+                }
+                else
+                {
+                    MoveBy(Speed_Actual, new List<Trap>());
+                    ii++;
+                }
+            } while (ii > 0);
+            float angle = (float)Math.Atan2((float)Center.Y - tower.Center.Y, (float)Center.X - tower.Center.X);
+            Point = savedPosition;
+            currentTile = tileNum;
+            return angle;
+        }
+
         #region Spawning / Despawning Stuff
         public void Start(GameTime gameTime)
         {
@@ -285,7 +315,7 @@ namespace CakeDefense
 
         public void Hit(int hitDmg)
         {
-            if (IsActive && IsSpawning == false)
+            if (IsActive && IsSpawning == false && IsDying == false)
             {
                 CurrentHealth -= hitDmg;
                 healthBar.Show(time);

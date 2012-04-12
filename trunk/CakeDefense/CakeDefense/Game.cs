@@ -24,7 +24,7 @@ namespace CakeDefense
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
-        Texture2D blankTex, cursorTex, mainMenu, instructions, credits, bulletTex, enemyAnimationTest;
+        Texture2D blankTex, cursorTex, mainMenu, instructions, credits, bulletTex, enemyAnimationTest, pixel;
         GameTime animationTotalTime;
         TimeSpan pausedTime;
         #endregion Graphic Stuff
@@ -32,10 +32,12 @@ namespace CakeDefense
         #region General Game Stuff (GameState, music stuff, Map, HUD)
         public enum GameState { Menu, Instructions, Credits, Game, Paused, GameOver }
         private GameState gameState;
-        bool musicOn, soundEffectsOn;
+        bool debugOn, musicOn, soundEffectsOn;
         Map map;
         Cake cake;
         HUD hud;
+
+        Button turnDebugOn;
         #endregion General Game Stuff
 
         #region Keyboard / Mouse Stuff (KeyboardState, MouseState, Button Dictionary)
@@ -77,9 +79,10 @@ namespace CakeDefense
             graphics.PreferredBackBufferWidth = Var.TOTAL_WIDTH;
             graphics.IsFullScreen = false;
             graphics.ApplyChanges();
+            pixel = new Texture2D(GraphicsDevice, 1, 1); pixel.SetData<Color>(new Color[] { Color.White });
             gameState = GameState.Menu;
 
-            singlePress = false; musicOn = true; soundEffectsOn = true;
+            singlePress = false; debugOn = false; musicOn = true; soundEffectsOn = true;
 
             buttons = new Dictionary<ButtonType, Rectangle[]>{
                 { ButtonType.Menu, new Rectangle[]{
@@ -98,6 +101,8 @@ namespace CakeDefense
         protected void InitializeAfterLoadContent()
         {
             // Most of these are in NewGame()
+            turnDebugOn = new Button(blankTex, new Vector2(25), 300, 300, 1, Color.DarkOrange, spriteBatch, new TextObject("", Vector2.Zero, mediumFont, Color.GhostWhite, spriteBatch));
+            turnDebugOn.Color = Color.Black;
         }
 
         protected override void LoadContent()
@@ -193,7 +198,7 @@ namespace CakeDefense
                         }
                     }
 
-                    towers.ForEach(tower => tower.Fire());
+                    towers.ForEach(tower => tower.Fire(enemies));
                     traps.ForEach(trap => traps.Remove(trap.RemoveIfCan()));
 
                     if (heldItem != null)
@@ -329,6 +334,10 @@ namespace CakeDefense
                     {
                         gameState = GameState.Game;
                     }
+                    else if (CheckIfClicked(turnDebugOn.Rectangle))
+                    {
+                        debugOn = !debugOn;
+                    }
                     break;
                 case GameState.Menu:
                     if (CheckIfClicked(buttons[ButtonType.Menu][0]))
@@ -384,6 +393,14 @@ namespace CakeDefense
                     if (heldItem != null)
                         heldItem.Draw();
 
+                    #region Debug Stuff
+                    if (debugOn)
+                    {
+                        towers.ForEach(tower => DrawCircle(tower.Center, tower.FireRadius, 25, Color.Red));
+                        enemies.ForEach(enemy => enemy.DrawRectangleOutline(1, Color.DarkCyan, blankTex));
+                    }
+                    #endregion Debug Stuff
+
                     hud.Draw();
 
                     // break; is in Pause.
@@ -399,6 +416,33 @@ namespace CakeDefense
                     spriteBatch.Draw(blankTex, Var.SCREEN_SIZE, Var.PAUSE_GRAY);
                     hud.MenuButtonList[0].Draw();
                     spriteBatch.DrawString(largeFont, "Press [P] or click \'Pause\'", new Vector2(Var.GAME_AREA.X + (Var.GAME_AREA.Width - largeFont.MeasureString("Press [P] or click \'Pause\'").X) / 2, Var.TOTAL_HEIGHT - largeFont.MeasureString("-").Y - 10), Color.YellowGreen);
+
+                    #region Debug
+                    if (debugOn)
+                    {
+                        if (mouseRect.Intersects(turnDebugOn.Rectangle))
+                        {
+                            turnDebugOn.Message.Message = "Fine, turn me off.\n\"You can't\nHANDLE\nthe TRUTH!\"";
+                            turnDebugOn.CenterText();
+                            turnDebugOn.Draw();
+                        }
+                        else
+                        {
+                            turnDebugOn.Message.Message = "Hi.";
+                            turnDebugOn.CenterText();
+                            turnDebugOn.Draw();
+                        }
+                    }
+                    else
+                    {
+                        if(mouseRect.Intersects(turnDebugOn.Rectangle))
+                        {
+                            turnDebugOn.Message.Message = "Turn on Debugging.\nYou know you wanna.";
+                            turnDebugOn.CenterText();
+                            turnDebugOn.Draw();
+                        }
+                    }
+                    #endregion Debug
                 }
                 break;
 
@@ -649,10 +693,12 @@ namespace CakeDefense
             if (type == Var.TowerType.Basic)
             {
                 return new Tower(
+                    200,
                     Var.MAX_TOWER_HEALTH,
                     100,
                     2,
-                    2,
+                    500,//Fire Rate in ms
+                    Var.BASE_BULLET_SPEED,
                     Var.TILE_SIZE,
                     Var.TILE_SIZE,
                     spriteBatch,
@@ -689,5 +735,64 @@ namespace CakeDefense
             return null;
         }
         #endregion New Enemy / Tower / Trap
+
+        #region Draw Circle
+        // NOTE: this code taken from MessiahAndrw at http://forums.create.msdn.com/forums/t/7414.aspx (and then modified some =p)
+        
+        /// <summary>
+        /// Creates a circle starting from 0, 0.
+        /// </summary>
+        /// <param name="radius">The radius (half the width) of the circle.</param>
+        /// <param name="sides">The number of sides on the circle (the more the detailed).</param>
+        public void DrawCircle(Vector2 cCenter, float radius, int sides, Color color)
+        {
+            List<Vector2> vectors = new List<Vector2>();
+
+            float max = 2 * (float)Math.PI;
+            float step = max / (float)sides;
+
+            for (float theta = 0; theta < max; theta += step)
+            {
+                vectors.Add(new Vector2(cCenter.X + radius * (float)Math.Cos((double)theta),
+                    cCenter.Y + radius * (float)Math.Sin((double)theta)));
+            }
+
+            // then add the first vector again so it's a complete loop
+            vectors.Add(vectors.First());
+
+            RenderCircle(vectors, color);
+        }
+
+        /// <summary>
+        /// Renders the primtive line object.
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch to use to render the primitive line object.</param>
+        public void RenderCircle(List<Vector2> vectors, Color color)
+        {
+            if (vectors.Count < 2)
+                return;
+
+            Vector2 start, end, scale;
+            int lineWidth = 1;
+            float rotation;
+
+            for (int i = 1; i <= vectors.Count; i++)
+            {
+                start = vectors[i - 1];
+                if (i == vectors.Count)
+                    end = vectors[0];
+                else
+                    end = vectors[i];
+
+                scale = new Vector2(Vector2.Distance(end, start), lineWidth);
+
+                // Calculate the rotation
+                rotation = (float)Math.Atan2(end.Y - start.Y, end.X - start.X);
+
+                // Draw
+                spriteBatch.Draw(pixel, start, null, color, rotation, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
+            }
+        }
+        #endregion Draw Circle
     }
 }
