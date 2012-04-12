@@ -429,7 +429,7 @@ namespace CakeDefense
 
                     cake.Draw();
                     towers.ForEach(tower => tower.Draw());
-                    traps.ForEach(trap => trap.Draw());
+                    traps.ForEach(trap => trap.Draw(gameTime));
                     enemies.ForEach(enemy => enemy.Draw(gameTime));
 
                     if (heldItem != null)
@@ -748,7 +748,8 @@ namespace CakeDefense
                     2,
                     5,
                     50,
-                    image
+                    image,
+                    blankTex
                 );
             }
             #endregion Basic
