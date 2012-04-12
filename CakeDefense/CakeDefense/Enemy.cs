@@ -235,9 +235,9 @@ namespace CakeDefense
             Vector2 savedPosition = Point;
             int tileNum = currentTile;
             do {
-                if (tower.BulletSpeed * ii > Vector2.Distance(tower.Center, Center))
+                if (tower.BulletSpeed * Var.GAME_SPEED * ii > Vector2.Distance(tower.Center, Center))
                 {
-                    //got to do more than this!
+                    // This should be enough? if not, go back to last tile, and then step-by-step (every 1-2 space) go forawrd, and break right after the above if is true
                     break;
                 }
                 else
@@ -339,7 +339,7 @@ namespace CakeDefense
 
         private int CalculateDeathReward()
         {
-            return (int)(StartHealth / (Speed) / 5);
+            return (int)(StartHealth * (Speed));
         }
         #endregion Get Damaged (Hit)
 

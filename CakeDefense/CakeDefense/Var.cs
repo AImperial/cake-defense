@@ -46,7 +46,7 @@ namespace CakeDefense
 
         #region Enemy
         public static int MAX_ENEMY_HEALTH = 4, SPAWN_SPINS = 1, DEATH_SPINS = 3, ENEMY_SIZE = 25;
-        public const float ENEMY_SLOW_CAP = .25f;
+        public const float ENEMY_SLOW_CAP = .25f, WAVES_DIFFICULTY_INCREASE = .1f;
         public static TimeSpan SPAWN_TIME = new TimeSpan(0, 0, 0, 0, 500);
         public static TimeSpan DESPAWN_TIME = new TimeSpan(0, 0, 1);
         public static TimeSpan DYING_TIME = new TimeSpan(0, 0, 1);

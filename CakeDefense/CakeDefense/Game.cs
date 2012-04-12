@@ -33,6 +33,8 @@ namespace CakeDefense
         public enum GameState { Menu, Instructions, Credits, Game, Paused, GameOver }
         private GameState gameState;
         bool debugOn, musicOn, soundEffectsOn;
+        float difficulty;
+        int level, wave;
         Map map;
         Cake cake;
         HUD hud;
@@ -87,10 +89,10 @@ namespace CakeDefense
             buttons = new Dictionary<ButtonType, Rectangle[]>{
                 { ButtonType.Menu,
                     new Rectangle[] {
-                        new Rectangle(118, 184, 498, 284),
+                        new Rectangle(109, 124, 498, 284),
                         new Rectangle(762, 80, 420, 145),
                         new Rectangle(776, 387, 417, 136),
-                        new Rectangle(0, 0, 0, 0),
+                        new Rectangle(97, 459, 607, 195),
                         new Rectangle(0, 0, 163, 79)
                     }
                 }
@@ -179,11 +181,16 @@ namespace CakeDefense
                         if (waves.Count == 1 && waves[0].Count == 0)
                         {
                             waves.RemoveAt(0);
+                            wave = 0;
+                            level++;
+                            //save
                         }
                     }
                     else if (waves.Count > 0 && waves[0].Count == 0 && spawnTimer.Finished)
                     {
                         waves.RemoveAt(0);
+                        wave++;
+                        //save
                     }
                     else if (waves.Count == 0 && enemies.Count == 0)
                     {
@@ -391,6 +398,11 @@ namespace CakeDefense
                     {
                         gameState = GameState.Credits;
                     }
+                    else if (CheckIfClicked(buttons[ButtonType.Menu][3]) && CheckForSave())
+                    {
+                        ContinueGame();
+                        gameState = GameState.Game;
+                    }
                     else if (CheckIfClicked(buttons[ButtonType.Menu][4]) || SingleKeyPress(Keys.Escape))
                     {
                         Environment.Exit(0);
@@ -492,6 +504,8 @@ namespace CakeDefense
 
                 case GameState.Menu:
                     spriteBatch.Draw(mainMenu, Var.SCREEN_SIZE, Color.White);
+                    if (CheckForSave() == false)
+                        spriteBatch.Draw(blankTex, buttons[ButtonType.Menu][3], Color.Black);
                     break;
                 case GameState.Instructions:
                     spriteBatch.Draw(instructions, Var.SCREEN_SIZE, Color.White);
@@ -603,9 +617,12 @@ namespace CakeDefense
         #region NewGame
         public void NewGame()
         {
+            Var.GAME_SPEED = 1;
+            difficulty = 1f;
             pausedTime = TimeSpan.Zero;
             animationTotalTime = new GameTime(TimeSpan.Zero, TimeSpan.Zero);
             enemies = new List<Enemy>();
+            towers = new List<Tower>();
             traps = new List<Trap>();
             waves = new List<Queue<Enemy>>();
             spawnTimer = new Timer(Var.GAME_SPEED);
@@ -616,14 +633,30 @@ namespace CakeDefense
             paths = new List<Path>();
             paths.Add(map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1));
 
+            level = wave = 0;
             // Gets enemies
-            LoadWaves(0, 0);
-
-            towers = new List<Tower>();
+            LoadWaves(level, wave);
         }
         #endregion NewGame
 
-        #region Load (waves / file)
+        #region Continue Game
+        public void ContinueGame()
+        {
+            NewGame();
+
+            LoadGame();
+
+            map = new Map(32, 18, spriteBatch);
+
+            paths = new List<Path>();
+            paths.Add(map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1));
+
+            // Gets enemies
+            LoadWaves(level, wave); // level / wave taken from LoadGame();
+        }
+        #endregion Continue Game
+
+        #region Load Waves
         /// <summary> Loads wave data from a .lvl file. </summary>
         /// <param name="level">default = 0</param>
         /// <param name="waveNum">default = 0</param>
@@ -648,8 +681,7 @@ namespace CakeDefense
 
                     thisWave.Enqueue(
                         NewEnemy(
-                        (Var.EnemyType)Enum.Parse(typeof(Var.EnemyType),
-                        infoArray[0], true),
+                        (Var.EnemyType)Enum.Parse(typeof(Var.EnemyType), infoArray[0], true),
                         paths[Int32.Parse(infoArray[1])],
                         float.Parse(infoArray[2]),
                         Int32.Parse(infoArray[3]),
@@ -660,9 +692,99 @@ namespace CakeDefense
                 if(thisWave.Count > 0)
                     waves.Add(thisWave);
                 wave++;
+                difficulty += Var.WAVES_DIFFICULTY_INCREASE;
+            }
+        }
+        #endregion Load Waves
+
+        #region Load / Save Game
+
+        #region Load
+        public void LoadGame()
+        {
+            if (File.Exists("save.sav"))
+            {
+                StreamReader reader = new StreamReader("save.sav");
+                string[] infoArray = null;
+                string firstLine = null;
+                if ((firstLine = reader.ReadLine()) != null)
+                {
+                    if (firstLine.Contains("//"))
+                        firstLine.Remove(firstLine.IndexOf("//"));
+
+                    // 0-Money ||| 1-CakeLeft ||| 2-Level ||| 3-Wave
+                    infoArray = firstLine.Split('-');
+
+                    cake = new Cake(Int32.Parse(infoArray[1]), 600, 80, 120, 120, spriteBatch, blankTex);
+                    hud = new HUD(spriteBatch, Int32.Parse(infoArray[0]), blankTex, mediumFont, cake);
+                    level = Int32.Parse(infoArray[2]);
+                    wave = Int32.Parse(infoArray[3]);
+
+                    string curType = reader.ReadLine();
+                    Tower tempTower; string[] coord;
+                    while (curType == "--Towers--")
+                    {
+                        firstLine = reader.ReadLine();
+                        if (firstLine == null || (firstLine[0] == '-' && firstLine[1] == '-')) {
+                            curType = firstLine;
+                            break;
+                        }
+                        if (firstLine.Contains("//"))
+                            firstLine.Remove(firstLine.IndexOf("//"));
+
+                        // 0-Type ||| 1-tile (x,y) ||| 2-health
+                        infoArray = firstLine.Split('-'); coord = infoArray[1].Split(',');
+                        tempTower = LoadTower((Var.TowerType)Enum.Parse(typeof(Var.TowerType), infoArray[0], true), Int32.Parse(infoArray[2]));
+                        tempTower.Place((Tile_Tower)map.Tiles[Int32.Parse(coord[0]), Int32.Parse(coord[1])]);
+                        towers.Add(tempTower);
+                    }
+
+                    Trap tempTrap;
+                    while (curType == "--Traps--")
+                    {
+                        firstLine = reader.ReadLine();
+                        if (firstLine == null || (firstLine[0] == '-' && firstLine[1] == '-'))
+                        {
+                            curType = firstLine;
+                            break;
+                        }
+                        if (firstLine.Contains("//"))
+                            firstLine.Remove(firstLine.IndexOf("//"));
+
+                        // 0-Type ||| 1-tile (x,y) ||| 2-health
+                        infoArray = firstLine.Split('-'); coord = infoArray[1].Split(',');
+                        tempTrap = LoadTrap((Var.TrapType)Enum.Parse(typeof(Var.TrapType), infoArray[0], true), Int32.Parse(infoArray[2]));
+                        tempTrap.Place((Tile_Path)map.Tiles[Int32.Parse(coord[0]), Int32.Parse(coord[1])]);
+                        traps.Add(tempTrap);
+                    }
+                }
             }
         }
         #endregion Load
+
+        #region Save
+        public void SaveGame()
+        {
+
+        }
+        #endregion Save
+
+        #region Check If Saved Game
+        public bool CheckForSave()
+        {
+            if (File.Exists("save.sav"))
+            {
+                StreamReader reader = new StreamReader("save.sav");
+                if (reader.ReadLine() != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        #endregion Check If Saved Game
+
+        #endregion Load / Save Game
 
         #endregion New Game / LoadGame / SaveGame
 
@@ -695,9 +817,9 @@ namespace CakeDefense
 
                 return new Enemy(
                     image,
-                    health,
-                    damage,
-                    speed,
+                    (int)(health * difficulty),
+                    (int)(damage * difficulty),
+                    speed * difficulty,
                     path,
                     blankTex,
                     hud
@@ -708,14 +830,27 @@ namespace CakeDefense
             return null;
         }
 
+        #region Tower
         private Tower NewTower(Var.TowerType type)
+        {
+            #region Basic
+            if (type == Var.TowerType.Basic)
+            {
+                return LoadTower(type, Var.MAX_TOWER_HEALTH);
+            }
+            #endregion Basic
+
+            return null;
+        }
+
+        private Tower LoadTower(Var.TowerType type, int health)
         {
             #region Basic
             if (type == Var.TowerType.Basic)
             {
                 return new Tower(
                     200,
-                    Var.MAX_TOWER_HEALTH,
+                    health,
                     100,
                     2,
                     500,//Fire Rate in ms
@@ -731,8 +866,22 @@ namespace CakeDefense
 
             return null;
         }
+        #endregion Tower
 
+        #region Trap
         private Trap NewTrap(Var.TrapType type)
+        {
+            #region Basic
+            if (type == Var.TrapType.Basic)
+            {
+                return LoadTrap(type, 2);
+            }
+            #endregion Basic
+
+            return null;
+        }
+
+        private Trap LoadTrap(Var.TrapType type, int health)
         {
             #region Basic
             if (type == Var.TrapType.Basic)
@@ -756,6 +905,8 @@ namespace CakeDefense
 
             return null;
         }
+        #endregion Trap
+
         #endregion New Enemy / Tower / Trap
 
         #region Draw Circle
