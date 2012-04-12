@@ -35,7 +35,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\MainMenu.xnb</Output>
-      <Time>2012-04-02T22:37:37.8490856-04:00</Time>
+      <Time>2012-04-12T00:21:14.5175637-04:00</Time>
     </Item>
     <Item>
       <Source>Cursor.png</Source>
@@ -99,6 +99,15 @@
       <Options>None</Options>
       <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Small.xnb</Output>
       <Time>2012-04-02T23:16:52.9957923-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Menu\GameOver.png</Source>
+      <Name>Menu\GameOver</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\GameOver.xnb</Output>
+      <Time>2012-04-12T00:32:55.0896341-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

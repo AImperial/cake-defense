@@ -20,6 +20,7 @@ namespace CakeDefense
     {
         #region Attributes
         private Path path;
+        private HUD hud;
         private int currentTile;
         private HealthBar healthBar;
         private GameTime time;
@@ -30,7 +31,7 @@ namespace CakeDefense
         #endregion Attributes
 
         #region Constructor
-        public Enemy(ImageObject imageObject, int health, int damage, float speed, Path path, Texture2D healthTex)
+        public Enemy(ImageObject imageObject, int health, int damage, float speed, Path path, Texture2D healthTex, HUD hud)
             : base(imageObject, health, damage, speed)
         {
             healthBar = new HealthBar(healthTex, health, imageObject.SpriteBatch);
@@ -44,6 +45,7 @@ namespace CakeDefense
             spawning = true;
             hasCake = false;
             timer = new Timer(Var.GAME_SPEED);
+            this.hud = hud;
         }
         #endregion Constructor
 
@@ -73,7 +75,7 @@ namespace CakeDefense
         public float SlowEffect
         {
             get { return slowEffect; }
-            set { slowEffect = value; if (value < 0) { slowEffect = 0; } if (value > 1) { slowEffect = 1; } }
+            set { slowEffect = value; if (value <= Var.ENEMY_SLOW_CAP) { slowEffect = Var.ENEMY_SLOW_CAP; } if (value >= 1) { slowEffect = 1; } }
         }
 
         /// <summary> Incorperates speed, slow effect, and game speed. </summary>
@@ -225,6 +227,7 @@ namespace CakeDefense
         }
         #endregion Move
 
+        #region Let Tower find where you will be
         /// <summary> Does NOT WORK on high enemy / game speeds currently. </summary>
         public float CheckWhereIWillBe(Tower tower)
         {
@@ -248,6 +251,7 @@ namespace CakeDefense
             currentTile = tileNum;
             return angle;
         }
+        #endregion Let Tower find where you will be
 
         #region Spawning / Despawning Stuff
         public void Start(GameTime gameTime)
@@ -291,6 +295,7 @@ namespace CakeDefense
                 timer.End();
                 despawning = false;
                 IsActive = false;
+                hud.EnemyGotCake();
             }
         }
 
@@ -313,6 +318,7 @@ namespace CakeDefense
         }
         #endregion Spawning / Despawning Stuff
 
+        #region Get Damaged (Hit)
         public void Hit(int hitDmg)
         {
             if (IsActive && IsSpawning == false && IsDying == false)
@@ -325,10 +331,17 @@ namespace CakeDefense
                     dying = true;
                     despawning = false;
                     healthBar.Hide();
+                    hud.EnemyDied(CalculateDeathReward());
                     timer.Start(time, Var.DYING_TIME);
                 }
             }
         }
+
+        private int CalculateDeathReward()
+        {
+            return (int)(StartHealth / (Speed) / 5);
+        }
+        #endregion Get Damaged (Hit)
 
         #endregion Methods
 
