@@ -25,45 +25,25 @@ namespace CakeDefense
         #endregion Attributes
 
         #region Constructor
-        public Map(int tilesWide, int tilesHigh, SpriteBatch spriteBatch)
+        public Map(int level, SpriteBatch spriteBatch)
         {
             sprite = spriteBatch;
-            size = new Point(tilesWide, tilesHigh);
-            //create list for use in loop to change specific tiles
-            //32 wide 18 high
+            int[,] tileMap = LoadMap(level);
 
-            int [,] tileMap = new int [,]{
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
-                {1,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0},
-                {0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0}
-            };
+            size = new Point(tileMap.GetLength(0), tileMap.GetLength(1));
 
-            tiles = new Tile[tileMap.GetUpperBound(1) + 1, tileMap.GetUpperBound(0) + 1];
-            for (int i = 0; i <= tileMap.GetUpperBound(1); i++ )
+            tiles = new Tile[tileMap.GetLength(0), tileMap.GetLength(1)];
+            for (int x = 0; x < tileMap.GetLength(0); x++)
             {
-                for (int j = 0; j <= tileMap.GetUpperBound(0); j++)
+                for (int y = 0; y < tileMap.GetLength(1); y++)
                 {
-                    if (tileMap[j, i] == 0)
-                        tiles[i, j] = new Tile_Tower(i * Var.TILE_SIZE, j * Var.TILE_SIZE, Var.TILE_SIZE, Var.TILE_SIZE, new Point(i,j));
-                    else if (tileMap[j, i] >= 1)
-                        tiles[i, j] = new Tile_Path(i * Var.TILE_SIZE, j * Var.TILE_SIZE, Var.TILE_SIZE, Var.TILE_SIZE, new Point(i, j), tileMap[j, i] - 1);
+                    if (tileMap[x, y] == 0)
+                        tiles[x, y] = new Tile_Tower(x * Var.TILE_SIZE, y * Var.TILE_SIZE, Var.TILE_SIZE, Var.TILE_SIZE, new Point(x, y));
+                    else if (tileMap[x, y] >= 1)
+                        tiles[x, y] = new Tile_Path(x * Var.TILE_SIZE, y * Var.TILE_SIZE, Var.TILE_SIZE, Var.TILE_SIZE, new Point(x, y), tileMap[x, y] - 1);
                 }
             }
+
             AssignTileNeighbors();
         }
         #endregion region Constructor
@@ -76,6 +56,44 @@ namespace CakeDefense
         #endregion Properties
 
         #region Methods
+        private int[,] LoadMap(int level)
+        {
+            if (File.Exists("Game Levels/Level" + level + "/level.map"))
+            {
+                StreamReader reader = new StreamReader("Game Levels/Level" + level + "/level.map");
+                
+                string message = reader.ReadToEnd();
+                message = message.Replace("\r\n", "-");
+                string[] rows = message.Split('-');
+                string[] rowContents = rows[0].Split(',');
+                int[,] mapArray = new int[rowContents.Length, rows.Length];
+                for (int y = 0; y < mapArray.GetLength(1); y++)
+                {
+                    rowContents = rows[y].Split(',');
+                    for (int x = 0; x < mapArray.GetLength(0); x++)
+                    {
+                        mapArray[x, y] = Int32.Parse(rowContents[x]);
+                    }
+                }
+                return mapArray;
+
+
+                //string[] infoArray = null;
+                //string firstLine = null;
+                //while ((firstLine = reader.ReadLine()) != null)
+                //{
+                //    infoArray = firstLine.Split(',');
+                //    row = new int[infoArray.Length];
+                //    for (int i = 0; i < row.Length; i++)
+                //    {
+                //        row[i] = Int32.Parse(infoArray[i]);
+                //    }
+                //}
+                //return null;
+            }
+            return null;
+        }
+
         public void AssignTileNeighbors()
         {
             // Now for each of the search nodes, we will

@@ -21,14 +21,16 @@ namespace CakeDefense
         #region Attributes
         protected bool placed;
         protected Tile_Path occupiedTile;
-        HealthBar healthBar;
-        private int cost;
+        protected HealthBar healthBar;
+        protected int cost;
+        protected Var.TrapType type;
         #endregion Attributes
 
         #region Constructor
         public Trap(int health, int damage, int cost, ImageObject io, Texture2D healthTex)
             :base(io, health, damage, 0)
         {
+            type = Var.TrapType.Basic;
             healthBar = new HealthBar(healthTex, StartHealth, io.SpriteBatch, 5, Var.TRAP_SHOW_HEALTH_TIME, .5f, Color.Green, Color.DarkSeaGreen);
             healthBar.OriginalWidth = 50;
             placed = false;
@@ -47,6 +49,13 @@ namespace CakeDefense
         {
             get { return occupiedTile; }
             set { occupiedTile = value; }
+        }
+
+        public Var.TrapType Type
+        {
+            get { return type; }
+
+            set { type = value; }
         }
         #endregion Properties
 

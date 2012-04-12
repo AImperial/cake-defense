@@ -109,6 +109,15 @@
       <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\GameOver.xnb</Output>
       <Time>2012-04-12T00:32:55.0896341-04:00</Time>
     </Item>
+    <Item>
+      <Source>Sprites\can.png</Source>
+      <Name>Sprites\can</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\can.xnb</Output>
+      <Time>2012-04-12T18:33:44.5768126-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
