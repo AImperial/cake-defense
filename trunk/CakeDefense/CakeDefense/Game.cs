@@ -24,7 +24,7 @@ namespace CakeDefense
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
-        Texture2D blankTex, cursorTex, mainMenu, instructions, credits, gameOver, bulletTex, enemyAnimationTest, pixel, towerTex;
+        Texture2D blankTex, stripesTex, cursorTex, mainMenu, instructions, credits, gameOver, bulletTex, enemyAnimationTest, pixel, towerTex;
         GameTime animationTotalTime;
         TimeSpan pausedTime;
         #endregion Graphic Stuff
@@ -32,7 +32,7 @@ namespace CakeDefense
         #region General Game Stuff (GameState, music stuff, Map, HUD)
         public enum GameState { Menu, Instructions, Credits, Game, Paused, GameOver }
         private GameState gameState;
-        bool debugOn, musicOn, soundEffectsOn;
+        bool debugOn, musicOn, soundEffectsOn, drawCursor;
         float difficulty;
         int level, wave;
         Map map;
@@ -117,6 +117,7 @@ namespace CakeDefense
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Var.BLANK_TEX = blankTex = this.Content.Load<Texture2D>("Blank");
             cursorTex = this.Content.Load<Texture2D>("Cursor");
+            stripesTex = this.Content.Load<Texture2D>("Stripes");
 
             #region Menu
             mainMenu = this.Content.Load<Texture2D>("Menu/MainMenu");
@@ -164,9 +165,15 @@ namespace CakeDefense
             {
                 #region GameState.Game
                 case GameState.Game:
+                    drawCursor = true;
 
                     QuickKeys();
                     spawnTimer.Update(animationTotalTime);
+
+                    if (heldItem != null) {
+                        heldItem.Center = mousePoint;
+                        drawCursor = false;
+                    }
 
                     #region Wave Stuff
                     if (waves.Count > 0 && waves[0].Count > 0 && spawnTimer.Finished)
@@ -214,9 +221,6 @@ namespace CakeDefense
                     towers.ForEach(tower => tower.Fire(enemies));
                     traps.ForEach(trap => traps.Remove(trap.RemoveIfCan()));
 
-                    if (heldItem != null)
-                        heldItem.Point = mousePoint;
-
                     #region Collision
                     foreach(Tower tower in towers)
                     {
@@ -237,12 +241,22 @@ namespace CakeDefense
                     else if (hud.MenuButton.Focused)
                     {
                         // This rectangle is the rectangle from top of menu bttn to bottom of last menu option.
-                        if (mouseRect.Intersects(new Rectangle(hud.MenuButton.X, hud.MenuButton.Y, hud.MenuButton.Width, (hud.MenuButton.ChildButtons.Last().Y + hud.MenuButton.ChildButtons.Last().Height) - hud.MenuButton.Y)))
+                        if (mouseRect.Intersects(new Rectangle(hud.MenuButton.X, hud.MenuButton.Y, hud.MenuButton.Width, (hud.MenuButton.ChildButtons.Last().Y + hud.MenuButton.ChildButtons.Last().Height) - hud.MenuButton.Y))){
                             hud.MenuButton.Focused = true;
-                        else
+                            drawCursor = true;
+                        }else
                             hud.MenuButton.Focused = false;
                     }
                     #endregion Menu Display
+
+                    foreach (GameObject itm in hud.SelectionBar)
+                    {
+                        if (itm.Rectangle.Intersects(mouseRect))
+                        {
+                            drawCursor = true;
+                            break;
+                        }
+                    }
 
                     #endregion Mouse Over
 
@@ -251,58 +265,77 @@ namespace CakeDefense
                     {
                         singlePress = false;
 
-                        #region Click Something (normally)
-                        if (heldItem == null)
+                        #region Menu List Buttons
+                        if (hud.MenuButton.Focused)
                         {
-                            #region Menu List Buttons
-                            if (hud.MenuButton.Focused)
+                            for (int i = 0; i < hud.MenuButton.ChildButtons.Count; i++)
                             {
-                                for (int i = 0; i < hud.MenuButton.ChildButtons.Count; i++)
+                                if (CheckIfClicked(hud.MenuButton.ChildButtons[i].Rectangle))
                                 {
-                                    if (CheckIfClicked(hud.MenuButton.ChildButtons[i].Rectangle))
+                                    switch (i)
                                     {
-                                        switch (i)
-                                        {
-                                            case 0://Pause
-                                                gameState = GameState.Paused;
-                                                break;
-                                            case 1://Change Game Speed
-                                                #region Change Speed
-                                                singlePress = false;
-                                                for (int j = 0; j < hud.MenuButton.ChildButtons[i].ChildButtons.Count; j++)
+                                        case 0://Pause
+                                            gameState = GameState.Paused;
+                                            break;
+                                        case 1://Change Game Speed
+                                            #region Change Speed
+                                            singlePress = false;
+                                            for (int j = 0; j < hud.MenuButton.ChildButtons[i].ChildButtons.Count; j++)
+                                            {
+                                                if (CheckIfClicked(hud.MenuButton.ChildButtons[i].ChildButtons[j].Rectangle))
                                                 {
-                                                    if (CheckIfClicked(hud.MenuButton.ChildButtons[i].ChildButtons[j].Rectangle))
+                                                    switch (j)
                                                     {
-                                                        switch (j)
-                                                        {
-                                                            case 0:
-                                                                Var.GAME_SPEED = 1;
-                                                                break;
-                                                            case 1:
-                                                                Var.GAME_SPEED = 2;
-                                                                break;
-                                                            case 2:
-                                                                Var.GAME_SPEED = 4;
-                                                                break;
-                                                        }
-
+                                                        case 0:
+                                                            Var.GAME_SPEED = 1;
+                                                            break;
+                                                        case 1:
+                                                            Var.GAME_SPEED = 2;
+                                                            break;
+                                                        case 2:
+                                                            Var.GAME_SPEED = 4;
+                                                            break;
                                                     }
 
                                                 }
-                                                break;
-                                                #endregion Change Speed
-                                            case 2://Restart
-                                                NewGame();
-                                                break;
-                                            case 3://Exit
-                                                gameState = GameState.Menu;
-                                                break;
-                                        }
+
+                                            }
+                                            break;
+                                            #endregion Change Speed
+                                        case 2://Restart
+                                            NewGame();
+                                            break;
+                                        case 3://Exit
+                                            gameState = GameState.Menu;
+                                            break;
                                     }
                                 }
                             }
-                            #endregion Menu List Buttons
+                        }
+                        #endregion Menu List Buttons
 
+                        #region Select Tower / trap from List
+                        foreach (GameObject itm in hud.SelectionBar)
+                        {
+                            if (CheckIfClicked(itm.Rectangle))
+                            {
+                                if (itm is Tower)
+                                {
+                                    heldItem = NewTower(((Tower)itm).Type);
+                                }
+                                else if (itm is Trap)
+                                {
+                                    heldItem = NewTrap(((Trap)itm).Type);
+                                }
+                            }
+                        }
+                        #endregion Select Tower / trap from List
+
+                        #region Click Something (normally)
+                        if (heldItem == null)
+                        {
+                            // Not functional atm
+                            #region Get Info (Tower / Enemy)
                             foreach (Tower tower in towers)
                             {
                                 if (CheckIfClicked(tower.Rectangle))
@@ -320,6 +353,7 @@ namespace CakeDefense
                                     break;
                                 }
                             }
+                            #endregion Get Info (Tower / Enemy)
                         }
                         #endregion Click Something (normally)
 
@@ -337,7 +371,7 @@ namespace CakeDefense
                                             hud.Money -= ((Tower)heldItem).Cost;
                                             ((Tower)heldItem).Place((Tile_Tower)tile);
                                             towers.Add(((Tower)heldItem));
-                                            heldItem = null;
+                                            heldItem = NewTower(((Tower)heldItem).Type);
                                         }
                                     }
                                     else if (tile is Tile_Path)
@@ -347,7 +381,7 @@ namespace CakeDefense
                                             hud.Money -= ((Trap)heldItem).Cost;
                                             ((Trap)heldItem).Place((Tile_Path)tile);
                                             traps.Add(((Trap)heldItem));
-                                            heldItem = null;
+                                            heldItem = NewTrap(((Trap)heldItem).Type);
                                         }
                                     }
                                     break;
@@ -371,11 +405,7 @@ namespace CakeDefense
                 #region Everything else
                 case GameState.Paused:
                     pausedTime += gameTime.ElapsedGameTime;
-                    if (SingleKeyPress(Keys.P))
-                    {
-                        gameState = GameState.Game;
-                    }
-                    else if (CheckIfClicked(hud.MenuButton.ChildButtons[0].Rectangle))
+                    if (SingleKeyPress(Keys.P) || SingleKeyPress(Keys.Space) || CheckIfClicked(hud.MenuButton.ChildButtons[0].Rectangle))
                     {
                         gameState = GameState.Game;
                     }
@@ -445,7 +475,19 @@ namespace CakeDefense
                     enemies.ForEach(enemy => enemy.Draw(gameTime));
 
                     if (heldItem != null)
+                    {
                         heldItem.Draw();
+                        foreach (Tile tile in map.Tiles)
+                        {
+                            if (mouseRect.Intersects(tile.Rectangle))
+                            {
+                                if (heldItem is Tower && tile is Tile_Tower)
+                                    ImageObject.DrawRectangleOutline(tile.Rectangle, 2, Color.Blue, blankTex, spriteBatch);
+                                else if (heldItem is Trap && tile is Tile_Path)
+                                    ImageObject.DrawRectangleOutline(tile.Rectangle, 2, Color.Green, blankTex, spriteBatch);
+                            }
+                        }
+                    }
 
                     #region Debug Stuff
                     if (debugOn)
@@ -469,7 +511,7 @@ namespace CakeDefense
                 {
                     spriteBatch.Draw(blankTex, Var.SCREEN_SIZE, Var.PAUSE_GRAY);
                     hud.MenuButton.ChildButtons[0].Draw();
-                    spriteBatch.DrawString(largeFont, "Press [P] or click \'Pause\'", new Vector2(Var.GAME_AREA.X + (Var.GAME_AREA.Width - largeFont.MeasureString("Press [P] or click \'Pause\'").X) / 2, Var.TOTAL_HEIGHT - largeFont.MeasureString("-").Y - 10), Color.YellowGreen);
+                    spriteBatch.DrawString(largeFont, "Press [P] or [Space] or click \'Pause\'", new Vector2(Var.GAME_AREA.X + (Var.GAME_AREA.Width - largeFont.MeasureString("Press [P] or [Space] or click \'Pause\'").X) / 2, Var.TOTAL_HEIGHT - largeFont.MeasureString("-").Y - 10), Color.YellowGreen);
 
                     #region Debug
                     if (debugOn)
@@ -482,7 +524,7 @@ namespace CakeDefense
                         }
                         else
                         {
-                            turnDebugOn.Message.Message = "Hi.";
+                            turnDebugOn.Message.Message = "Cheater.";
                             turnDebugOn.CenterText();
                             turnDebugOn.Draw();
                         }
@@ -521,7 +563,8 @@ namespace CakeDefense
                     break;
                 #endregion Everything else
             }
-            spriteBatch.Draw(cursorTex, new Rectangle(mouseRect.X, mouseRect.Y, 25, 25), Color.White);
+            if ((drawCursor == true && gameState == GameState.Game) || gameState != GameState.Game)
+                spriteBatch.Draw(cursorTex, new Rectangle(mouseRect.X, mouseRect.Y, 25, 25), Color.White);
 
             spriteBatch.End();
             base.Draw(gameTime);
@@ -634,6 +677,7 @@ namespace CakeDefense
         {
             Var.GAME_SPEED = 1;
             difficulty = 1f;
+            heldItem = null;
             pausedTime = TimeSpan.Zero;
             animationTotalTime = new GameTime(TimeSpan.Zero, TimeSpan.Zero);
             enemies = new List<Enemy>();
@@ -648,7 +692,8 @@ namespace CakeDefense
             SetUpGame();
 
             cake = new Cake(Var.MAX_CAKE_HEALTH, 600, 80, 120, 120, spriteBatch, blankTex);
-            hud = new HUD(spriteBatch, Var.START_MONEY, blankTex, mediumFont, cake);
+            hud = new HUD(spriteBatch, Var.START_MONEY, blankTex, mediumFont, cake,
+                new List<GameObject> { NewTower(Var.TowerType.Basic), NewTrap(Var.TrapType.Basic) }, stripesTex);
 
             level = wave = 0;
             map = new Map(level, spriteBatch);
@@ -664,6 +709,8 @@ namespace CakeDefense
         {
             SetUpGame();
             LoadGame();
+
+            // HUD / Cake / Map declared in LoadGame()
 
             paths = new List<Path>();
             paths.Add(map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1));
@@ -734,7 +781,8 @@ namespace CakeDefense
                     infoArray = firstLine.Split('-');
 
                     cake = new Cake(Int32.Parse(infoArray[1]), 600, 80, 120, 120, spriteBatch, blankTex);
-                    hud = new HUD(spriteBatch, Int32.Parse(infoArray[0]), blankTex, mediumFont, cake);
+                    hud = new HUD(spriteBatch, Int32.Parse(infoArray[0]), blankTex, mediumFont, cake,
+                        new List<GameObject> { NewTower(Var.TowerType.Basic), NewTrap(Var.TrapType.Basic) }, stripesTex);
                     level = Int32.Parse(infoArray[2]);
                     wave = Int32.Parse(infoArray[3]);
 
@@ -801,6 +849,8 @@ namespace CakeDefense
             traps.ForEach(trap => writer.WriteLine(trap.Type + "-" + (trap.OccupiedTile.TileNum.X + "," + trap.OccupiedTile.TileNum.Y) + "-" + trap.CurrentHealth));
             writer.Close();
             writer.Dispose();
+
+            hud.GameSaved();
         }
 
         public void DeleteSave()
@@ -856,6 +906,7 @@ namespace CakeDefense
                     0,
                     0,
                     Color.White,
+                    100f,
                     ImageObject.RIGHT,
                     Vector2.Zero,
                     SpriteEffects.None,

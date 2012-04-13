@@ -35,6 +35,7 @@ namespace CakeDefense
             healthBar.OriginalWidth = 50;
             placed = false;
             this.cost = cost;
+            Image.Transparency = Var.PLACING_TRANSPARENCY;
         }
         #endregion Constructor
 
@@ -66,6 +67,7 @@ namespace CakeDefense
             occupiedTile = tile;
             occupiedTile.OccupiedBy = this;
             Center = tile.Center;
+            Image.Transparency = 100;
         }
 
         public void AttackIfCan(Enemy enemy, GameTime gameTime)
@@ -103,22 +105,9 @@ namespace CakeDefense
         {
             if (IsActive)
             {
-                #region Placing
-                if (placed == false)
-                {
-                    Color tempColor = Image.Color;
-                    Image.Color = Var.PLACING_COLOR;
-                    base.Draw();
-                    Image.Color = tempColor;
-                }
-                #endregion Placing
-
-                else
-                {
-                    healthBar.Update(gameTime, CurrentHealth, Center.X, Y);
-                    Draw();
-                    healthBar.Draw();
-                }
+                healthBar.Update(gameTime, CurrentHealth, Center.X, Y);
+                base.Draw();
+                healthBar.Draw();
             }
         }
         #endregion Draw

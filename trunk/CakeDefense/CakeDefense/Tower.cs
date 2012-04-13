@@ -47,6 +47,7 @@ namespace CakeDefense
             this.cost = cost;
             bulletTexture = bt;
             bullets = new List<Bullet>();
+            Image.Transparency = Var.PLACING_TRANSPARENCY;
         }
         #endregion Constructor
 
@@ -112,6 +113,7 @@ namespace CakeDefense
             occupiedTile = tile;
             occupiedTile.OccupiedBy = this;
             Center = tile.Center;
+            Image.Transparency = 100;
         }
 
         public void Fire(List<Enemy> enemies)
@@ -121,7 +123,6 @@ namespace CakeDefense
                 if (timer.ElapsedMilliseconds >= Speed / Var.GAME_SPEED)
                 {
                     float fireAngle = -1000; // random number to make sure it should fire.
-
                     List<Enemy> enemiesInRange = new List<Enemy>();
                     #region Get Enemies In Range
                     foreach (Enemy enemy in enemies)
@@ -134,38 +135,60 @@ namespace CakeDefense
                     #endregion Get Enemies In Range
 
                     #region Attack based on AttackType
-                    switch (attackType)
+                    if (enemiesInRange.Count > 0)
                     {
-                        #region Attacktype.None
-                        case Attacktype.None:
-                            if (enemiesInRange.Count > 0)
-                                fireAngle = enemiesInRange[rand.Next(enemiesInRange.Count)].CheckWhereIWillBe(this);
-                            break;
-                        #endregion Attacktype.None
+                        // Holds an enemy until it knows what one to attack (ex: if looking for strongest in-range enemies)
+                        Enemy enemyToAttack = enemiesInRange.First(); // To have something to check against
 
-                        #region Attacktype.Fastest
-                        case Attacktype.Fastest:
+                        switch (attackType)
+                        {
+                            #region Attacktype.None
+                            case Attacktype.None:
+                                enemyToAttack = enemiesInRange[rand.Next(enemiesInRange.Count)];
+                                break;
+                            #endregion Attacktype.None
 
-                            break;
-                        #endregion Attacktype.Fastest
+                            #region Attacktype.Fastest
+                            case Attacktype.Fastest:
+                                foreach (Enemy enemy in enemiesInRange)
+                                {
+                                    if (enemy.Speed > enemyToAttack.Speed)
+                                        enemyToAttack = enemy;
+                                }
+                                break;
+                            #endregion Attacktype.Fastest
 
-                        #region Attacktype.Slowest
-                        case Attacktype.Slowest:
+                            #region Attacktype.Slowest
+                            case Attacktype.Slowest:
+                                foreach (Enemy enemy in enemiesInRange)
+                                {
+                                    if (enemy.Speed < enemyToAttack.Speed)
+                                        enemyToAttack = enemy;
+                                }
+                                break;
+                            #endregion Attacktype.Slowest
 
-                            break;
-                        #endregion Attacktype.Slowest
+                            #region Attacktype.Strongest
+                            case Attacktype.Strongest:
+                                foreach (Enemy enemy in enemiesInRange)
+                                {
+                                    if (enemy.CurrentHealth > enemyToAttack.CurrentHealth)
+                                        enemyToAttack = enemy;
+                                }
+                                break;
+                            #endregion Attacktype.Strongest
 
-                        #region Attacktype.Strongest
-                        case Attacktype.Strongest:
-
-                            break;
-                        #endregion Attacktype.Strongest
-
-                        #region Attacktype.Weakest
-                        case Attacktype.Weakest:
-
-                            break;
-                        #endregion Attacktype.Weakest
+                            #region Attacktype.Weakest
+                            case Attacktype.Weakest:
+                                foreach (Enemy enemy in enemiesInRange)
+                                {
+                                    if (enemy.CurrentHealth < enemyToAttack.CurrentHealth)
+                                        enemyToAttack = enemy;
+                                }
+                                break;
+                            #endregion Attacktype.Weakest
+                        }
+                        fireAngle = enemyToAttack.CheckWhereIWillBe(this); // attacks enemy chosen
                     }
                     #endregion Attack based on AttackType
 
@@ -220,21 +243,8 @@ namespace CakeDefense
         {
             if (IsActive)
             {
-                #region Placing
-                if (placing)
-                {
-                    Color tempColor = Image.Color;
-                    Image.Color = Var.PLACING_COLOR;
-                    base.Draw();
-                    Image.Color = tempColor;
-                }
-                #endregion Placing
-
-                else
-                {
-                    base.Draw();
-                    bullets.ForEach(bullet => bullet.Draw());
-                }
+                base.Draw();
+                bullets.ForEach(bullet => bullet.Draw());
             }
         }
         #endregion Draw

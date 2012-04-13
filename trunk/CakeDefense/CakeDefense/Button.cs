@@ -82,7 +82,7 @@ namespace CakeDefense
         {
             base.Draw();
             if (outLineThickness > 0)
-                DrawRectangleOutline(outLineThickness, outlineColor, Var.BLANK_TEX);
+                DrawRectangleOutline(outLineThickness, Color.FromNonPremultiplied(outlineColor.R, outlineColor.G, outlineColor.B, (byte)(outlineColor.A * (transparency / 100))), Var.BLANK_TEX);
             if (message != null)
                 message.Draw();
         }
@@ -158,7 +158,7 @@ namespace CakeDefense
         public override void Draw()
         {
             if (drawCenter == false)
-                SpriteBatch.DrawString(font, message, Point, color);
+                SpriteBatch.DrawString(font, message, Point, TransparentColor());
             else
             {
                 int bigWdth = 0;
@@ -170,7 +170,7 @@ namespace CakeDefense
                 }
                 for (int i = 0; i < parts.Length; i++)
                 {
-                    SpriteBatch.DrawString(font, parts[i], new Vector2(X + ((bigWdth - font.MeasureString(parts[i]).X) / 2), Y + (i * font.MeasureString(parts[i]).Y) + i), color);
+                    SpriteBatch.DrawString(font, parts[i], new Vector2(X + ((bigWdth - font.MeasureString(parts[i]).X) / 2), Y + (i * font.MeasureString(parts[i]).Y) + i), TransparentColor());
                 }
             }
         }

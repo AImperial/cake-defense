@@ -32,7 +32,7 @@ namespace CakeDefense
         protected int width, height, cutOutWidth, cutOutHeight;
         protected Color color;
         protected int totalFrames;
-        protected float rotation;
+        protected float rotation, transparency;
         protected Vector2 origin, resize;
         protected SpriteEffects effects;
 
@@ -61,6 +61,7 @@ namespace CakeDefense
             cutOutWidth = 10; cutOutHeight = 10;
             drawXOff = 0; drawYOff = 0;
             totalFrames = 1;
+            transparency = 100;
             color = Color.White;
             rotation = 0;
             origin = Vector2.Zero;
@@ -94,7 +95,7 @@ namespace CakeDefense
 
         /// <summary> Sets every value of a GameObject to something. </summary>
         public ImageObject(Texture2D texture, int x, int y, int width, int height, int totalFrameNum, int cutOutX, int cutOutY, int cutOutWidth,
-            int cutOutHeight, int drawXOff, int drawYOff, Color color, float rotation, Vector2 origin, SpriteEffects effects, SpriteBatch spriteBatch)
+            int cutOutHeight, int drawXOff, int drawYOff, Color color, float transparency, float rotation, Vector2 origin, SpriteEffects effects, SpriteBatch spriteBatch)
         {
             this.texture = texture;
             this.spriteBatch = spriteBatch;
@@ -105,6 +106,7 @@ namespace CakeDefense
             this.drawXOff = drawXOff; this.drawYOff = drawYOff;
             totalFrames = totalFrameNum;
             this.color = color;
+            this.transparency = transparency;
             this.rotation = rotation;
             this.origin = origin;
             this.effects = effects;
@@ -188,6 +190,14 @@ namespace CakeDefense
             get { return color; }
 
             set { color = value; }
+        }
+
+        /// <summary> Effects the Image's tranparency. (0-100) (100:visible) </summary>
+        public float Transparency
+        {
+            get { return transparency; }
+
+            set { transparency = value; }
         }
 
         /// <summary> The X location on the Texture to draw. </summary>
@@ -332,6 +342,15 @@ namespace CakeDefense
             drawYOff = (int)(Center.Y - yLoc);
         }
 
+        /// <summary> Returns the color use for Image with transparency attribute added to it. </summary>
+        public Color TransparentColor()
+        {
+            if (transparency == 100)
+                return color;
+            else
+                return Color.FromNonPremultiplied(color.R, color.G, color.B, (byte)(color.A * (transparency / 100)));
+        }
+
         #endregion Methods
 
         #region Draw
@@ -340,7 +359,7 @@ namespace CakeDefense
         {
             Rectangle position = Resized();
             if (texture != null)
-                spriteBatch.Draw(texture, position, CutOut, color, rotation, origin, effects, 0);
+                spriteBatch.Draw(texture, position, CutOut, TransparentColor(), rotation, origin, effects, 0);
         }
 
         /// <summary> Draws an animation (Left to Right on a SpriteSheet). </summary>
@@ -353,7 +372,7 @@ namespace CakeDefense
                 Rectangle cutOutAnimation = CutOut;
                 cutOutAnimation.X = cutX + (cutOutWidth * ((int)(gameTime.TotalGameTime.TotalMilliseconds / frameSpeed) % totalFrames));
 
-                spriteBatch.Draw(texture, position, cutOutAnimation, color, rotation, origin, effects, 0);
+                spriteBatch.Draw(texture, position, cutOutAnimation, TransparentColor(), rotation, origin, effects, 0);
             }
         }
         #endregion Draw

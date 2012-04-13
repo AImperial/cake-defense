@@ -28,6 +28,7 @@ namespace CakeDefense
 
         #region Cake / HUD
         public static int MAX_CAKE_HEALTH = 9, START_MONEY = 500;
+        public static TimeSpan MENU_ACTION_TIME = new TimeSpan(0, 0, 0, 0, 500), SAVE_MESSAGE_TIME = new TimeSpan(0, 0, 5);
         #endregion Cake / HUD
 
         #region Tower
@@ -61,8 +62,6 @@ namespace CakeDefense
 
         public static TimeSpan TIME_BETWEEN_SPAWNS = new TimeSpan(0, 0, 0, 0, 1000);
         public static TimeSpan TIME_BETWEEN_WAVES = new TimeSpan(0, 0, 10);
-
-        public static TimeSpan MENU_ACTION_TIME = new TimeSpan(0, 0, 0, 0, 500);
         #endregion Time Stuff
 
         #region Enums
@@ -72,7 +71,7 @@ namespace CakeDefense
         #endregion Enums
 
         #region Colors
-        public static Color PLACING_COLOR = Color.FromNonPremultiplied(255, 255, 255, 150);
+        public static float PLACING_TRANSPARENCY = 60f;
         public static Color PAUSE_GRAY = Color.FromNonPremultiplied(50, 50, 50, 200);
         
         public static Color EffectTransparency(float percent, Color clr)

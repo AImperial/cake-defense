@@ -27,7 +27,7 @@ namespace CakeDefense
         Timer timer;
 
         private bool spawning, despawning, dying, hasCake;
-        private float transparency, slowEffect;
+        private float slowEffect;
         #endregion Attributes
 
         #region Constructor
@@ -40,7 +40,7 @@ namespace CakeDefense
             Image.Center = Center = path.Start.Center;
             currentTile = 0;
             slowEffect = 1;
-            transparency = 0;
+            Image.Transparency = 0;
             Image.Rotation = ImageObject.RIGHT;
             spawning = true;
             hasCake = false;
@@ -257,7 +257,7 @@ namespace CakeDefense
         public void Start(GameTime gameTime)
         {
             IsActive = true;
-            transparency = 0;
+            Image.Transparency = 0;
             Image.Rotation = ImageObject.RIGHT;
             spawning = true;
             timer.Start(gameTime, Var.SPAWN_TIME);
@@ -268,12 +268,12 @@ namespace CakeDefense
         {
             if (timer.Finished == false)
             {
-                transparency = timer.Percent;
+                Image.Transparency = timer.Percent * 100;
                 Image.Rotation = (float)(Var.SPAWN_SPINS * (Math.PI * 2) * timer.Percent);//percComplete);
             }
             else
             {
-                transparency = 100;
+                Image.Transparency = 100;
                 Image.Rotation = ImageObject.RIGHT;
                 timer.End();
                 spawning = false;
@@ -286,11 +286,11 @@ namespace CakeDefense
         {
             if (timer.Finished == false)
             {
-                transparency = 1 - timer.Percent;
+                Image.Transparency = (1 - timer.Percent) * 100;
             }
             else
             {
-                transparency = 100;
+                Image.Transparency = 100;
                 Image.Rotation = ImageObject.RIGHT;
                 timer.End();
                 despawning = false;
@@ -303,14 +303,14 @@ namespace CakeDefense
         {
             if (timer.Finished == false)
             {
-                transparency = timer.Percent;
+                Image.Transparency = timer.Percent * 100;
                 Image.Rotation = (float)(Var.DEATH_SPINS * (Math.PI * 2) * timer.Percent);
                 Image.Resize = new Vector2(1 - timer.Percent);
                 CenterImage();
             }
             else
             {
-                transparency = 100;
+                Image.Transparency = 100;
                 Image.Rotation = ImageObject.RIGHT;
                 timer.End();
                 IsActive = false;
@@ -350,23 +350,8 @@ namespace CakeDefense
         {
             if (IsActive)
             {
-                #region Spawning / Despawning / Dying
-                if (spawning || despawning || IsDying)
-                {
-                    Color tempColor = Image.Color;
-                    Image.Color = Var.EffectTransparency(transparency, Image.Color);
-                    base.Draw(gameTime, Var.FRAME_SPEED);
-                    Image.Color = tempColor;
-
-                    if (despawning)
-                        healthBar.Draw();
-                }
-                #endregion Spawning / Despawning / Dying
-                else
-                {
-                    base.Draw(gameTime, Var.FRAME_SPEED);
-                    healthBar.Draw();
-                }
+                base.Draw(gameTime, Var.FRAME_SPEED);
+                healthBar.Draw();
             }
         }
         #endregion Draw
