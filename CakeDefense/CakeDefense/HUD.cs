@@ -20,19 +20,32 @@ namespace CakeDefense
     {
         #region Attributes
         private SpriteBatch spriteBatch;
+        private Texture2D stripesTex;
         private int money, score;
         private Cake cake;
-        private Button moneyDisplay, cakeDisplay, activeMenuDisplay;
-        //private List<Button> activeMenuDisplayButtons;
-        private Timer menuTimer;
+        private Button moneyDisplay, cakeDisplay, saveMessage, activeMenuDisplay;
+        private List<GameObject> selectionBar;
+        private GameTime time;
+        private Timer menuTimer, saveTimer;
         #endregion Attributes
 
         #region Constructor
-        public HUD(SpriteBatch sprite, int money, Texture2D infoBoxTex, SpriteFont font, Cake cake)
+        public HUD(SpriteBatch sprite, int money, Texture2D infoBoxTex, SpriteFont font, Cake cake, List<GameObject> towerTrapImages, Texture2D stripes)
         {
             this.spriteBatch = sprite;
             this.money = money;
             this.cake = cake;
+            stripesTex = stripes;
+
+            selectionBar = towerTrapImages;
+            int xStart = (Var.GAME_AREA.Width - (selectionBar.Count * 70)) / 2, ndx = 0;
+            foreach (GameObject item in selectionBar)
+            {
+                item.Width = item.Height = 70;
+                item.Y = Var.GAME_AREA.Bottom - item.Height;
+                item.X = xStart + (ndx++ * item.Width);
+                item.Image.Transparency = 100;
+            }
 
             moneyDisplay = new Button(infoBoxTex, new Vector2(2, 2), 120, 40, 2, Color.DarkGray, sprite, new TextObject("$" + money, Vector2.Zero, font, Color.Black, sprite));
             moneyDisplay.Color = Color.DarkKhaki;
@@ -41,8 +54,11 @@ namespace CakeDefense
 
             activeMenuDisplay = new Button(infoBoxTex, new Vector2(Var.TOTAL_WIDTH - 120 - 2, 2), 120, 40, 2, Color.LightCyan, sprite, new TextObject("Menu", Vector2.Zero, font, Color.GhostWhite, sprite));
             activeMenuDisplay.Color = Color.Navy;
+            saveMessage = new Button(infoBoxTex, new Vector2(Var.GAME_AREA.X + 2, Var.GAME_AREA.Bottom - 40 - 2), 120, 40, 2, Color.MidnightBlue, sprite, new TextObject("Saved!", Vector2.Zero, font, Color.LightCyan, sprite));
+            saveMessage.Color = Color.Navy;
             PopulateMenuList();
             menuTimer = new Timer(Var.GAME_SPEED);
+            saveTimer = new Timer();
         }
         #endregion Constructor
 
@@ -76,18 +92,31 @@ namespace CakeDefense
             get { return activeMenuDisplay; }
         }
 
-        //public List<Button> MenuButtonList
-        //{
-        //    get { return activeMenuDisplayButtons; }
-        //}
+        public List<GameObject> SelectionBar
+        {
+            get { return selectionBar; }
+        }
         #endregion Properties
 
         #region Methods
 
+        #region Menu / Timer Stuff
+
         public void Update(GameTime gameTime)
         {
+            time = gameTime;
             moneyDisplay.Message.Message = "$" + money; moneyDisplay.CenterText();
             cakeDisplay.Message.Message = "Cake: " + cake.CurrentHealth;
+
+            saveTimer.Update(gameTime);
+            if (saveTimer.Finished == false)
+            {
+                if (saveTimer.Percent > .6)
+                {
+                    saveMessage.Transparency = (1 - Timer.GetPercentRelative(.6f, saveTimer.Percent, 1f)) * 100;
+                    saveMessage.Message.Transparency = saveMessage.Transparency;
+                }
+            }
 
             menuTimer.Update(gameTime);
             if (menuTimer.Finished == false)
@@ -125,14 +154,6 @@ namespace CakeDefense
                 speedList[2].Message.Color = Color.Multiply(speedList[2].Message.Color, .5f);
             }
             #endregion Game Speed Buttons
-        }
-
-        /// <summary> Checks to see if you can spend a certain ammount of money (Does NOT subtract it). </summary>
-        public bool CanSpendMoney(int spending)
-        {
-            if (money - spending >= 0)
-                return true;
-            return false;
         }
 
         private void PopulateMenuList()
@@ -176,6 +197,22 @@ namespace CakeDefense
             menuTimer.Start(gameTime, Var.MENU_ACTION_TIME);
         }
 
+        #endregion Menu / Timer Stuff
+
+        /// <summary> Checks to see if you can spend a certain ammount of money (Does NOT subtract it). </summary>
+        public bool CanSpendMoney(int spending)
+        {
+            if (money - spending >= 0)
+                return true;
+            return false;
+        }
+
+        public void GameSaved()
+        {
+            saveMessage.Transparency = saveMessage.Message.Transparency = 100;
+            saveTimer.Start(time, Var.SAVE_MESSAGE_TIME);
+        }
+
         public void EnemyGotCake()
         {
             cake.CurrentHealth--;
@@ -202,8 +239,21 @@ namespace CakeDefense
                         activeMenuDisplay.ChildButtons[i].ChildButtons.ForEach(button => button.Draw());
                 }
             }
-
             activeMenuDisplay.Draw();
+
+            if (saveTimer.Finished == false)
+                saveMessage.Draw();
+
+            for (int i = 0; i < selectionBar.Count; i++)
+            {
+                Color clr = Color.Blue;
+                if (selectionBar[i] is Trap)
+                    clr = Color.Green;
+
+                spriteBatch.Draw(stripesTex, selectionBar[i].Rectangle, clr);
+
+                selectionBar[i].Draw();
+            }
         }
         #endregion Draw
     }

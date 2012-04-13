@@ -11,3 +11,4 @@ Content\Spritefonts\Normal.xnb
 Content\Spritefonts\Small.xnb
 Content\Menu\GameOver.xnb
 Content\Sprites\can.xnb
+Content\Stripes.xnb
