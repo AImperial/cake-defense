@@ -108,7 +108,7 @@ namespace CakeDefense
             moneyDisplay.Message.Message = "$" + money; moneyDisplay.CenterText();
             cakeDisplay.Message.Message = "Cake: " + cake.CurrentHealth;
 
-            saveTimer.Update(gameTime);
+            saveTimer.Update(gameTime, Var.GAME_SPEED);
             if (saveTimer.Finished == false)
             {
                 if (saveTimer.Percent > .6)
@@ -118,7 +118,7 @@ namespace CakeDefense
                 }
             }
 
-            menuTimer.Update(gameTime);
+            menuTimer.Update(gameTime, Var.GAME_SPEED);
             if (menuTimer.Finished == false)
             {
                 activeMenuDisplay.ChildButtons[0].Y = activeMenuDisplay.Y + (int)((activeMenuDisplay.Height + 2) * menuTimer.Percent);

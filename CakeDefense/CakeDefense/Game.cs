@@ -168,7 +168,7 @@ namespace CakeDefense
                     drawCursor = true;
 
                     QuickKeys();
-                    spawnTimer.Update(animationTotalTime);
+                    spawnTimer.Update(animationTotalTime, Var.GAME_SPEED);
 
                     if (heldItem != null) {
                         heldItem.Center = mousePoint;
@@ -691,9 +691,7 @@ namespace CakeDefense
         {
             SetUpGame();
 
-            cake = new Cake(Var.MAX_CAKE_HEALTH, 600, 80, 120, 120, spriteBatch, blankTex);
-            hud = new HUD(spriteBatch, Var.START_MONEY, blankTex, mediumFont, cake,
-                new List<GameObject> { NewTower(Var.TowerType.Basic), NewTrap(Var.TrapType.Basic) }, stripesTex);
+            SetUpSelection(Var.START_MONEY, Var.MAX_CAKE_HEALTH);
 
             level = wave = 0;
             map = new Map(level, spriteBatch);
@@ -717,6 +715,20 @@ namespace CakeDefense
 
             // Gets enemies
             LoadWaves(level, wave); // level / wave taken from LoadGame();
+        }
+
+        public void SetUpSelection(int money, int cakeLeft)
+        {
+            // This automatically adds any tower/trap to the selection list.
+            List<GameObject> selectionList = new List<GameObject>();
+            for (int i = 0; i < Enum.GetNames(typeof(Var.TowerType)).Length; i++)
+                selectionList.Add(NewTower((Var.TowerType)i));
+            for (int i = 0; i < Enum.GetNames(typeof(Var.TrapType)).Length; i++)
+                selectionList.Add(NewTrap((Var.TrapType)i));
+
+            cake = new Cake(cakeLeft, 600, 80, 120, 120, spriteBatch, blankTex);
+            hud = new HUD(spriteBatch, money, blankTex, mediumFont, cake,
+                selectionList, stripesTex);
         }
         #endregion New / Continued Game
 
@@ -780,9 +792,7 @@ namespace CakeDefense
                     // 0-Money ||| 1-CakeLeft ||| 2-Level ||| 3-Wave
                     infoArray = firstLine.Split('-');
 
-                    cake = new Cake(Int32.Parse(infoArray[1]), 600, 80, 120, 120, spriteBatch, blankTex);
-                    hud = new HUD(spriteBatch, Int32.Parse(infoArray[0]), blankTex, mediumFont, cake,
-                        new List<GameObject> { NewTower(Var.TowerType.Basic), NewTrap(Var.TrapType.Basic) }, stripesTex);
+                    SetUpSelection(Int32.Parse(infoArray[0]), Int32.Parse(infoArray[1]));
                     level = Int32.Parse(infoArray[2]);
                     wave = Int32.Parse(infoArray[3]);
 
@@ -972,12 +982,18 @@ namespace CakeDefense
         #region Trap
         private Trap NewTrap(Var.TrapType type)
         {
-            #region Basic
-            if (type == Var.TrapType.Basic)
+            switch (type)
             {
-                return LoadTrap(type, 2);
+                #region Basic
+                case Var.TrapType.Basic:
+                    return LoadTrap(type, 2);
+                #endregion Basic
+
+                #region Slow
+                case Var.TrapType.Slow:
+                    return LoadTrap(type, 5);
+                #endregion Slow
             }
-            #endregion Basic
 
             return null;
         }
@@ -994,8 +1010,8 @@ namespace CakeDefense
                     spriteBatch
                 );
 
-                return new Trap(
-                    2,
+                return new Trap_Basic(
+                    health,
                     5,
                     50,
                     image,
@@ -1003,6 +1019,26 @@ namespace CakeDefense
                 );
             }
             #endregion Basic
+
+            #region Slow
+            if (type == Var.TrapType.Slow)
+            {
+                ImageObject image = new ImageObject(
+                    stripesTex,
+                    0, 0,
+                    Var.TRAP_SIZE, Var.TRAP_SIZE,
+                    spriteBatch
+                );
+
+                return new Trap_Slow(
+                    health,
+                    6,
+                    25,
+                    image,
+                    blankTex
+                );
+            }
+            #endregion Slow
 
             return null;
         }

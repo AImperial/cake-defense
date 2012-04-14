@@ -77,7 +77,7 @@ namespace CakeDefense
 
         public void Update(GameTime gameTime, int hp, float centerX, float yVal)
         {
-            timer.Update(gameTime);
+            timer.Update(gameTime, Var.GAME_SPEED);
             health = hp;
             position.X = (int)centerX - (originalWidth / 2);
             position.Y = (int)yVal - position.Height - heightUpExtra;

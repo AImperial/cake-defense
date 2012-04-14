@@ -67,7 +67,7 @@ namespace CakeDefense
         #region Enums
         public enum EnemyType { Spider }
         public enum TowerType { Basic }
-        public enum TrapType { Basic }
+        public enum TrapType { Basic, Slow }
         #endregion Enums
 
         #region Colors

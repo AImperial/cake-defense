@@ -90,7 +90,9 @@
     <Compile Include="Tile - Map\Tile_Tower.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="Tower.cs" />
-    <Compile Include="Trap.cs" />
+    <Compile Include="Traps\Trap.cs" />
+    <Compile Include="Traps\Trap_Basic.cs" />
+    <Compile Include="Traps\Trap_Slow.cs" />
     <Compile Include="Var.cs" />
   </ItemGroup>
   <ItemGroup>
