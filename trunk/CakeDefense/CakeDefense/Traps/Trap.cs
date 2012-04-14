@@ -43,13 +43,22 @@ namespace CakeDefense
         public bool Placed
         {
             get { return placed; }
+
             set { placed = value; }
         }
 
         public Tile_Path OccupiedTile
         {
             get { return occupiedTile; }
+
             set { occupiedTile = value; }
+        }
+
+        public int Cost
+        {
+            get { return cost; }
+
+            set { cost = value; }
         }
 
         public Var.TrapType Type
@@ -70,16 +79,10 @@ namespace CakeDefense
             Image.Transparency = 100;
         }
 
-        public void AttackIfCan(Enemy enemy, GameTime gameTime)
+        public virtual bool AttackIfCan(Enemy enemy, GameTime gameTime)
         {
-            if(enemy.Center == Center && IsActive)
-            {
-                CurrentHealth--;
-                enemy.Hit(Damage);
-                healthBar.Show(gameTime);
-                if (CurrentHealth <= 0)
-                    IsActive = false;
-            }
+            // This should be over-riden by children classes
+            return false;
         }
 
         /// <summary> If it should be removed, returns itself; else retruns null </summary>
@@ -91,12 +94,6 @@ namespace CakeDefense
                 return this;
             }
             return null;
-        }
-
-        public int Cost
-        {
-            get { return cost; }
-            set { cost = value; }
         }
         #endregion Methods
 

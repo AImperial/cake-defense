@@ -91,7 +91,7 @@ namespace CakeDefense
         public void Update(GameTime gameTime, List<Trap> traps)
         {
             time = gameTime;
-            timer.Update(gameTime);
+            timer.Update(gameTime, Var.GAME_SPEED);
             if (dying == false && IsActive)
                 healthBar.Update(gameTime, CurrentHealth, Center.X, Y);
 

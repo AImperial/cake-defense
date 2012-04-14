@@ -131,7 +131,7 @@ namespace CakeDefense
             tte = new TimeSpan(0, 0, 0, 0, lengthInMilSec);
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, int gameSpeed)
         {
             currentTime = gameTime.TotalGameTime;
         }
