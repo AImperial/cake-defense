@@ -97,8 +97,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Menu\GameOver.png">
-      <Name>GameOver</Name>
+    <Compile Include="Menu\Lose.png">
+      <Name>Lose</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -113,6 +113,13 @@
   <ItemGroup>
     <Compile Include="Stripes.png">
       <Name>Stripes</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Menu\Win.png">
+      <Name>Win</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
