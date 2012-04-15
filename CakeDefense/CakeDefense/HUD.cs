@@ -114,7 +114,6 @@ namespace CakeDefense
                 if (saveTimer.Percent > .6)
                 {
                     saveMessage.Transparency = (1 - Timer.GetPercentRelative(.6f, saveTimer.Percent, 1f)) * 100;
-                    saveMessage.Message.Transparency = saveMessage.Transparency;
                 }
             }
 
@@ -230,16 +229,7 @@ namespace CakeDefense
             moneyDisplay.Draw();
             cakeDisplay.Draw();
 
-            if (activeMenuDisplay.Focused)
-            {
-                for (int i = activeMenuDisplay.ChildButtons.Count - 1; i >= 0; i--)
-                {
-                    activeMenuDisplay.ChildButtons[i].Draw();
-                    if (activeMenuDisplay.ChildButtons[i].ChildButtons != null)
-                        activeMenuDisplay.ChildButtons[i].ChildButtons.ForEach(button => button.Draw());
-                }
-            }
-            activeMenuDisplay.Draw();
+            DrawDropDownMenu();
 
             if (saveTimer.Finished == false)
                 saveMessage.Draw();
@@ -254,6 +244,20 @@ namespace CakeDefense
 
                 selectionBar[i].Draw();
             }
+        }
+
+        public void DrawDropDownMenu()
+        {
+            if (activeMenuDisplay.Focused)
+            {
+                for (int i = activeMenuDisplay.ChildButtons.Count - 1; i >= 0; i--)
+                {
+                    activeMenuDisplay.ChildButtons[i].Draw();
+                    if (activeMenuDisplay.ChildButtons[i].ChildButtons != null)
+                        activeMenuDisplay.ChildButtons[i].ChildButtons.ForEach(button => button.Draw());
+                }
+            }
+            activeMenuDisplay.Draw();
         }
         #endregion Draw
     }

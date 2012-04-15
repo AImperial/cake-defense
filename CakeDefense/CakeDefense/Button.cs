@@ -57,6 +57,21 @@ namespace CakeDefense
             set { focused = value; }
         }
 
+        public new Vector2 Resize
+        {
+            get { return resize; }
+
+            set { resize = value; if (message != null) { message.Resize = value; CenterText(); } }
+        }
+
+        /// <summary> Effects the Image's tranparency. (0-100) (100:visible) </summary>
+        public new float Transparency
+        {
+            get { return transparency; }
+
+            set { transparency = value; if (message != null) { message.Transparency = value; } }
+        }
+
         public List<Button> ChildButtons
         {
             get { return childButtons; }
@@ -71,8 +86,8 @@ namespace CakeDefense
         {
             if (message != null)
             {
-                message.X = X + (int)((Width - message.Font.MeasureString(message.Message).X) / 2);
-                message.Y = Y + (int)((Height - message.Font.MeasureString(message.Message).Y) / 2);
+                message.X = Resized().X + (int)((Resized().Width - (message.Width * resize.X)) / 2);
+                message.Y = Resized().Y + (int)((Resized().Height - (message.Height * resize.Y)) / 2);
             }
         }
         #endregion Methods
@@ -82,7 +97,7 @@ namespace CakeDefense
         {
             base.Draw();
             if (outLineThickness > 0)
-                DrawRectangleOutline(outLineThickness, Color.FromNonPremultiplied(outlineColor.R, outlineColor.G, outlineColor.B, (byte)(outlineColor.A * (transparency / 100))), Var.BLANK_TEX);
+                ImageObject.DrawRectangleOutline(Resized(), outLineThickness, Color.FromNonPremultiplied(outlineColor.R, outlineColor.G, outlineColor.B, (byte)(outlineColor.A * (transparency / 100))), Var.BLANK_TEX, spriteBatch);
             if (message != null)
                 message.Draw();
         }
@@ -144,12 +159,12 @@ namespace CakeDefense
 
         new public int Width
         {
-            get { return (int)font.MeasureString(message).X; }
+            get { return (int)(font.MeasureString(message).X); }
         }
 
         new public int Height
         {
-            get { return (int)font.MeasureString(message).Y; }
+            get { return (int)(font.MeasureString(message).Y); }
         }
 
         #endregion Properties
@@ -158,7 +173,7 @@ namespace CakeDefense
         public override void Draw()
         {
             if (drawCenter == false)
-                SpriteBatch.DrawString(font, message, Point, TransparentColor());
+                SpriteBatch.DrawString(font, message, Point, TransparentColor(), 0, Vector2.Zero, resize, SpriteEffects.None, 0);
             else
             {
                 int bigWdth = 0;
@@ -166,11 +181,13 @@ namespace CakeDefense
                 foreach (string part in parts)
                 {
                     if (font.MeasureString(part).X > bigWdth)
-                        bigWdth = (int)font.MeasureString(part).X;
+                        bigWdth = (int)(font.MeasureString(part).X * resize.X);
                 }
                 for (int i = 0; i < parts.Length; i++)
                 {
-                    SpriteBatch.DrawString(font, parts[i], new Vector2(X + ((bigWdth - font.MeasureString(parts[i]).X) / 2), Y + (i * font.MeasureString(parts[i]).Y) + i), TransparentColor());
+                    Vector2 pos = new Vector2(X + ((bigWdth - font.MeasureString(parts[i]).X * resize.X) / 2), Y + ((font.MeasureString(" ").Y - (font.LineSpacing / 2)) * i * resize.Y));
+                    
+                    SpriteBatch.DrawString(font, parts[i], pos, TransparentColor(), 0, Vector2.Zero, resize, SpriteEffects.None, 0);
                 }
             }
         }

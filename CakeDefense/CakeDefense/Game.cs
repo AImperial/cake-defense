@@ -24,13 +24,14 @@ namespace CakeDefense
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
-        Texture2D blankTex, stripesTex, cursorTex, mainMenu, instructions, credits, gameOver, bulletTex, enemyAnimationTest, pixel, towerTex;
+        Texture2D blankTex, stripesTex, cursorTex, bulletTex, enemyAnimationTest, pixel, towerTex;
+        Dictionary<GameState, Texture2D> menuBackgrounds;
         GameTime animationTotalTime;
         TimeSpan pausedTime;
         #endregion Graphic Stuff
 
         #region General Game Stuff (GameState, music stuff, Map, HUD)
-        public enum GameState { Menu, Instructions, Credits, Game, Paused, GameOver }
+        public enum GameState { Menu, Instructions, Credits, Game, Paused, GameOver_Lose, GameOver_Win }
         private GameState gameState;
         bool debugOn, musicOn, soundEffectsOn, drawCursor;
         float difficulty;
@@ -38,8 +39,6 @@ namespace CakeDefense
         Map map;
         Cake cake;
         HUD hud;
-
-        Button turnDebugOn;
         #endregion General Game Stuff
 
         #region Keyboard / Mouse Stuff (KeyboardState, MouseState, Button Dictionary)
@@ -49,8 +48,7 @@ namespace CakeDefense
         Vector2 mousePoint;
         bool singlePress;
 
-        public enum ButtonType { Menu }
-        Dictionary<ButtonType, Rectangle[]> buttons;
+        Dictionary<GameState, List<Button>> buttons;
         #endregion Keyboard / Mouse Stuff
 
         #region Enemy Stuff (spawn stuff, enemies wave list / active list)
@@ -86,18 +84,6 @@ namespace CakeDefense
 
             singlePress = false; debugOn = false; musicOn = true; soundEffectsOn = true;
 
-            buttons = new Dictionary<ButtonType, Rectangle[]>{
-                { ButtonType.Menu,
-                    new Rectangle[] {
-                        new Rectangle(109, 124, 498, 284),
-                        new Rectangle(762, 80, 420, 145),
-                        new Rectangle(776, 387, 417, 136),
-                        new Rectangle(97, 459, 607, 195),
-                        new Rectangle(0, 0, 163, 79)
-                    }
-                }
-            };
-
             base.Initialize();
         }
 
@@ -108,8 +94,37 @@ namespace CakeDefense
         protected void InitializeAfterLoadContent()
         {
             // Most of these are in NewGame()
-            turnDebugOn = new Button(blankTex, new Vector2(25), 300, 300, 1, Color.DarkOrange, spriteBatch, new TextObject("", Vector2.Zero, mediumFont, Color.GhostWhite, spriteBatch));
-            turnDebugOn.Color = Color.Black;
+            buttons = new Dictionary<GameState, List<Button>>
+            {
+                { GameState.Menu,
+                    new List<Button> {
+                        new Button(null, new Vector2(109, 124), 498, 284, 0, Color.White, null, null),
+                        new Button(null, new Vector2(762, 80), 420, 145, 0, Color.White, null, null),
+                        new Button(null, new Vector2(776, 387), 417, 136, 0, Color.White, null, null),
+                        new Button(null, new Vector2(97, 459), 607, 195, 0, Color.White, null, null),
+                        new Button(null, new Vector2(0, 0), 163, 79, 0, Color.White, null, null)
+                    }
+                },
+                { GameState.Paused,
+                    new List<Button> {
+                        new Button(blankTex, new Vector2(25), 300, 300, 1, Color.DarkOrange, spriteBatch, new TextObject("", Vector2.Zero, mediumFont, Color.GhostWhite, spriteBatch))
+                    }
+                },
+                { GameState.GameOver_Win,
+                    new List<Button> {
+                        new Button(blankTex, new Vector2((Var.TOTAL_WIDTH - 240) / 2, (Var.TOTAL_HEIGHT - 80) / 2), 240, 80, 1, Color.DarkSlateGray, spriteBatch, new TextObject("Go To Menu", Vector2.Zero, largeFont, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch))
+                    }
+                },
+                { GameState.GameOver_Lose,
+                    new List<Button> {
+                        new Button(blankTex, new Vector2(250, (Var.TOTAL_HEIGHT - 80) / 2), 240, 80, 1, Color.DarkSlateGray, spriteBatch, new TextObject("Go To Menu", Vector2.Zero, largeFont, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch)),
+                        new Button(blankTex, new Vector2(600, (Var.TOTAL_HEIGHT - 80) / 2), 240, 80, 1, Color.DarkSlateGray, spriteBatch, new TextObject("Restart", Vector2.Zero, largeFont, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch))
+                    }
+                }
+            };
+            buttons[GameState.GameOver_Win].ForEach(bttn => bttn.Color = Color.Black);
+            buttons[GameState.GameOver_Lose].ForEach(bttn => bttn.Color = Color.Black);
+            buttons[GameState.Paused][0].Color = Color.Black;
         }
 
         protected override void LoadContent()
@@ -120,10 +135,14 @@ namespace CakeDefense
             stripesTex = this.Content.Load<Texture2D>("Stripes");
 
             #region Menu
-            mainMenu = this.Content.Load<Texture2D>("Menu/MainMenu");
-            instructions = this.Content.Load<Texture2D>("Menu/Instructions");
-            credits = this.Content.Load<Texture2D>("Menu/Credits");
-            gameOver = this.Content.Load<Texture2D>("Menu/GameOver");
+            menuBackgrounds = new Dictionary<GameState, Texture2D>
+            {
+                { GameState.Menu, this.Content.Load<Texture2D>("Menu/MainMenu") },
+                { GameState.Instructions, this.Content.Load<Texture2D>("Menu/Instructions") },
+                { GameState.Credits, this.Content.Load<Texture2D>("Menu/Credits") },
+                { GameState.GameOver_Win, this.Content.Load<Texture2D>("Menu/Win") },
+                { GameState.GameOver_Lose, this.Content.Load<Texture2D>("Menu/Lose") }
+            };
             #endregion Menu
 
             #region Spritefonts
@@ -266,52 +285,7 @@ namespace CakeDefense
                         singlePress = false;
 
                         #region Menu List Buttons
-                        if (hud.MenuButton.Focused)
-                        {
-                            for (int i = 0; i < hud.MenuButton.ChildButtons.Count; i++)
-                            {
-                                if (CheckIfClicked(hud.MenuButton.ChildButtons[i].Rectangle))
-                                {
-                                    switch (i)
-                                    {
-                                        case 0://Pause
-                                            gameState = GameState.Paused;
-                                            break;
-                                        case 1://Change Game Speed
-                                            #region Change Speed
-                                            singlePress = false;
-                                            for (int j = 0; j < hud.MenuButton.ChildButtons[i].ChildButtons.Count; j++)
-                                            {
-                                                if (CheckIfClicked(hud.MenuButton.ChildButtons[i].ChildButtons[j].Rectangle))
-                                                {
-                                                    switch (j)
-                                                    {
-                                                        case 0:
-                                                            Var.GAME_SPEED = 1;
-                                                            break;
-                                                        case 1:
-                                                            Var.GAME_SPEED = 2;
-                                                            break;
-                                                        case 2:
-                                                            Var.GAME_SPEED = 4;
-                                                            break;
-                                                    }
-
-                                                }
-
-                                            }
-                                            break;
-                                            #endregion Change Speed
-                                        case 2://Restart
-                                            NewGame();
-                                            break;
-                                        case 3://Exit
-                                            gameState = GameState.Menu;
-                                            break;
-                                    }
-                                }
-                            }
-                        }
+                        ClickGameDropDownMenuItemsIfCan();
                         #endregion Menu List Buttons
 
                         #region Select Tower / trap from List
@@ -397,47 +371,61 @@ namespace CakeDefense
                     #endregion If Mouse Clicked
 
                     if (hud.Health <= 0)
-                        gameState = GameState.GameOver;
+                        gameState = GameState.GameOver_Lose;
 
                     break;
                 #endregion GameState.Game
 
                 #region Everything else
+
+                #region Paused
                 case GameState.Paused:
                     pausedTime += gameTime.ElapsedGameTime;
-                    if (SingleKeyPress(Keys.P) || SingleKeyPress(Keys.Space) || CheckIfClicked(hud.MenuButton.ChildButtons[0].Rectangle))
+
+                    // Allows Menu items to be interactable in pause
+                    hud.Update(gameTime);
+                    if (hud.MenuButton.Focused == false)
+                        hud.StartMenuOpening(gameTime);
+                    ClickGameDropDownMenuItemsIfCan();
+
+                    if (SingleKeyPress(Keys.P) || SingleKeyPress(Keys.Space))
                     {
                         gameState = GameState.Game;
                     }
-                    else if (CheckIfClicked(turnDebugOn.Rectangle))
+                    else if (CheckIfClicked(buttons[GameState.Paused][0].Rectangle))
                     {
                         debugOn = !debugOn;
                     }
                     break;
+                #endregion Paused
+
+                #region Menu
                 case GameState.Menu:
-                    if (CheckIfClicked(buttons[ButtonType.Menu][0]))
+                    if (CheckIfClicked(buttons[gameState][0].Rectangle))
                     {
                         NewGame();
                         gameState = GameState.Game;
                     }
-                    else if (CheckIfClicked(buttons[ButtonType.Menu][1]))
+                    else if (CheckIfClicked(buttons[gameState][1].Rectangle))
                     {
                         gameState = GameState.Instructions;
                     }
-                    else if (CheckIfClicked(buttons[ButtonType.Menu][2]))
+                    else if (CheckIfClicked(buttons[gameState][2].Rectangle))
                     {
                         gameState = GameState.Credits;
                     }
-                    else if (CheckIfClicked(buttons[ButtonType.Menu][3]) && CheckForSave())
+                    else if (CheckIfClicked(buttons[gameState][3].Rectangle) && CheckForSave())
                     {
                         ContinueGame();
                         gameState = GameState.Game;
                     }
-                    else if (CheckIfClicked(buttons[ButtonType.Menu][4]) || SingleKeyPress(Keys.Escape))
+                    else if (CheckIfClicked(buttons[gameState][4].Rectangle) || SingleKeyPress(Keys.Escape))
                     {
                         Environment.Exit(0);
                     }
                     break;
+                #endregion Menu
+
                 case GameState.Instructions:
                     if (mouseState.RightButton == ButtonState.Pressed)
                         gameState = GameState.Menu;
@@ -446,10 +434,28 @@ namespace CakeDefense
                     if (mouseState.RightButton == ButtonState.Pressed)
                         gameState = GameState.Menu;
                     break;
-                case GameState.GameOver:
-                    if (SingleMouseClick() || SingleKeyPress(Keys.Space))
+
+                #region GameOver (Win/Lose)
+                case GameState.GameOver_Win:
+                case GameState.GameOver_Lose:
+                    foreach (Button bttn in buttons[gameState])
+                    {
+                        bttn.Resize = Vector2.One;
+                        if (bttn.Intersects(mouseRect))
+                            bttn.Resize = new Vector2(1.1f);
+                    }
+
+                    if (SingleKeyPress(Keys.Space) || CheckIfClicked(buttons[gameState][0].Rectangle))
                         gameState = GameState.Menu;
+
+                    if (gameState == GameState.GameOver_Lose)
+                    {
+                        if (SingleKeyPress(Keys.R) || CheckIfClicked(buttons[gameState][1].Rectangle))
+                            ContinueGame();
+                    }
                     break;
+                #endregion GameOver (Win/Lose)
+
                 #endregion Everything else
             }
             base.Update(gameTime);
@@ -510,32 +516,32 @@ namespace CakeDefense
                 if (gameState == GameState.Paused)
                 {
                     spriteBatch.Draw(blankTex, Var.SCREEN_SIZE, Var.PAUSE_GRAY);
-                    hud.MenuButton.ChildButtons[0].Draw();
+                    hud.DrawDropDownMenu();
                     spriteBatch.DrawString(largeFont, "Press [P] or [Space] or click \'Pause\'", new Vector2(Var.GAME_AREA.X + (Var.GAME_AREA.Width - largeFont.MeasureString("Press [P] or [Space] or click \'Pause\'").X) / 2, Var.TOTAL_HEIGHT - largeFont.MeasureString("-").Y - 10), Color.YellowGreen);
 
                     #region Debug
                     if (debugOn)
                     {
-                        if (mouseRect.Intersects(turnDebugOn.Rectangle))
+                        if (mouseRect.Intersects(buttons[gameState][0].Rectangle))
                         {
-                            turnDebugOn.Message.Message = "Fine, turn me off.\n\"You can't\nHANDLE\nthe TRUTH!\"";
-                            turnDebugOn.CenterText();
-                            turnDebugOn.Draw();
+                            buttons[gameState][0].Message.Message = "Fine, turn me off.\n\"You can't\nHANDLE\nthe TRUTH!\"";
+                            buttons[gameState][0].CenterText();
+                            buttons[gameState][0].Draw();
                         }
                         else
                         {
-                            turnDebugOn.Message.Message = "Cheater.";
-                            turnDebugOn.CenterText();
-                            turnDebugOn.Draw();
+                            buttons[gameState][0].Message.Message = "Cheater.";
+                            buttons[gameState][0].CenterText();
+                            buttons[gameState][0].Draw();
                         }
                     }
                     else
                     {
-                        if(mouseRect.Intersects(turnDebugOn.Rectangle))
+                        if (mouseRect.Intersects(buttons[gameState][0].Rectangle))
                         {
-                            turnDebugOn.Message.Message = "Turn on Debugging.\nYou know you wanna.";
-                            turnDebugOn.CenterText();
-                            turnDebugOn.Draw();
+                            buttons[gameState][0].Message.Message = "Turn on Debugging.\nYou know you wanna.";
+                            buttons[gameState][0].CenterText();
+                            buttons[gameState][0].Draw();
                         }
                     }
                     #endregion Debug
@@ -545,21 +551,25 @@ namespace CakeDefense
                 #endregion GameState.Paused
 
                 case GameState.Menu:
-                    spriteBatch.Draw(mainMenu, Var.SCREEN_SIZE, Color.White);
+                    spriteBatch.Draw(menuBackgrounds[gameState], Var.SCREEN_SIZE, Color.White);
                     if (CheckForSave() == false)
-                        spriteBatch.Draw(blankTex, buttons[ButtonType.Menu][3], Color.Black);
+                        spriteBatch.Draw(blankTex, buttons[gameState][3].Rectangle, Color.Black);
                     break;
                 case GameState.Instructions:
-                    spriteBatch.Draw(instructions, Var.SCREEN_SIZE, Color.White);
+                    spriteBatch.Draw(menuBackgrounds[gameState], Var.SCREEN_SIZE, Color.White);
                     spriteBatch.DrawString(mediumFont, "Right click to return", new Vector2(15, Var.TOTAL_HEIGHT - mediumFont.MeasureString("-").Y - 10), Color.DarkGreen);
                     break;
                 case GameState.Credits:
-                    spriteBatch.Draw(credits, Var.SCREEN_SIZE, Color.White);
+                    spriteBatch.Draw(menuBackgrounds[gameState], Var.SCREEN_SIZE, Color.White);
                     spriteBatch.DrawString(mediumFont, "Right click to return", new Vector2(15, Var.TOTAL_HEIGHT - mediumFont.MeasureString("-").Y - 10), Color.DarkGreen);
                     break;
-                case GameState.GameOver:
-                    spriteBatch.Draw(gameOver, Var.SCREEN_SIZE, Color.White);
-                    spriteBatch.DrawString(mediumFont, "Click or Press Space to continue", new Vector2(15, Var.TOTAL_HEIGHT - mediumFont.MeasureString("-").Y - 10), Color.DarkGreen);
+                case GameState.GameOver_Win:
+                    spriteBatch.Draw(menuBackgrounds[gameState], Var.SCREEN_SIZE, Color.White);
+                    buttons[gameState].ForEach(bttn => bttn.Draw());
+                    break;
+                case GameState.GameOver_Lose:
+                    spriteBatch.Draw(menuBackgrounds[gameState], Var.SCREEN_SIZE, Color.White);
+                    buttons[gameState].ForEach(bttn => bttn.Draw());
                     break;
                 #endregion Everything else
             }
@@ -571,7 +581,7 @@ namespace CakeDefense
         }
         #endregion Draw
 
-        #region Mouse / Keyboard Stuff
+        #region QuickKeys / Mouse / Keyboard Stuff
 
         #region Quick Keys
         /// <summary> Called in GameState.Game </summary>
@@ -595,7 +605,7 @@ namespace CakeDefense
             }
             if (SingleKeyPress(Keys.R))
             {
-                NewGame();
+                ContinueGame();
             }
             if (SingleKeyPress(Keys.Escape))
             {
@@ -653,7 +663,7 @@ namespace CakeDefense
         }
         #endregion CheckIfClickedd (Includes SinglePress)
 
-        #endregion Mouse / Keyboard Stuff
+        #endregion QuickKeys / Mouse / Keyboard Stuff
 
         #region NextLevel / New Game / LoadGame / SaveGame
 
@@ -666,7 +676,7 @@ namespace CakeDefense
 
             if (waves.Count == 0)
             {
-                gameState = GameState.GameOver;
+                gameState = GameState.GameOver_Win;
                 DeleteSave();
             }
         }
@@ -675,6 +685,7 @@ namespace CakeDefense
         #region New / Continued Game
         private void SetUpGame()
         {
+            gameState = GameState.Game;
             Var.GAME_SPEED = 1;
             difficulty = 1f;
             heldItem = null;
@@ -959,10 +970,10 @@ namespace CakeDefense
             if (type == Var.TowerType.Basic)
             {
                 return new Tower(
-                    200,
+                    150,
                     health,
                     100,
-                    2,
+                    1,
                     500,//Fire Rate in ms
                     Var.BASE_BULLET_SPEED,
                     Var.TILE_SIZE,
@@ -1046,63 +1057,122 @@ namespace CakeDefense
 
         #endregion New Enemy / Tower / Trap
 
+        #region Other
+
+        #region Dropdown Menu
+        public void ClickGameDropDownMenuItemsIfCan()
+        {
+            if (hud.MenuButton.Focused)
+            {
+                for (int i = 0; i < hud.MenuButton.ChildButtons.Count; i++)
+                {
+                    if (CheckIfClicked(hud.MenuButton.ChildButtons[i].Rectangle))
+                    {
+                        switch (i)
+                        {
+                            case 0://Pause
+                                if (gameState == GameState.Game)
+                                    gameState = GameState.Paused;
+                                else
+                                    gameState = GameState.Game;
+                                break;
+                            case 1://Change Game Speed
+                                #region Change Speed
+                                singlePress = false;
+                                for (int j = 0; j < hud.MenuButton.ChildButtons[i].ChildButtons.Count; j++)
+                                {
+                                    if (CheckIfClicked(hud.MenuButton.ChildButtons[i].ChildButtons[j].Rectangle))
+                                    {
+                                        switch (j)
+                                        {
+                                            case 0:
+                                                Var.GAME_SPEED = 1;
+                                                break;
+                                            case 1:
+                                                Var.GAME_SPEED = 2;
+                                                break;
+                                            case 2:
+                                                Var.GAME_SPEED = 4;
+                                                break;
+                                        }
+
+                                    }
+
+                                }
+                                break;
+                                #endregion Change Speed
+                            case 2://Restart
+                                ContinueGame();
+                                break;
+                            case 3://Exit
+                                gameState = GameState.Menu;
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+        #endregion Dropdown Menu
+
         #region Draw Circle
-        // NOTE: this code taken from MessiahAndrw at http://forums.create.msdn.com/forums/t/7414.aspx (and then modified some =p)
+                // NOTE: this code taken from MessiahAndrw at http://forums.create.msdn.com/forums/t/7414.aspx (and then modified some =p)
         
-        /// <summary>
-        /// Creates a circle starting from 0, 0.
-        /// </summary>
-        /// <param name="radius">The radius (half the width) of the circle.</param>
-        /// <param name="sides">The number of sides on the circle (the more the detailed).</param>
-        public void DrawCircle(Vector2 cCenter, float radius, int sides, Color color)
-        {
-            List<Vector2> vectors = new List<Vector2>();
+                /// <summary>
+                /// Creates a circle starting from 0, 0.
+                /// </summary>
+                /// <param name="radius">The radius (half the width) of the circle.</param>
+                /// <param name="sides">The number of sides on the circle (the more the detailed).</param>
+                public void DrawCircle(Vector2 cCenter, float radius, int sides, Color color)
+                {
+                    List<Vector2> vectors = new List<Vector2>();
 
-            float max = 2 * (float)Math.PI;
-            float step = max / (float)sides;
+                    float max = 2 * (float)Math.PI;
+                    float step = max / (float)sides;
 
-            for (float theta = 0; theta < max; theta += step)
-            {
-                vectors.Add(new Vector2(cCenter.X + radius * (float)Math.Cos((double)theta),
-                    cCenter.Y + radius * (float)Math.Sin((double)theta)));
-            }
+                    for (float theta = 0; theta < max; theta += step)
+                    {
+                        vectors.Add(new Vector2(cCenter.X + radius * (float)Math.Cos((double)theta),
+                            cCenter.Y + radius * (float)Math.Sin((double)theta)));
+                    }
 
-            // then add the first vector again so it's a complete loop
-            vectors.Add(vectors.First());
+                    // then add the first vector again so it's a complete loop
+                    vectors.Add(vectors.First());
 
-            RenderCircle(vectors, color);
-        }
+                    RenderCircle(vectors, color);
+                }
 
-        /// <summary>
-        /// Renders the primtive line object.
-        /// </summary>
-        /// <param name="spriteBatch">The sprite batch to use to render the primitive line object.</param>
-        public void RenderCircle(List<Vector2> vectors, Color color)
-        {
-            if (vectors.Count < 2)
-                return;
+                /// <summary>
+                /// Renders the primtive line object.
+                /// </summary>
+                /// <param name="spriteBatch">The sprite batch to use to render the primitive line object.</param>
+                public void RenderCircle(List<Vector2> vectors, Color color)
+                {
+                    if (vectors.Count < 2)
+                        return;
 
-            Vector2 start, end, scale;
-            int lineWidth = 1;
-            float rotation;
+                    Vector2 start, end, scale;
+                    int lineWidth = 1;
+                    float rotation;
 
-            for (int i = 1; i <= vectors.Count; i++)
-            {
-                start = vectors[i - 1];
-                if (i == vectors.Count)
-                    end = vectors[0];
-                else
-                    end = vectors[i];
+                    for (int i = 1; i <= vectors.Count; i++)
+                    {
+                        start = vectors[i - 1];
+                        if (i == vectors.Count)
+                            end = vectors[0];
+                        else
+                            end = vectors[i];
 
-                scale = new Vector2(Vector2.Distance(end, start), lineWidth);
+                        scale = new Vector2(Vector2.Distance(end, start), lineWidth);
 
-                // Calculate the rotation
-                rotation = (float)Math.Atan2(end.Y - start.Y, end.X - start.X);
+                        // Calculate the rotation
+                        rotation = (float)Math.Atan2(end.Y - start.Y, end.X - start.X);
 
-                // Draw
-                spriteBatch.Draw(pixel, start, null, color, rotation, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
-            }
-        }
-        #endregion Draw Circle
+                        // Draw
+                        spriteBatch.Draw(pixel, start, null, color, rotation, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
+                    }
+                }
+                #endregion Draw Circle
+
+        #endregion Other
     }
 }
