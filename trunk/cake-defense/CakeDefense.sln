@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CakeDefense", "CakeDefense\CakeDefense\CakeDefense.csproj", "{237CA0C7-F34E-47A2-ADC8-17987478A2A2}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "CakeDefenseContent", "CakeDefense\CakeDefenseContent\CakeDefenseContent.contentproj", "{D4D5A295-4196-4B7A-9522-797B96D08AC5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{237CA0C7-F34E-47A2-ADC8-17987478A2A2}.Debug|x86.ActiveCfg = Debug|x86
+		{237CA0C7-F34E-47A2-ADC8-17987478A2A2}.Debug|x86.Build.0 = Debug|x86
+		{237CA0C7-F34E-47A2-ADC8-17987478A2A2}.Release|x86.ActiveCfg = Release|x86
+		{237CA0C7-F34E-47A2-ADC8-17987478A2A2}.Release|x86.Build.0 = Release|x86
+		{D4D5A295-4196-4B7A-9522-797B96D08AC5}.Debug|x86.ActiveCfg = Debug|x86
+		{D4D5A295-4196-4B7A-9522-797B96D08AC5}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
