@@ -25,10 +25,11 @@ namespace CakeDefense
         protected int outLineThickness;
         protected Color outlineColor;
         protected List<Button> childButtons;
+        protected ButtonEvent bEvent;
         #endregion Attributes
 
         #region Constructor
-        public Button(Texture2D texture, Vector2 loc, int width, int height, int borderSize, Color borderColor, SpriteBatch sprite, TextObject message)
+        public Button(Texture2D texture, Vector2 loc, int width, int height, int borderSize, Color borderColor, SpriteBatch sprite, TextObject message, ButtonEvent buttonEvent)
             : base(texture, (int)loc.X, (int)loc.Y, width, height, sprite)
         {
             this.message = message;
@@ -38,6 +39,7 @@ namespace CakeDefense
             if (message != null && message.Point == Vector2.Zero)
                 CenterText();
             focused = false;
+            bEvent = buttonEvent;
         }
         #endregion Constructor
 
@@ -89,6 +91,12 @@ namespace CakeDefense
                 message.X = Resized().X + (int)((Resized().Width - (message.Width * resize.X)) / 2);
                 message.Y = Resized().Y + (int)((Resized().Height - (message.Height * resize.Y)) / 2);
             }
+        }
+
+        public void Click()
+        {
+            if (bEvent != null)
+                bEvent(this);
         }
         #endregion Methods
 

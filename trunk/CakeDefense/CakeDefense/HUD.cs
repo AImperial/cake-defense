@@ -30,7 +30,7 @@ namespace CakeDefense
         #endregion Attributes
 
         #region Constructor
-        public HUD(SpriteBatch sprite, int money, Texture2D infoBoxTex, SpriteFont font, Cake cake, List<GameObject> towerTrapImages, Texture2D stripes)
+        public HUD(SpriteBatch sprite, int money, Texture2D infoBoxTex, SpriteFont font, Cake cake, List<GameObject> towerTrapImages, Texture2D stripes, Game game)
         {
             this.spriteBatch = sprite;
             this.money = money;
@@ -47,16 +47,17 @@ namespace CakeDefense
                 item.Image.Transparency = 100;
             }
 
-            moneyDisplay = new Button(infoBoxTex, new Vector2(2, 2), 120, 40, 2, Color.DarkGray, sprite, new TextObject("$" + money, Vector2.Zero, font, Color.Black, sprite));
+            moneyDisplay = new Button(infoBoxTex, new Vector2(2, 2), 120, 40, 2, Color.DarkGray, sprite, new TextObject("$" + money, Vector2.Zero, font, Color.Black, sprite), null);
             moneyDisplay.Color = Color.DarkKhaki;
-            cakeDisplay = new Button(infoBoxTex, new Vector2(125, 2), 120, 40, 2, Color.DarkGray, sprite, new TextObject("Cake: " + cake.CurrentHealth, Vector2.Zero, font, Color.Black, sprite));
+            cakeDisplay = new Button(infoBoxTex, new Vector2(125, 2), 120, 40, 2, Color.DarkGray, sprite, new TextObject("Cake: " + cake.CurrentHealth, Vector2.Zero, font, Color.Black, sprite), null);
             cakeDisplay.Color = Color.DarkKhaki;
 
-            activeMenuDisplay = new Button(infoBoxTex, new Vector2(Var.TOTAL_WIDTH - 120 - 2, 2), 120, 40, 2, Color.LightCyan, sprite, new TextObject("Menu", Vector2.Zero, font, Color.GhostWhite, sprite));
+            activeMenuDisplay = new Button(infoBoxTex, new Vector2(Var.TOTAL_WIDTH - 120 - 2, 2), 120, 40, 2, Color.LightCyan, sprite, new TextObject("Menu", Vector2.Zero, font, Color.GhostWhite, sprite), null);
             activeMenuDisplay.Color = Color.Navy;
-            saveMessage = new Button(infoBoxTex, new Vector2(Var.GAME_AREA.X + 2, Var.GAME_AREA.Bottom - 40 - 2), 120, 40, 2, Color.MidnightBlue, sprite, new TextObject("Saved!", Vector2.Zero, font, Color.LightCyan, sprite));
+            saveMessage = new Button(infoBoxTex, new Vector2(Var.GAME_AREA.X + 2, Var.GAME_AREA.Bottom - 40 - 2), 120, 40, 2, Color.MidnightBlue, sprite, new TextObject("Saved!", Vector2.Zero, font, Color.LightCyan, sprite), null);
             saveMessage.Color = Color.Navy;
-            PopulateMenuList();
+            PopulateMenuList(game);
+            time = game.AnimationTime;
             menuTimer = new Timer(Var.GAME_SPEED);
             saveTimer = new Timer();
         }
@@ -132,41 +133,22 @@ namespace CakeDefense
                 {
                     bttn.Y = activeMenuDisplay.ChildButtons[1].Y + 1;
                     bttn.CenterText();
-                    bttn.Message.Color = activeMenuDisplay.Message.Color;
                 }
             }
-
-            #region Game Speed Buttons
-            List<Button> speedList = activeMenuDisplay.ChildButtons[1].ChildButtons;
-            speedList.ForEach(bttn => bttn.Message.Color = activeMenuDisplay.Message.Color);
-
-            if (Var.GAME_SPEED == 1)
-            {
-                speedList[0].Message.Color = Color.Multiply(speedList[0].Message.Color, .5f);
-            }
-            else if (Var.GAME_SPEED == 2)
-            {
-                speedList[1].Message.Color = Color.Multiply(speedList[1].Message.Color, .5f);
-            }
-            else if (Var.GAME_SPEED == 4)
-            {
-                speedList[2].Message.Color = Color.Multiply(speedList[2].Message.Color, .5f);
-            }
-            #endregion Game Speed Buttons
         }
 
-        private void PopulateMenuList()
+        private void PopulateMenuList(Game game)
         {
             Button parent = activeMenuDisplay;
             parent.ChildButtons = new List<Button>();
             parent.ChildButtons.Add(new Button(parent.Texture, parent.Point, parent.Width, parent.Height, 2, Color.LightCyan, parent.SpriteBatch,
-                new TextObject("Pause", Vector2.Zero, parent.Message.Font, Color.GhostWhite, parent.SpriteBatch)));
+                new TextObject("Pause", Vector2.Zero, parent.Message.Font, Color.GhostWhite, parent.SpriteBatch), new ButtonEvent(game.SwitchPauseAndGame)));
             parent.ChildButtons.Add(new Button(parent.Texture, parent.Point, parent.Width, parent.Height, 2, Color.LightCyan, parent.SpriteBatch,
-                null));
+                null, null));
             parent.ChildButtons.Add(new Button(parent.Texture, parent.Point, parent.Width, parent.Height, 2, Color.LightCyan, parent.SpriteBatch,
-                new TextObject("Restart", Vector2.Zero, parent.Message.Font, Color.GhostWhite, parent.SpriteBatch)));
+                new TextObject("Restart", Vector2.Zero, parent.Message.Font, Color.GhostWhite, parent.SpriteBatch), new ButtonEvent(game.RestartGame)));
             parent.ChildButtons.Add(new Button(parent.Texture, parent.Point, parent.Width, parent.Height, 2, Color.LightCyan, parent.SpriteBatch,
-                new TextObject("Exit", Vector2.Zero, parent.Message.Font, Color.GhostWhite, parent.SpriteBatch)));
+                new TextObject("Exit", Vector2.Zero, parent.Message.Font, Color.GhostWhite, parent.SpriteBatch), new ButtonEvent(game.GoToMenu)));
 
             parent.ChildButtons.ForEach(bttn => bttn.Color = Color.Navy);
 
@@ -176,11 +158,11 @@ namespace CakeDefense
             int tempWidth = parent.Width / 3;
             parent.ChildButtons = new List<Button>();
             parent.ChildButtons.Add(new Button(parent.Texture, parent.Point + Vector2.One, tempWidth - 2, parent.Height - 2, 2, Color.LightCyan, parent.SpriteBatch,
-                new TextObject("1x", Vector2.Zero, activeMenuDisplay.Message.Font, Color.GhostWhite, parent.SpriteBatch)));
+                new TextObject("1x", Vector2.Zero, activeMenuDisplay.Message.Font, Color.Multiply(Color.GhostWhite, .5f), parent.SpriteBatch), new ButtonEvent(game.GameSpeedOne)));
             parent.ChildButtons.Add(new Button(parent.Texture, parent.Point + new Vector2(tempWidth, 0) + Vector2.One, tempWidth, parent.Height - 2, 2, Color.LightCyan, parent.SpriteBatch,
-                new TextObject("2x", Vector2.Zero, activeMenuDisplay.Message.Font, Color.GhostWhite, parent.SpriteBatch)));
+                new TextObject("2x", Vector2.Zero, activeMenuDisplay.Message.Font, Color.GhostWhite, parent.SpriteBatch), new ButtonEvent(game.GameSpeedTwo)));
             parent.ChildButtons.Add(new Button(parent.Texture, parent.Point + new Vector2(tempWidth * 2, 0) + Vector2.One, tempWidth, parent.Height - 2, 2, Color.LightCyan, parent.SpriteBatch,
-                new TextObject("4x", Vector2.Zero, activeMenuDisplay.Message.Font, Color.GhostWhite, parent.SpriteBatch)));
+                new TextObject("4x", Vector2.Zero, activeMenuDisplay.Message.Font, Color.GhostWhite, parent.SpriteBatch), new ButtonEvent(game.GameSpeedFour)));
 
             parent.ChildButtons.ForEach(bttn => bttn.Color = Color.Navy);
         }
@@ -208,7 +190,6 @@ namespace CakeDefense
 
         public void GameSaved()
         {
-            saveMessage.Transparency = saveMessage.Message.Transparency = 100;
             saveTimer.Start(time, Var.SAVE_MESSAGE_TIME);
         }
 
