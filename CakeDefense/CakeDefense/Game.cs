@@ -26,7 +26,7 @@ namespace CakeDefense
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
         Texture2D blankTex, stripesTex, cursorTex, bulletTex, enemyAnimationTest, pixel, towerTex;
         Dictionary<GameState, Texture2D> menuBackgrounds;
-        GameTime animationTotalTime;
+        GameTime animationTotalTime; public GameTime AnimationTime { get { return animationTotalTime; } }
         TimeSpan pausedTime;
         #endregion Graphic Stuff
 
@@ -54,6 +54,7 @@ namespace CakeDefense
         #region Enemy Stuff (spawn stuff, enemies wave list / active list)
         List<Path> paths;
         List<Enemy> enemies;
+        List<List<Enemy>> prevWaves;
         List<Queue<Enemy>> waves;
         Timer spawnTimer;
         #endregion Enemy Stuff
@@ -98,27 +99,27 @@ namespace CakeDefense
             {
                 { GameState.Menu,
                     new List<Button> {
-                        new Button(null, new Vector2(109, 124), 498, 284, 0, Color.White, null, null),
-                        new Button(null, new Vector2(762, 80), 420, 145, 0, Color.White, null, null),
-                        new Button(null, new Vector2(776, 387), 417, 136, 0, Color.White, null, null),
-                        new Button(null, new Vector2(97, 459), 607, 195, 0, Color.White, null, null),
-                        new Button(null, new Vector2(0, 0), 163, 79, 0, Color.White, null, null)
+                        new Button(null, new Vector2(109, 124), 498, 284, 0, Color.White, null, null, null),
+                        new Button(null, new Vector2(762, 80), 420, 145, 0, Color.White, null, null, null),
+                        new Button(null, new Vector2(776, 387), 417, 136, 0, Color.White, null, null, null),
+                        new Button(null, new Vector2(97, 459), 607, 195, 0, Color.White, null, null, null),
+                        new Button(null, new Vector2(0, 0), 163, 79, 0, Color.White, null, null, null)
                     }
                 },
                 { GameState.Paused,
                     new List<Button> {
-                        new Button(blankTex, new Vector2(25), 300, 300, 1, Color.DarkOrange, spriteBatch, new TextObject("", Vector2.Zero, mediumFont, Color.GhostWhite, spriteBatch))
+                        new Button(blankTex, new Vector2(25), 300, 300, 1, Color.DarkOrange, spriteBatch, new TextObject("", Vector2.Zero, mediumFont, Color.GhostWhite, spriteBatch), null)
                     }
                 },
                 { GameState.GameOver_Win,
                     new List<Button> {
-                        new Button(blankTex, new Vector2((Var.TOTAL_WIDTH - 240) / 2, (Var.TOTAL_HEIGHT - 80) / 2), 240, 80, 1, Color.DarkSlateGray, spriteBatch, new TextObject("Go To Menu", Vector2.Zero, largeFont, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch))
+                        new Button(blankTex, new Vector2((Var.TOTAL_WIDTH - 240) / 2, (Var.TOTAL_HEIGHT - 80) / 2), 240, 80, 2, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch, new TextObject("Go To Menu", Vector2.Zero, largeFont, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch), new ButtonEvent(GoToMenu))
                     }
                 },
                 { GameState.GameOver_Lose,
                     new List<Button> {
-                        new Button(blankTex, new Vector2(250, (Var.TOTAL_HEIGHT - 80) / 2), 240, 80, 1, Color.DarkSlateGray, spriteBatch, new TextObject("Go To Menu", Vector2.Zero, largeFont, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch)),
-                        new Button(blankTex, new Vector2(600, (Var.TOTAL_HEIGHT - 80) / 2), 240, 80, 1, Color.DarkSlateGray, spriteBatch, new TextObject("Restart", Vector2.Zero, largeFont, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch))
+                        new Button(blankTex, new Vector2(250, (Var.TOTAL_HEIGHT - 80) / 2), 240, 80, 2, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch, new TextObject("Go To Menu", Vector2.Zero, largeFont, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch), new ButtonEvent(GoToMenu)),
+                        new Button(blankTex, new Vector2(600, (Var.TOTAL_HEIGHT - 80) / 2), 240, 80, 2, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch, new TextObject("Restart", Vector2.Zero, largeFont, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch), new ButtonEvent(RestartGame))
                     }
                 }
             };
@@ -184,47 +185,16 @@ namespace CakeDefense
             {
                 #region GameState.Game
                 case GameState.Game:
-                    drawCursor = true;
 
+                    drawCursor = true;
                     QuickKeys();
-                    spawnTimer.Update(animationTotalTime, Var.GAME_SPEED);
 
                     if (heldItem != null) {
                         heldItem.Center = mousePoint;
                         drawCursor = false;
                     }
 
-                    #region Wave Stuff
-                    if (waves.Count > 0 && waves[0].Count > 0 && spawnTimer.Finished)
-                    {
-                        enemies.Add(waves[0].Dequeue());
-                        enemies[enemies.Count - 1].Start(animationTotalTime);
-
-                        if (waves[0].Count > 0)
-                            spawnTimer.Start(animationTotalTime, Var.TIME_BETWEEN_SPAWNS);
-                        else
-                            spawnTimer.Start(animationTotalTime, Var.TIME_BETWEEN_WAVES);
-
-                        if (waves.Count == 1 && waves[0].Count == 0)
-                        {
-                            waves.RemoveAt(0);
-                            wave = 0;
-                            SaveGame();//save
-                            Console.WriteLine("saved");
-                        }
-                    }
-                    else if (waves.Count > 0 && waves[0].Count == 0 && spawnTimer.Finished)
-                    {
-                        waves.RemoveAt(0);
-                        wave++;
-                        SaveGame();//save
-                        Console.WriteLine("saved");
-                    }
-                    else if (waves.Count == 0 && enemies.Count == 0)
-                    {
-                        NextLevel();
-                    }
-                    #endregion Wave Stuff
+                    NextWave(); // If it can begins next wave
                     
                     for (int i = 0; i < enemies.Count; i++)
                     {
@@ -240,13 +210,11 @@ namespace CakeDefense
                     towers.ForEach(tower => tower.Fire(enemies));
                     traps.ForEach(trap => traps.Remove(trap.RemoveIfCan()));
 
-                    #region Collision
                     foreach(Tower tower in towers)
                     {
                         foreach(Enemy enemy in enemies)
                             tower.CheckCollision(enemy);
                     }
-                    #endregion Collision
 
                     hud.Update(animationTotalTime);
 
@@ -386,6 +354,7 @@ namespace CakeDefense
                     hud.Update(gameTime);
                     if (hud.MenuButton.Focused == false)
                         hud.StartMenuOpening(gameTime);
+
                     ClickGameDropDownMenuItemsIfCan();
 
                     if (SingleKeyPress(Keys.P) || SingleKeyPress(Keys.Space))
@@ -441,17 +410,13 @@ namespace CakeDefense
                     foreach (Button bttn in buttons[gameState])
                     {
                         bttn.Resize = Vector2.One;
+
                         if (bttn.Intersects(mouseRect))
-                            bttn.Resize = new Vector2(1.1f);
-                    }
-
-                    if (SingleKeyPress(Keys.Space) || CheckIfClicked(buttons[gameState][0].Rectangle))
-                        gameState = GameState.Menu;
-
-                    if (gameState == GameState.GameOver_Lose)
-                    {
-                        if (SingleKeyPress(Keys.R) || CheckIfClicked(buttons[gameState][1].Rectangle))
-                            ContinueGame();
+                        {
+                            bttn.Resize = new Vector2(1.025f);
+                            if (CheckIfClicked(bttn.Rectangle))
+                                bttn.Click();
+                        }
                     }
                     break;
                 #endregion GameOver (Win/Lose)
@@ -665,22 +630,7 @@ namespace CakeDefense
 
         #endregion QuickKeys / Mouse / Keyboard Stuff
 
-        #region NextLevel / New Game / LoadGame / SaveGame
-
-        #region Next Level
-        public void NextLevel()
-        {
-            level++;
-            wave = 0;
-            LoadWaves(level, wave);
-
-            if (waves.Count == 0)
-            {
-                gameState = GameState.GameOver_Win;
-                DeleteSave();
-            }
-        }
-        #endregion Next Level
+        #region NextLevel-Wave / New-Continue Game / Load-Save File / Load Waves
 
         #region New / Continued Game
         private void SetUpGame()
@@ -695,6 +645,7 @@ namespace CakeDefense
             towers = new List<Tower>();
             traps = new List<Trap>();
             waves = new List<Queue<Enemy>>();
+            prevWaves = new List<List<Enemy>>();
             spawnTimer = new Timer(Var.GAME_SPEED);
         }
 
@@ -717,7 +668,7 @@ namespace CakeDefense
         public void ContinueGame()
         {
             SetUpGame();
-            LoadGame();
+            LoadFile();
 
             // HUD / Cake / Map declared in LoadGame()
 
@@ -739,9 +690,72 @@ namespace CakeDefense
 
             cake = new Cake(cakeLeft, 600, 80, 120, 120, spriteBatch, blankTex);
             hud = new HUD(spriteBatch, money, blankTex, mediumFont, cake,
-                selectionList, stripesTex);
+                selectionList, stripesTex, this);
         }
         #endregion New / Continued Game
+
+        #region Next Wave / Level
+        public void NextWave()
+        {
+            spawnTimer.Update(animationTotalTime, Var.GAME_SPEED);
+
+            if (waves.Count > 0 && waves[0].Count > 0 && spawnTimer.Finished)
+            {
+                enemies.Add(waves[0].Dequeue());
+                enemies.Last().Start(animationTotalTime);
+
+                if (waves[0].Count > 0)
+                    spawnTimer.Start(animationTotalTime, Var.TIME_BETWEEN_SPAWNS);
+                else
+                    spawnTimer.Start(animationTotalTime, Var.TIME_BETWEEN_WAVES);
+
+                if (waves.Count == 1 && waves[0].Count == 0 && enemies.Count == 0)
+                {
+                    waves.RemoveAt(0);
+                    wave = 0;
+                    NextLevel();
+                }
+            }
+            if (waves.Count > 1 && waves[0].Count == 0 && spawnTimer.Finished)
+            {
+                waves.RemoveAt(0);
+                wave++;
+                prevWaves.Add(waves[0].ToList());
+            }
+            if (waves.Count == 0 && enemies.Count == 0)
+            {
+                NextLevel();
+            }
+
+            if (prevWaves.Count >= 1)
+            {
+                bool waveAlive = false;
+                foreach (Enemy enemy in prevWaves[0])
+                {
+                    if (enemy.IsActive || enemy.IsSpawning)
+                        waveAlive = true;
+                }
+                if (waveAlive == false)
+                {
+                    prevWaves.RemoveAt(0);
+                    SaveFile();
+                }
+            }
+        }
+
+        public void NextLevel()
+        {
+            level++;
+            wave = 0;
+            LoadWaves(level, wave);
+
+            if (waves.Count == 0)
+            {
+                gameState = GameState.GameOver_Win;
+                DeleteSave();
+            }
+        }
+        #endregion Next Wave / Level
 
         #region Load Waves
         /// <summary> Loads wave data from a .lvl file. </summary>
@@ -781,21 +795,24 @@ namespace CakeDefense
                 wave++;
                 difficulty += Var.WAVES_DIFFICULTY_INCREASE;
             }
+            wave = waveNum;
+            if (waves.Count > 0)
+                prevWaves.Add(waves[0].ToList());
         }
         #endregion Load Waves
 
-        #region Load / Save Game
+        #region Load / Save File
 
         #region Load
         /// <summary> Loads Game info such as money, cake, level, wave, saved towers, and saved traps. also MAP is created here. </summary>
-        public void LoadGame()
+        public void LoadFile()
         {
             if (File.Exists("Save.sav"))
             {
                 StreamReader reader = new StreamReader("Save.sav");
                 string[] infoArray = null;
                 string firstLine = null;
-                if ((firstLine = reader.ReadLine()) != null)
+                if ((firstLine = reader.ReadLine()) != "")
                 {
                     if (firstLine.Contains("//"))
                         firstLine = firstLine.Remove(firstLine.IndexOf("//"));
@@ -815,7 +832,8 @@ namespace CakeDefense
                     while (curType == "--Towers--")
                     {
                         firstLine = reader.ReadLine();
-                        if (firstLine == null || (firstLine[0] == '-' && firstLine[1] == '-')) {
+                        if (firstLine == null || (firstLine[0] == '-' && firstLine[1] == '-'))
+                        {
                             curType = firstLine;
                             break;
                         }
@@ -855,7 +873,7 @@ namespace CakeDefense
         #endregion Load
 
         #region Save
-        public void SaveGame()
+        public void SaveFile()
         {
             StreamWriter writer = new StreamWriter("Save.sav");
             // 0-Money ||| 1-CakeLeft ||| 2-Level ||| 3-Wave
@@ -877,6 +895,7 @@ namespace CakeDefense
         public void DeleteSave()
         {
             StreamWriter writer = new StreamWriter("Save.sav");
+            writer.Write("");
             writer.Close();
             writer.Dispose();
         }
@@ -901,9 +920,9 @@ namespace CakeDefense
         }
         #endregion Check If Saved Game
 
-        #endregion Load / Save Game
+        #endregion Load / Save File
 
-        #endregion New Game / LoadGame / SaveGame
+        #endregion NextLevel-Wave / New-Continue Game / Load-Save File / Load Waves
 
         #region New Enemy / Tower / Trap
 
@@ -973,7 +992,7 @@ namespace CakeDefense
                     150,
                     health,
                     100,
-                    1,
+                    2,
                     500,//Fire Rate in ms
                     Var.BASE_BULLET_SPEED,
                     Var.TILE_SIZE,
@@ -1057,6 +1076,49 @@ namespace CakeDefense
 
         #endregion New Enemy / Tower / Trap
 
+        #region Button Event Methods
+        public void SwitchPauseAndGame(Button bttn)
+        {
+            if (gameState == GameState.Game)
+                gameState = GameState.Paused;
+            else
+                gameState = GameState.Game;
+        }
+
+        public void GoToMenu(Button bttn)
+        {
+            gameState = GameState.Menu;
+        }
+
+        public void RestartGame(Button bttn)
+        {
+            ContinueGame();
+        }
+
+        #region Game Speed Buttons
+        public void GameSpeedOne(Button bttn)
+        {
+            GameSpeedChange(1, bttn);
+        }
+        public void GameSpeedTwo(Button bttn)
+        {
+            GameSpeedChange(2, bttn);
+        }
+        public void GameSpeedFour(Button bttn)
+        {
+            GameSpeedChange(4, bttn);
+        }
+
+        private void GameSpeedChange(int speed, Button bttn)
+        {
+            Var.GAME_SPEED = speed;
+            hud.MenuButton.ChildButtons[1].ChildButtons.ForEach(button => button.Message.Color = Color.GhostWhite);
+            bttn.Message.Color = Color.Multiply(bttn.Message.Color, .5f);
+        }
+        #endregion Game Speed Buttons
+
+        #endregion Button Event Methods
+
         #region Other
 
         #region Dropdown Menu
@@ -1064,52 +1126,59 @@ namespace CakeDefense
         {
             if (hud.MenuButton.Focused)
             {
-                for (int i = 0; i < hud.MenuButton.ChildButtons.Count; i++)
+                List<Button> tempList = new List<Button>();
+                tempList.AddRange(hud.MenuButton.ChildButtons[1].ChildButtons);
+                tempList.AddRange(hud.MenuButton.ChildButtons);
+
+                foreach (Button bttn in tempList)
                 {
-                    if (CheckIfClicked(hud.MenuButton.ChildButtons[i].Rectangle))
-                    {
-                        switch (i)
-                        {
-                            case 0://Pause
-                                if (gameState == GameState.Game)
-                                    gameState = GameState.Paused;
-                                else
-                                    gameState = GameState.Game;
-                                break;
-                            case 1://Change Game Speed
-                                #region Change Speed
-                                singlePress = false;
-                                for (int j = 0; j < hud.MenuButton.ChildButtons[i].ChildButtons.Count; j++)
-                                {
-                                    if (CheckIfClicked(hud.MenuButton.ChildButtons[i].ChildButtons[j].Rectangle))
-                                    {
-                                        switch (j)
-                                        {
-                                            case 0:
-                                                Var.GAME_SPEED = 1;
-                                                break;
-                                            case 1:
-                                                Var.GAME_SPEED = 2;
-                                                break;
-                                            case 2:
-                                                Var.GAME_SPEED = 4;
-                                                break;
-                                        }
-
-                                    }
-
-                                }
-                                break;
-                                #endregion Change Speed
-                            case 2://Restart
-                                ContinueGame();
-                                break;
-                            case 3://Exit
-                                gameState = GameState.Menu;
-                                break;
-                        }
-                    }
+                    if (CheckIfClicked(bttn.Rectangle))
+                        bttn.Click();
                 }
+
+                //for (int i = 0; i < hud.MenuButton.ChildButtons.Count; i++)
+                //{
+                //    if (CheckIfClicked(hud.MenuButton.ChildButtons[i].Rectangle))
+                //    {
+                //        switch (i)
+                //        {
+                //            case 0://Pause
+                //                hud.MenuButton.ChildButtons[i].Click();
+                //                break;
+                //            case 1://Change Game Speed
+                //                #region Change Speed
+                //                singlePress = false;
+                //                for (int j = 0; j < hud.MenuButton.ChildButtons[i].ChildButtons.Count; j++)
+                //                {
+                //                    if (CheckIfClicked(hud.MenuButton.ChildButtons[i].ChildButtons[j].Rectangle))
+                //                    {
+                //                        switch (j)
+                //                        {
+                //                            case 0:
+                //                                Var.GAME_SPEED = 1;
+                //                                break;
+                //                            case 1:
+                //                                Var.GAME_SPEED = 2;
+                //                                break;
+                //                            case 2:
+                //                                Var.GAME_SPEED = 4;
+                //                                break;
+                //                        }
+
+                //                    }
+
+                //                }
+                //                break;
+                //                #endregion Change Speed
+                //            case 2://Restart
+                //                hud.MenuButton.ChildButtons[i].Click();
+                //                break;
+                //            case 3://Exit
+                //                hud.MenuButton.ChildButtons[i].Click();
+                //                break;
+                //        }
+                //    }
+                //}
             }
         }
         #endregion Dropdown Menu

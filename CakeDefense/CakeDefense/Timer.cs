@@ -134,6 +134,7 @@ namespace CakeDefense
         public void Update(GameTime gameTime, int gameSpeed)
         {
             currentTime = gameTime.TotalGameTime;
+            Speed = gameSpeed;
         }
 
         public void End()

@@ -17,6 +17,7 @@ using System.IO;
 namespace CakeDefense
 {
     // Constant/Static variables go here
+    public delegate void ButtonEvent(Button bttn);
     class Var
     {
         #region Screen/Map Stuff
@@ -61,7 +62,7 @@ namespace CakeDefense
         public static int FRAME_SPEED = 500;
 
         public static TimeSpan TIME_BETWEEN_SPAWNS = new TimeSpan(0, 0, 0, 0, 1000);
-        public static TimeSpan TIME_BETWEEN_WAVES = new TimeSpan(0, 0, 10);
+        public static TimeSpan TIME_BETWEEN_WAVES = new TimeSpan(0, 0, 15);
         #endregion Time Stuff
 
         #region Enums
