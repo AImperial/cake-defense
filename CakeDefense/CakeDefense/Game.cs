@@ -635,7 +635,6 @@ namespace CakeDefense
         #region New / Continued Game
         private void SetUpGame()
         {
-            DeleteSave();
             gameState = GameState.Game;
             Var.GAME_SPEED = 1;
             difficulty = 1f;
@@ -709,12 +708,13 @@ namespace CakeDefense
                     spawnTimer.Start(animationTotalTime, Var.TIME_BETWEEN_SPAWNS);
                 else
                     spawnTimer.Start(animationTotalTime, Var.TIME_BETWEEN_WAVES);
-            }
-            if (waves.Count == 1 && waves[0].Count == 0 && enemies.Count == 0)
-            {
-                waves.RemoveAt(0);
-                wave = 0;
-                NextLevel();
+
+                if (waves.Count == 1 && waves[0].Count == 0 && enemies.Count == 0)
+                {
+                    waves.RemoveAt(0);
+                    wave = 0;
+                    NextLevel();
+                }
             }
             if (waves.Count > 1 && waves[0].Count == 0 && spawnTimer.Finished)
             {
@@ -812,7 +812,7 @@ namespace CakeDefense
                 StreamReader reader = new StreamReader("Save.sav");
                 string[] infoArray = null;
                 string firstLine = null;
-                if ((firstLine = reader.ReadLine()) != "" &&  firstLine != null)
+                if ((firstLine = reader.ReadLine()) != "")
                 {
                     if (firstLine.Contains("//"))
                         firstLine = firstLine.Remove(firstLine.IndexOf("//"));
@@ -992,7 +992,7 @@ namespace CakeDefense
                     150,
                     health,
                     100,
-                    1,
+                    2,
                     500,//Fire Rate in ms
                     Var.BASE_BULLET_SPEED,
                     Var.TILE_SIZE,
@@ -1135,6 +1135,50 @@ namespace CakeDefense
                     if (CheckIfClicked(bttn.Rectangle))
                         bttn.Click();
                 }
+
+                //for (int i = 0; i < hud.MenuButton.ChildButtons.Count; i++)
+                //{
+                //    if (CheckIfClicked(hud.MenuButton.ChildButtons[i].Rectangle))
+                //    {
+                //        switch (i)
+                //        {
+                //            case 0://Pause
+                //                hud.MenuButton.ChildButtons[i].Click();
+                //                break;
+                //            case 1://Change Game Speed
+                //                #region Change Speed
+                //                singlePress = false;
+                //                for (int j = 0; j < hud.MenuButton.ChildButtons[i].ChildButtons.Count; j++)
+                //                {
+                //                    if (CheckIfClicked(hud.MenuButton.ChildButtons[i].ChildButtons[j].Rectangle))
+                //                    {
+                //                        switch (j)
+                //                        {
+                //                            case 0:
+                //                                Var.GAME_SPEED = 1;
+                //                                break;
+                //                            case 1:
+                //                                Var.GAME_SPEED = 2;
+                //                                break;
+                //                            case 2:
+                //                                Var.GAME_SPEED = 4;
+                //                                break;
+                //                        }
+
+                //                    }
+
+                //                }
+                //                break;
+                //                #endregion Change Speed
+                //            case 2://Restart
+                //                hud.MenuButton.ChildButtons[i].Click();
+                //                break;
+                //            case 3://Exit
+                //                hud.MenuButton.ChildButtons[i].Click();
+                //                break;
+                //        }
+                //    }
+                //}
             }
         }
         #endregion Dropdown Menu

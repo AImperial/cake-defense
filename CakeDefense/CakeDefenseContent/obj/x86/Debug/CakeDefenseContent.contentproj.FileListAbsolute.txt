@@ -5,4 +5,3 @@ C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefenseContent\ob
 \\banner.main.ad.rit.edu\students\amm4108\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\CakeDefenseContent\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefenseContent\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefenseContent\obj\x86\Debug\ResolveAssemblyReference.cache
-\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefenseContent\obj\x86\Debug\ResolveAssemblyReference.cache
