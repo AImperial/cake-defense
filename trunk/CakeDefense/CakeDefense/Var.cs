@@ -34,11 +34,20 @@ namespace CakeDefense
 
         #region Tower
         public static int MAX_TOWER_HEALTH = 10;
+        public static Dictionary<TowerType, string> towerNames = new Dictionary<TowerType, string>
+        {
+            { TowerType.Basic, "Raid" }
+        };
         #endregion Tower
 
         #region Trap
         public const int TRAP_SIZE = 30;
         public static TimeSpan TRAP_SHOW_HEALTH_TIME = new TimeSpan(0, 0, 1);
+        public static Dictionary<TrapType, string> trapNames = new Dictionary<TrapType, string>
+        {
+            { TrapType.Basic, "Pain Trap" },
+            { TrapType.Slow, "Fly Paper" }
+        };
         #endregion Trap
 
         #region Bullet

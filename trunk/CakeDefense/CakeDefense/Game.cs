@@ -240,8 +240,36 @@ namespace CakeDefense
                     {
                         if (itm.Rectangle.Intersects(mouseRect))
                         {
+                            hud.CostWindow.IsActive = true;
                             drawCursor = true;
+                            string name = "";
+                            int cost = 0;
+                            if (itm is Tower)
+                            {
+                                Tower tower = (Tower)itm;
+                                name = Var.towerNames[tower.Type];
+                                cost = tower.Cost;
+                            }
+                            else if (itm is Trap)
+                            {
+                                Trap trap = (Trap)itm;
+                                name = Var.trapNames[trap.Type];
+                                cost = trap.Cost;
+                            }
+                            int width = (int)hud.CostWindow.TextObjects[0].Font.MeasureString(name).X;
+                            if (hud.CostWindow.TextObjects[1].Font.MeasureString("$" + cost).X > width)
+                                width = (int)hud.CostWindow.TextObjects[1].Font.MeasureString("$" + cost).X;
+                            hud.CostWindow.Width = width;
+                            foreach (TextObject to in hud.CostWindow.TextObjects)
+                            {
+                                to.X = to.X + (int)((to.Width - width) / 2);
+                            }
+
                             break;
+                        }
+                        else
+                        {
+                            hud.CostWindow.IsActive = false;
                         }
                     }
 
@@ -630,7 +658,7 @@ namespace CakeDefense
 
         #endregion QuickKeys / Mouse / Keyboard Stuff
 
-        #region NextLevel-Wave / New-Continue Game / Load-Save File / Load Waves
+        #region NextLevel-Wave / New-Continue Game
 
         #region New / Continued Game
         private void SetUpGame()
@@ -668,7 +696,12 @@ namespace CakeDefense
         public void ContinueGame()
         {
             SetUpGame();
-            LoadFile();
+            bool fileLoaded = LoadFile();
+            if (fileLoaded == false)
+            {
+                NewGame();
+                return;
+            }
 
             // HUD / Cake / Map declared in LoadGame()
 
@@ -691,6 +724,13 @@ namespace CakeDefense
             cake = new Cake(cakeLeft, 600, 80, 120, 120, spriteBatch, blankTex);
             hud = new HUD(spriteBatch, money, blankTex, mediumFont, cake,
                 selectionList, stripesTex, this);
+            List<TextObject> texts = new List<TextObject>
+            {
+                new TextObject("", Vector2.Zero, normalFont, Color.GhostWhite, spriteBatch),
+                new TextObject("", Vector2.Zero, normalFont, Color.GhostWhite, spriteBatch)
+            };
+            hud.CostWindow = new Window(0, (int)(hud.SelectionBar[0].Y - texts[0].Height - texts[1].Height - 10), 100, texts[0].Height + texts[1].Height, spriteBatch, blankTex, null, texts);
+            hud.CostWindow.Color = Var.PAUSE_GRAY;
         }
         #endregion New / Continued Game
 
@@ -757,6 +797,10 @@ namespace CakeDefense
         }
         #endregion Next Wave / Level
 
+        #endregion NextLevel-Wave / New-Continue Game
+
+        #region File Stuff
+
         #region Load Waves
         /// <summary> Loads wave data from a .lvl file. </summary>
         /// <param name="level">default = 0</param>
@@ -790,7 +834,7 @@ namespace CakeDefense
                         )
                     );
                 }
-                if(thisWave.Count > 0)
+                if (thisWave.Count > 0)
                     waves.Add(thisWave);
                 wave++;
                 difficulty += Var.WAVES_DIFFICULTY_INCREASE;
@@ -801,18 +845,16 @@ namespace CakeDefense
         }
         #endregion Load Waves
 
-        #region Load / Save File
-
         #region Load
         /// <summary> Loads Game info such as money, cake, level, wave, saved towers, and saved traps. also MAP is created here. </summary>
-        public void LoadFile()
+        public bool LoadFile()
         {
             if (File.Exists("Save.sav"))
             {
                 StreamReader reader = new StreamReader("Save.sav");
                 string[] infoArray = null;
                 string firstLine = null;
-                if ((firstLine = reader.ReadLine()) != "")
+                if ((firstLine = reader.ReadLine()) != "" && firstLine != null)
                 {
                     if (firstLine.Contains("//"))
                         firstLine = firstLine.Remove(firstLine.IndexOf("//"));
@@ -866,9 +908,16 @@ namespace CakeDefense
                         traps.Add(tempTrap);
                     }
                 }
+                else{
+                    reader.Close();
+                    reader.Dispose();
+                    return false;
+                }
                 reader.Close();
                 reader.Dispose();
+                return true;
             }
+            return false;
         }
         #endregion Load
 
@@ -907,7 +956,8 @@ namespace CakeDefense
             if (File.Exists("save.sav"))
             {
                 StreamReader reader = new StreamReader("save.sav");
-                if (reader.ReadLine() != null)
+                string line;
+                if ((line = reader.ReadLine()) != null && line != "")
                 {
                     reader.Close();
                     reader.Dispose();
@@ -920,9 +970,7 @@ namespace CakeDefense
         }
         #endregion Check If Saved Game
 
-        #endregion Load / Save File
-
-        #endregion NextLevel-Wave / New-Continue Game / Load-Save File / Load Waves
+        #endregion File Stuff
 
         #region New Enemy / Tower / Trap
 

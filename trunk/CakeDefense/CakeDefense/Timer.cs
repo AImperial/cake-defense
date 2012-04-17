@@ -131,6 +131,11 @@ namespace CakeDefense
             tte = new TimeSpan(0, 0, 0, 0, lengthInMilSec);
         }
 
+        public void Update(GameTime gameTime)
+        {
+            currentTime = gameTime.TotalGameTime;
+        }
+
         public void Update(GameTime gameTime, int gameSpeed)
         {
             currentTime = gameTime.TotalGameTime;
@@ -148,7 +153,7 @@ namespace CakeDefense
             return "{Percent Finished: " + Percent +
                 "\nStart Time: " + StartTime.ToString("ss") +
                 "\nCurrent Time: " + CurrentTime.ToString("ss") +
-                "\nEnd Time" + EndTime.ToString("ss") + "}";
+                "\nEnd Time: " + EndTime.ToString("ss") + "}";
         }
 
         #endregion Regular

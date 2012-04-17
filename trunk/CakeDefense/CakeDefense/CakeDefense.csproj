@@ -94,6 +94,7 @@
     <Compile Include="Traps\Trap_Basic.cs" />
     <Compile Include="Traps\Trap_Slow.cs" />
     <Compile Include="Var.cs" />
+    <Compile Include="Window1.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Misc\Game.ico" />
