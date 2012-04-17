@@ -27,6 +27,7 @@ namespace CakeDefense
         private List<GameObject> selectionBar;
         private GameTime time;
         private Timer menuTimer, saveTimer;
+        private Window costWindow;
         #endregion Attributes
 
         #region Constructor
@@ -88,6 +89,13 @@ namespace CakeDefense
             set { cake.CurrentHealth = value; }
         }
 
+        public Window CostWindow
+        {
+            get { return costWindow; }
+
+            set { costWindow = value; }
+        }
+
         public Button MenuButton
         {
             get { return activeMenuDisplay; }
@@ -118,7 +126,7 @@ namespace CakeDefense
                 }
             }
 
-            menuTimer.Update(gameTime, Var.GAME_SPEED);
+            menuTimer.Update(gameTime);
             if (menuTimer.Finished == false)
             {
                 activeMenuDisplay.ChildButtons[0].Y = activeMenuDisplay.Y + (int)((activeMenuDisplay.Height + 2) * menuTimer.Percent);
@@ -225,6 +233,8 @@ namespace CakeDefense
 
                 selectionBar[i].Draw();
             }
+
+            costWindow.Draw();
         }
 
         public void DrawDropDownMenu()

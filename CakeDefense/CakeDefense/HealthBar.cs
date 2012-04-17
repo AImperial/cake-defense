@@ -93,16 +93,24 @@ namespace CakeDefense
         #region Draw
         public void Draw()
         {
-            if (timer.Finished == false)
+            if (true)//timer.Finished == false)
             {
                 Color colorBar = barColor;
                 Color colorCaps = capColor;
                 int capsWidth = 2;
 
-                if (timer.Percent >= startFadingByPerc)
+                colorBar = Var.EffectTransparency(.15f, colorBar);
+                colorCaps = Var.EffectTransparency(.15f, colorCaps);
+
+                if (timer.Finished == false && timer.Percent >= startFadingByPerc)
                 {
-                    colorBar = Var.EffectTransparency(1 - Timer.GetPercentRelative(startFadingByPerc, timer.Percent, 1f), colorBar);
-                    colorCaps = Var.EffectTransparency(1 - Timer.GetPercentRelative(startFadingByPerc, timer.Percent, 1f), colorCaps);
+                    colorBar = Var.EffectTransparency(1 - Timer.GetPercentRelative(startFadingByPerc, timer.Percent, 1f), barColor);
+                    colorCaps = Var.EffectTransparency(1 - Timer.GetPercentRelative(startFadingByPerc, timer.Percent, 1f), capColor);
+                }
+                else if (timer.Finished == false)
+                {
+                    colorBar = barColor;
+                    colorCaps = capColor;
                 }
 
                 spriteBatch.Draw(texture, position, colorBar);
