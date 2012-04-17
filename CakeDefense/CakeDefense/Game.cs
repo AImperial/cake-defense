@@ -24,7 +24,7 @@ namespace CakeDefense
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
-        Texture2D blankTex, stripesTex, cursorTex, bulletTex, enemyAnimationTest, pixel, towerTex;
+        Texture2D blankTex, stripesTex, cursorTex, bulletTex, enemyAnimationTest, pixel, towerTex, cakeTex, slowTex, cakepieceTex;
         Dictionary<GameState, Texture2D> menuBackgrounds;
         GameTime animationTotalTime; public GameTime AnimationTime { get { return animationTotalTime; } }
         TimeSpan pausedTime;
@@ -155,8 +155,13 @@ namespace CakeDefense
 
             #region Sprites
             enemyAnimationTest = this.Content.Load<Texture2D>("Sprites/SpiderSprite");
-            bulletTex = this.Content.Load<Texture2D>("Sprites/Bullet");
+            
+            cakeTex = this.Content.Load<Texture2D>("Sprites/cake");
+            cakepieceTex = this.Content.Load<Texture2D>("Sprites/cakepiece");
+
             towerTex = this.Content.Load<Texture2D>("Sprites/can");
+            bulletTex = this.Content.Load<Texture2D>("Sprites/Bullet");
+            slowTex = this.Content.Load<Texture2D>("Sprites/flypaper");
             #endregion Sprites
 
             InitializeAfterLoadContent();
@@ -721,7 +726,7 @@ namespace CakeDefense
             for (int i = 0; i < Enum.GetNames(typeof(Var.TrapType)).Length; i++)
                 selectionList.Add(NewTrap((Var.TrapType)i));
 
-            cake = new Cake(cakeLeft, 600, 80, 120, 120, spriteBatch, blankTex);
+            cake = new Cake(cakeLeft, 600, 80, 160, 180, spriteBatch, cakeTex);
             hud = new HUD(spriteBatch, money, blankTex, mediumFont, cake,
                 selectionList, stripesTex, this);
             List<TextObject> texts = new List<TextObject>
@@ -1102,7 +1107,7 @@ namespace CakeDefense
             if (type == Var.TrapType.Slow)
             {
                 ImageObject image = new ImageObject(
-                    stripesTex,
+                    slowTex,
                     0, 0,
                     Var.TRAP_SIZE, Var.TRAP_SIZE,
                     spriteBatch
@@ -1113,7 +1118,7 @@ namespace CakeDefense
                     6,
                     25,
                     image,
-                    blankTex
+                    slowTex
                 );
             }
             #endregion Slow

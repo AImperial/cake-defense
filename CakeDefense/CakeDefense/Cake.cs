@@ -31,7 +31,6 @@ namespace CakeDefense
         {
             if (IsActive)
             {
-                Image.Color = Color.Green;
                 base.Draw();
             }
         }
