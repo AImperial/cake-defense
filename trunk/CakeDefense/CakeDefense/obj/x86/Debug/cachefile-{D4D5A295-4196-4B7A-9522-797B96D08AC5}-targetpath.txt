@@ -10,6 +10,10 @@ Content\Spritefonts\Medium.xnb
 Content\Spritefonts\Normal.xnb
 Content\Spritefonts\Small.xnb
 Content\Sprites\can.xnb
-Content\Stripes.xnb
 Content\Menu\Lose.xnb
+Content\Stripes.xnb
 Content\Menu\Win.xnb
+Content\Sprites\cake.xnb
+Content\Sprites\menu_bttn.xnb
+Content\Sprites\flypaper.xnb
+Content\Sprites\cakepiece.xnb
