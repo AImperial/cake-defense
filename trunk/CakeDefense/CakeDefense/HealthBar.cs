@@ -124,7 +124,6 @@ namespace CakeDefense
                     spriteBatch.Draw(texture, new Rectangle(position.X + originalWidth, position.Y - capsWidth, capsWidth, position.Height + (capsWidth * 2)), colorCaps);
                     spriteBatch.Draw(texture, new Rectangle(position.X + originalWidth - position.Height, position.Y - capsWidth, position.Height, capsWidth), colorCaps);
                     spriteBatch.Draw(texture, new Rectangle(position.X + originalWidth - position.Height, position.Y + position.Height, position.Height, capsWidth), colorCaps);
-
                 }
                 else
                 {
