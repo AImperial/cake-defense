@@ -23,6 +23,7 @@ namespace CakeDefense
         private HUD hud;
         private int currentTile;
         private HealthBar healthBar;
+        private Cake cakepiece;
         private GameTime time;
         Timer timer;
 
@@ -31,10 +32,11 @@ namespace CakeDefense
         #endregion Attributes
 
         #region Constructor
-        public Enemy(ImageObject imageObject, int health, int damage, float speed, Path path, Texture2D healthTex, HUD hud)
+        public Enemy(ImageObject imageObject, int health, int damage, float speed, Path path, Texture2D healthTex, Texture2D cakepieceTex, HUD hud)
             : base(imageObject, health, damage, speed)
         {
             healthBar = new HealthBar(healthTex, health, imageObject.SpriteBatch, 2, Var.ENEMY_SHOW_HEALTH_TIME, .8f, Color.Red, Color.OrangeRed);
+            cakepiece = new Cake(1, (int)this.X, (int)this.Y, 15, 15, imageObject.SpriteBatch, cakepieceTex);
             IsActive = false;
             this.path = path;
             Image.Center = Center = path.Start.Center;
@@ -101,11 +103,13 @@ namespace CakeDefense
                 {
                     MoveBy(Speed_Actual, traps); // move the enemy (properly)
 
-                    //if path tile is adjacent to cake tiles, take a slice
-                    //if(path.GetTile(currentTile) == path.)
-                    //{
-                        //play animation
-                    //}
+                    Array temp = new Array[4];
+                    temp = path.GetTile(currentTile).Neighbors;
+                    for(int i = 0; i < temp.Length; i++)
+                    {
+                        //if any of the neighbors contain cake, take a slice
+                       // if(((Tile)temp[i]).
+                    }       
 
                     if (path.GetTile(currentTile) == path.End)
                     {
@@ -350,6 +354,8 @@ namespace CakeDefense
         {
             if (IsActive)
             {
+                if (hasCake)
+                    cakepiece.Draw();
                 base.Draw(gameTime, Var.FRAME_SPEED);
                 healthBar.Draw();
             }

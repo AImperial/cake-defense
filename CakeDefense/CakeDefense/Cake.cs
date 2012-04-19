@@ -18,6 +18,10 @@ namespace CakeDefense
 {
     class Cake:GameObject
     {
+        #region Attributes
+        protected Tile_Path occupiedTile;
+        #endregion Attributes
+
         #region Constructor
         public Cake(int health, int x, int y, int w, int h, SpriteBatch spB, Texture2D t)
             : base(t, x, y, w, h, spB, health, 0, 0)
@@ -25,6 +29,15 @@ namespace CakeDefense
 
         }
         #endregion Constructor
+
+        #region Properties
+        public Tile_Path OccupiedTile
+        {
+            get { return occupiedTile; }
+
+            set { occupiedTile = value; }
+        }
+        #endregion Properties
 
         #region Draw
         public override void Draw()

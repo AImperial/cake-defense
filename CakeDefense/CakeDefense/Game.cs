@@ -1014,6 +1014,7 @@ namespace CakeDefense
                     speed * difficulty,
                     path,
                     blankTex,
+                    cakepieceTex, 
                     hud
                 );
             }
