@@ -15,8 +15,7 @@ using System.IO;
 #endregion using
 /// by Torey J. Scheer
 /// Made to do easy timing, be it just waiting to do something, or getting a percent of time passed
-/// 
-/// ???
+
 namespace CakeDefense
 {
     class Timer

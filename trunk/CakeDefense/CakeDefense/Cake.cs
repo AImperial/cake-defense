@@ -19,24 +19,21 @@ namespace CakeDefense
     class Cake:GameObject
     {
         #region Attributes
-        protected Tile_Path occupiedTile;
+        SpriteBatch sprite;
+        SpriteFont spriteF;
         #endregion Attributes
 
         #region Constructor
-        public Cake(int health, int x, int y, int w, int h, SpriteBatch spB, Texture2D t)
+        public Cake(int health, int x, int y, int w, int h, SpriteBatch spB, SpriteFont spF, Texture2D t)
             : base(t, x, y, w, h, spB, health, 0, 0)
         {
-
+            sprite = spB;
+            spriteF = spF;
         }
         #endregion Constructor
 
         #region Properties
-        public Tile_Path OccupiedTile
-        {
-            get { return occupiedTile; }
 
-            set { occupiedTile = value; }
-        }
         #endregion Properties
 
         #region Draw
@@ -45,6 +42,8 @@ namespace CakeDefense
             if (IsActive)
             {
                 base.Draw();
+                if(this.CurrentHealth < this.StartHealth)
+                    sprite.DrawString(spriteF, "Health Down! (" + this.CurrentHealth + "left)", new Vector2(this.Point.X, this.Point.Y + 200), Color.Red);
             }
         }
         #endregion Draw
