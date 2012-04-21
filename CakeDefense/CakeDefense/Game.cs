@@ -475,8 +475,18 @@ namespace CakeDefense
                     map.DrawMap(blankTex, smallFont);
 
                     cake.Draw();
-                    towers.ForEach(tower => tower.Draw());
-                    towers.ForEach(tower => DrawCircle(tower.Center, tower.FireRadius, 25, Color.Red));
+
+                    foreach (Tower tower in towers)
+                    {
+                        tower.Draw();
+                        if (mouseRect.Intersects(tower.Rectangle))
+                        {
+                            DrawCircle(tower.Center, tower.FireRadius, 25, Color.Red);
+                            spriteBatch.DrawString(normalFont, "Price: " + tower.Cost, new Vector2(tower.Point.X + 40, tower.Point.Y), Color.Blue);
+                            spriteBatch.DrawString(normalFont, "Sale Price: " + tower.Cost / 2, new Vector2(tower.Point.X + 40, tower.Point.Y + 20), Color.Blue);
+                        }
+                    }
+
                     traps.ForEach(trap => trap.Draw(gameTime));
 
                     foreach (Enemy enemy in enemies)
