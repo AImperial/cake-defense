@@ -16,7 +16,8 @@ using System.IO;
 
 namespace CakeDefense
 {
-    class Trap:GameObject
+    // This class should never be created, rather only children classes (thus abstract)
+    abstract class Trap:GameObject
     {
         #region Attributes
         protected bool placed;
@@ -30,7 +31,6 @@ namespace CakeDefense
         public Trap(int health, int damage, int cost, ImageObject io, Texture2D healthTex)
             :base(io, health, damage, 0)
         {
-            type = Var.TrapType.Basic;
             healthBar = new HealthBar(healthTex, StartHealth, io.SpriteBatch, 5, Var.TRAP_SHOW_HEALTH_TIME, .5f, Color.Green, Color.DarkSeaGreen);
             healthBar.OriginalWidth = 50;
             placed = false;
@@ -70,6 +70,8 @@ namespace CakeDefense
         #endregion Properties
 
         #region Methods
+        public abstract bool AttackIfCan(Enemy enemy, GameTime gameTime);
+
         public void Place(Tile_Path tile)
         {
             placed = true;
@@ -79,10 +81,9 @@ namespace CakeDefense
             Image.Transparency = 100;
         }
 
-        public virtual bool AttackIfCan(Enemy enemy, GameTime gameTime)
+        public int SellCost()
         {
-            // This should be over-riden by children classes
-            return false;
+            return (int)(cost * ((float)CurrentHealth / (float)StartHealth) / 2f);
         }
 
         /// <summary> If it should be removed, returns itself; else retruns null </summary>

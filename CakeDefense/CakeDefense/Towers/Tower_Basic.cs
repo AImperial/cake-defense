@@ -16,107 +16,19 @@ using System.IO;
 
 namespace CakeDefense
 {
-    class Tower:GameObject
+    class Tower_Basic:Tower
     {
-        #region Attributes
-        protected bool placing, canFire;
-        protected Tile_Tower occupiedTile;
-        protected Stopwatch timer;
-        protected Random rand;
-        protected int cost;
-        protected float fireRadius, bulletSpeed;
-        protected List<Bullet> bullets;
-        protected Texture2D bulletTexture;
-        protected Var.TowerType type;
-
-        public enum Attacktype { None, Fastest, Slowest, Strongest, Weakest }
-        protected Attacktype attackType;
-        #endregion Attributes
-
         #region Constructor
-        public Tower(float fireRadius, int health, int cost, int damage, float speed, float bSpeed, int w, int h, SpriteBatch spB, Texture2D t, Texture2D bt, Attacktype attackType)
-            : base(t, 0, 0, w, h, spB, health, damage, speed)
+        public Tower_Basic(float fireRadius, int health, int cost, int damage, float speed, float bSpeed, int w, int h, SpriteBatch spB, Texture2D t, Texture2D bt, Attacktype attackType)
+            : base(fireRadius, health, cost, damage, speed, bSpeed, w, h, spB, t, bt, attackType)
         {
             type = Var.TowerType.Basic;
-            this.attackType = attackType;
-            this.fireRadius = fireRadius;
-            bulletSpeed = bSpeed;
-            canFire = true; placing = true;
-            timer = new Stopwatch();
-            rand = new Random();
-            this.cost = cost;
-            bulletTexture = bt;
-            bullets = new List<Bullet>();
-            Image.Transparency = Var.PLACING_TRANSPARENCY;
         }
         #endregion Constructor
 
-        #region Properties
-        public bool Placing
-        {
-            get { return placing; }
-            set { placing = value; }
-        }
-
-        public Tile_Tower OccupiedTile
-        {
-            get { return occupiedTile; }
-            set { occupiedTile = value; }
-        }
-
-        public bool CanFire
-        {
-            get { return canFire; }
-            set { canFire = value; }
-        }
-
-        public int Cost
-        {
-            get { return cost; }
-            set { cost = value; }
-        }
-
-        public float BulletSpeed
-        {
-            get { return bulletSpeed; }
-
-            set { bulletSpeed = value; }
-        }
-
-        public float FireRadius
-        {
-            get { return fireRadius; }
-
-            set { fireRadius = value; }
-        }
-
-        public Var.TowerType Type
-        {
-            get { return type; }
-
-            set { type = value; }
-        }
-
-        public Attacktype AttackType
-        {
-            get { return attackType; }
-
-            set { attackType = value; }
-        }
-        #endregion Properties
-
         #region Methods
-        public void Place(Tile_Tower tile)
-        {
-            timer.Start();
-            placing = false;
-            occupiedTile = tile;
-            occupiedTile.OccupiedBy = this;
-            Center = tile.Center;
-            Image.Transparency = 100;
-        }
 
-        public void Fire(List<Enemy> enemies)
+        public override void Fire(List<Enemy> enemies)
         {
             if (placing == false && IsActive)
             {
@@ -207,46 +119,6 @@ namespace CakeDefense
                 }
             }
         }
-
-        public void CheckCollision(GameObject GO)
-        {
-            if (GO is Enemy)
-            {
-                Enemy curEnemy = (Enemy)GO;
-                for (int i = 0; i < bullets.Count; i++)
-                {
-                    if (bullets[i].IsActive)
-                    {
-                        if (curEnemy.Rectangle.Intersects(bullets[i].Rectangle))
-                        {
-                            curEnemy.Hit(Damage);
-                            bullets.RemoveAt(i);
-                            i--;
-                        }
-                    }
-                }
-            }
-        }
-
-        public bool isDead()
-        {
-            if (CurrentHealth <= 0)
-            {
-                return true;
-            }
-            return false;
-        }
         #endregion Methods
-
-        #region Draw
-        public override void Draw()
-        {
-            if (IsActive)
-            {
-                base.Draw();
-                bullets.ForEach(bullet => bullet.Draw());
-            }
-        }
-        #endregion Draw
     }
 }

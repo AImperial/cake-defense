@@ -175,6 +175,14 @@ namespace CakeDefense
             get { return (int)(font.MeasureString(message).Y); }
         }
 
+        /// <summary> The Center of the text of this TextObject. </summary>
+        public new Vector2 Center
+        {
+            get { return new Vector2(xLoc + Width / 2, yLoc + Height / 2); }
+
+            set { xLoc = (int)value.X - (Width / 2); yLoc = (int)value.Y - (Height / 2); }
+        }
+
         #endregion Properties
 
         #region Draw
