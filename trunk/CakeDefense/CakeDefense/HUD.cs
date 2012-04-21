@@ -20,6 +20,7 @@ namespace CakeDefense
     {
         #region Attributes
         private SpriteBatch spriteBatch;
+        private SpriteFont spriteFont;
         private Texture2D stripesTex;
         private int money, score;
         private Cake cake;
@@ -34,6 +35,7 @@ namespace CakeDefense
         public HUD(SpriteBatch sprite, int money, Texture2D infoBoxTex, SpriteFont font, Cake cake, List<GameObject> towerTrapImages, Texture2D stripes, Game game)
         {
             this.spriteBatch = sprite;
+            this.spriteFont = font;
             this.money = money;
             this.cake = cake;
             stripesTex = stripes;
@@ -232,6 +234,9 @@ namespace CakeDefense
                 spriteBatch.Draw(stripesTex, selectionBar[i].Rectangle, clr);
 
                 selectionBar[i].Draw();
+             
+                //check for mousePos
+                //spriteBatch.DrawString(spriteFont, "Price: ", new Vector2(selectionBar[i].Rectangle.X, selectionBar[i].Rectangle.Y - 20), Color.Blue);
             }
 
             costWindow.Draw();
