@@ -61,7 +61,7 @@ namespace CakeDefense
         #endregion Enemy Stuff
 
         #region Tower/Trap Stuff (Tower List, heldItem)
-        GameObject heldItem;
+        GameObject heldItem, selectedItem;
         List<Tower> towers;
         List<Trap> traps;
         #endregion Tower/Trap Stuff
@@ -192,6 +192,7 @@ namespace CakeDefense
                 #region GameState.Game
                 case GameState.Game:
 
+                    #region Update
                     drawCursor = true;
                     QuickKeys();
 
@@ -223,6 +224,7 @@ namespace CakeDefense
                     }
 
                     hud.Update(animationTotalTime);
+                    #endregion Update
 
                     #region Mouse Over
 
@@ -242,6 +244,7 @@ namespace CakeDefense
                     }
                     #endregion Menu Display
 
+                    #region Selection Bar Name/Price MouseOver
                     foreach (GameObject itm in hud.SelectionBar)
                     {
                         if (itm.Rectangle.Intersects(mouseRect))
@@ -262,13 +265,18 @@ namespace CakeDefense
                                 name = Var.trapNames[trap.Type];
                                 cost = trap.Cost;
                             }
-                            int width = (int)hud.CostWindow.TextObjects[0].Font.MeasureString(name).X;
-                            if (hud.CostWindow.TextObjects[1].Font.MeasureString("$" + cost).X > width)
-                                width = (int)hud.CostWindow.TextObjects[1].Font.MeasureString("$" + cost).X;
+
+                            hud.CostWindow.TextObjects[0].Message = name;
+                            hud.CostWindow.TextObjects[1].Message = "$" + cost;
+                            int width = hud.CostWindow.TextObjects[0].Width + 10;
+                            if (hud.CostWindow.TextObjects[1].Width + 10 > width)
+                                width = hud.CostWindow.TextObjects[1].Width + 10;
+
                             hud.CostWindow.Width = width;
+                            hud.CostWindow.Center = new Vector2(itm.Center.X, hud.CostWindow.Center.Y);
                             foreach (TextObject to in hud.CostWindow.TextObjects)
                             {
-                                to.X = to.X + (int)((to.Width - width) / 2);
+                                to.Center = new Vector2(itm.Center.X, to.Center.Y);
                             }
 
                             break;
@@ -278,6 +286,7 @@ namespace CakeDefense
                             hud.CostWindow.IsActive = false;
                         }
                     }
+                    #endregion Selection Bar Name/Price MouseOver
 
                     #endregion Mouse Over
 
@@ -290,7 +299,7 @@ namespace CakeDefense
                         ClickGameDropDownMenuItemsIfCan();
                         #endregion Menu List Buttons
 
-                        #region Select Tower / trap from List
+                        #region Select Tower / trap from Selection Bar
                         foreach (GameObject itm in hud.SelectionBar)
                         {
                             if (CheckIfClicked(itm.Rectangle))
@@ -305,31 +314,34 @@ namespace CakeDefense
                                 }
                             }
                         }
-                        #endregion Select Tower / trap from List
+                        #endregion Select Tower / trap from Selection Bar
 
                         #region Click Something (normally)
                         if (heldItem == null)
                         {
-                            // Not functional atm
-                            #region Get Info (Tower / Enemy)
                             foreach (Tower tower in towers)
                             {
                                 if (CheckIfClicked(tower.Rectangle))
                                 {
-                                    // Info
+                                    selectedItem = tower;
                                     break;
                                 }
                             }
 
-                            foreach (Enemy enemy in enemies)
+                            if (singlePress == false)
                             {
-                                if (enemy.IsActive && CheckIfClicked(enemy.Rectangle))
+                                foreach (Trap trap in traps)
                                 {
-                                    // Info
-                                    break;
+                                    if (CheckIfClicked(trap.Rectangle))
+                                    {
+                                        selectedItem = trap;
+                                        break;
+                                    }
                                 }
                             }
-                            #endregion Get Info (Tower / Enemy)
+
+                            if (singlePress == false)
+                                selectedItem = null;
                         }
                         #endregion Click Something (normally)
 
@@ -366,10 +378,17 @@ namespace CakeDefense
                         }
                         #endregion Place Something
                     }
+
+                    #region RIGHT Click
                     else if (mouseState.RightButton == ButtonState.Released && previousMouseState.RightButton == ButtonState.Pressed)
                     {
-                        heldItem = null;
+                        if (heldItem != null)
+                            heldItem = null;
+                        else
+                            selectedItem = null;
                     }
+                    #endregion RIGHT Click
+
                     #endregion If Mouse Clicked
 
                     if (hud.Health <= 0)
@@ -476,6 +495,7 @@ namespace CakeDefense
 
                     cake.Draw();
 
+                    #region Towers
                     Tower mouseOverTower = null;
                     foreach (Tower tower in towers)
                     {
@@ -483,10 +503,36 @@ namespace CakeDefense
                         if (mouseRect.Intersects(tower.Rectangle))
                             mouseOverTower = tower;
                     }
-                    if (mouseOverTower != null) {
+                    if (mouseOverTower != null)
+                    {
                         DrawCircle(mouseOverTower.Center, mouseOverTower.FireRadius, 64, Color.Red);
-                        spriteBatch.DrawString(normalFont, "Price: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.Cost / 2, new Vector2(mouseOverTower.Point.X + mouseOverTower.Width + 2, mouseOverTower.Point.Y - 5), Color.Blue);
+                        spriteBatch.DrawString(normalFont, "Price: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost(), new Vector2(mouseOverTower.Point.X + mouseOverTower.Width + 2, mouseOverTower.Point.Y - 5), Color.Blue);
                     }
+                    if (selectedItem is Tower)
+                    {
+                        if (selectedItem != mouseOverTower)
+                            DrawCircle(selectedItem.Center, ((Tower)selectedItem).FireRadius, 64, Color.Red);
+                        ImageObject.DrawRectangleOutline(((Tower)selectedItem).OccupiedTile.Rectangle, 3, Color.Blue, blankTex, spriteBatch);
+                    }
+                    #endregion Towers
+
+                    #region Traps
+                    Trap mouseOverTrap = null;
+                    foreach (Trap trap in traps)
+                    {
+                        trap.Draw();
+                        if (mouseRect.Intersects(trap.Rectangle))
+                            mouseOverTrap = trap;
+                    }
+                    if (mouseOverTrap != null)
+                    {
+                        spriteBatch.DrawString(normalFont, "Price: " + mouseOverTrap.Cost + "\nSale Price: " + mouseOverTrap.SellCost(), new Vector2(mouseOverTrap.Point.X + mouseOverTrap.Width + 2, mouseOverTrap.Point.Y - 5), Color.Green);
+                    }
+                    if (selectedItem is Trap)
+                    {
+                        ImageObject.DrawRectangleOutline(((Trap)selectedItem).OccupiedTile.Rectangle, 3, Color.Green, blankTex, spriteBatch);
+                    }
+                    #endregion Traps
 
                     traps.ForEach(trap => trap.Draw(gameTime));
 
@@ -606,7 +652,7 @@ namespace CakeDefense
         #region QuickKeys / Mouse / Keyboard Stuff
 
         #region Quick Keys
-        /// <summary> Called in GameState.Game </summary>
+        /// <summary> Called in GameState.Game (NOT GameState.Paused)</summary>
         public void QuickKeys()
         {
             if (SingleKeyPress(Keys.D1))
@@ -628,6 +674,22 @@ namespace CakeDefense
             if (SingleKeyPress(Keys.R))
             {
                 ContinueGame();
+            }
+            if (SingleKeyPress(Keys.Delete))
+            {
+                if (selectedItem is Trap)
+                {
+                    hud.Money += ((Trap)selectedItem).SellCost();
+                    ((Trap)selectedItem).OccupiedTile.OccupiedBy = null;
+                    traps.Remove((Trap)selectedItem);
+                }
+                else if (selectedItem is Tower)
+                {
+                    hud.Money += ((Tower)selectedItem).SellCost();
+                    ((Tower)selectedItem).OccupiedTile.OccupiedBy = null;
+                    towers.Remove((Tower)selectedItem);
+                }
+                selectedItem = null;
             }
             if (SingleKeyPress(Keys.Escape))
             {
@@ -714,6 +776,14 @@ namespace CakeDefense
 
             level = wave = 0;
             map = new Map(level, spriteBatch);
+            if (map.Tiles != null)
+            { // Note: This check is also in Load()
+                foreach (Tile tile in map.Tiles)
+                {
+                    if (tile.Rectangle.Intersects(cake.Rectangle))
+                        tile.OccupiedBy = cake;
+                }
+            }
 
             paths = new List<Path>();
             paths.Add(map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1));
@@ -752,16 +822,17 @@ namespace CakeDefense
             for (int i = 0; i < Enum.GetNames(typeof(Var.TrapType)).Length; i++)
                 selectionList.Add(NewTrap((Var.TrapType)i));
 
-            cake = new Cake(cakeLeft, 580, 60, 160, 180, spriteBatch, normalFont, cakeTex);
-            
+            cake = new Cake(cakeLeft, Var.GAME_AREA.Left + (Var.TILE_SIZE * 15), Var.GAME_AREA.Top + (Var.TILE_SIZE * 2), Var.TILE_SIZE * 3, Var.TILE_SIZE * 3, spriteBatch, normalFont, cakeTex);
             hud = new HUD(spriteBatch, money, blankTex, mediumFont, cake, selectionList, stripesTex, this);
 
             List<TextObject> texts = new List<TextObject>
             {
-                new TextObject("", Vector2.Zero, normalFont, Color.GhostWhite, spriteBatch),
-                new TextObject("", Vector2.Zero, normalFont, Color.GhostWhite, spriteBatch)
+                new TextObject("-", Vector2.Zero, normalFont, Color.GhostWhite, spriteBatch),
+                new TextObject("-", Vector2.Zero, normalFont, Color.GhostWhite, spriteBatch)
             };
             hud.CostWindow = new Window(0, (int)(hud.SelectionBar[0].Y - texts[0].Height - texts[1].Height - 10), 100, texts[0].Height + texts[1].Height, spriteBatch, blankTex, null, texts);
+            hud.CostWindow.TextObjects[0].Y = hud.CostWindow.Y;
+            hud.CostWindow.TextObjects[1].Y = hud.CostWindow.Y + texts[0].Height;
             hud.CostWindow.Color = Var.PAUSE_GRAY;
         }
         #endregion New / Continued Game
@@ -895,6 +966,15 @@ namespace CakeDefense
 
                     // Map is declared here as you need the map to place towers and traps, but you need what level to load.
                     map = new Map(level, spriteBatch);
+                    if (map.Tiles != null)
+                    { // Note: This check is also in NewGame()
+                        foreach (Tile tile in map.Tiles)
+                        {
+                            if (tile.Rectangle.Intersects(cake.Rectangle))
+                                tile.OccupiedBy = cake;
+                        }
+                    }
+
                     if (map.Tiles != null)
                     {
                         string curType = reader.ReadLine();
@@ -1066,7 +1146,7 @@ namespace CakeDefense
             #region Basic
             if (type == Var.TowerType.Basic)
             {
-                return new Tower(
+                return new Tower_Basic(
                     150,
                     health,
                     100,

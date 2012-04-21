@@ -36,7 +36,7 @@ namespace CakeDefense
         public static int MAX_TOWER_HEALTH = 10;
         public static Dictionary<TowerType, string> towerNames = new Dictionary<TowerType, string>
         {
-            { TowerType.Basic, "Raid" }
+            { TowerType.Basic, "Rad" }
         };
         #endregion Tower
 

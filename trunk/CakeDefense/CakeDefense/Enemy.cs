@@ -106,11 +106,6 @@ namespace CakeDefense
                 {
                     MoveBy(Speed_Actual, traps); // move the enemy (properly)
 
-                    if (path.GetTile(currentTile) == path.Middle)
-                    {
-                        hasCake = true;
-                    }
-
                     if (path.GetTile(currentTile) == path.End)
                     {
                         despawning = true;
@@ -140,6 +135,20 @@ namespace CakeDefense
         private void MoveBy(float num, List<Trap> traps)
         {
             traps.ForEach(trap => trap.AttackIfCan(this, time));
+
+            #region Check for cake
+            if (hasCake == false)
+            {
+                foreach (Tile tile in path.GetTile(currentTile).Neighbors)
+                {
+                    if (tile != null && tile.OccupiedBy is Cake)
+                    {
+                        hasCake = true;
+                        break;
+                    }
+                }
+            }
+            #endregion Check for cake
 
             if (path.InRange(currentTile + 1))
             {
