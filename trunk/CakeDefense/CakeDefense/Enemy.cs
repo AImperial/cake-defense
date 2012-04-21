@@ -23,12 +23,14 @@ namespace CakeDefense
         private HUD hud;
         private int currentTile;
         private HealthBar healthBar;
-        private Cake cakepiece;
         private GameTime time;
         Timer timer;
 
         private bool spawning, despawning, dying, hasCake;
         private float slowEffect;
+
+        SpriteBatch sprite;
+        Texture2D cakepieceTex;
         #endregion Attributes
 
         #region Constructor
@@ -36,7 +38,8 @@ namespace CakeDefense
             : base(imageObject, health, damage, speed)
         {
             healthBar = new HealthBar(healthTex, health, imageObject.SpriteBatch, 2, Var.ENEMY_SHOW_HEALTH_TIME, .8f, Color.Red, Color.OrangeRed);
-            cakepiece = new Cake(1, (int)this.X, (int)this.Y, 15, 15, imageObject.SpriteBatch, cakepieceTex);
+            sprite = imageObject.SpriteBatch;
+            this.cakepieceTex = cakepieceTex;
             IsActive = false;
             this.path = path;
             Image.Center = Center = path.Start.Center;
@@ -103,13 +106,10 @@ namespace CakeDefense
                 {
                     MoveBy(Speed_Actual, traps); // move the enemy (properly)
 
-                    Array temp = new Array[4];
-                    temp = path.GetTile(currentTile).Neighbors;
-                    for(int i = 0; i < temp.Length; i++)
+                    if (path.GetTile(currentTile) == path.Middle)
                     {
-                        //if any of the neighbors contain cake, take a slice
-                       // if(((Tile)temp[i]).
-                    }       
+                        hasCake = true;
+                    }
 
                     if (path.GetTile(currentTile) == path.End)
                     {
@@ -299,7 +299,10 @@ namespace CakeDefense
                 timer.End();
                 despawning = false;
                 IsActive = false;
-                hud.EnemyGotCake();
+                if (hasCake)
+                {
+                    hud.EnemyGotCake();
+                }
             }
         }
 
@@ -354,9 +357,11 @@ namespace CakeDefense
         {
             if (IsActive)
             {
-                if (hasCake)
-                    cakepiece.Draw();
                 base.Draw(gameTime, Var.FRAME_SPEED);
+                if (hasCake)
+                {
+                    sprite.Draw(cakepieceTex, new Rectangle((int)(this.X), (int)(this.Y), 15, 15), Color.White);
+                }
                 healthBar.Draw();
             }
         }

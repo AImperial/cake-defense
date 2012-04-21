@@ -726,9 +726,10 @@ namespace CakeDefense
             for (int i = 0; i < Enum.GetNames(typeof(Var.TrapType)).Length; i++)
                 selectionList.Add(NewTrap((Var.TrapType)i));
 
-            cake = new Cake(cakeLeft, 600, 80, 160, 180, spriteBatch, cakeTex);
-            hud = new HUD(spriteBatch, money, blankTex, mediumFont, cake,
-                selectionList, stripesTex, this);
+            cake = new Cake(cakeLeft, 580, 60, 160, 180, spriteBatch, cakeTex);
+            
+            hud = new HUD(spriteBatch, money, blankTex, mediumFont, cake, selectionList, stripesTex, this);
+
             List<TextObject> texts = new List<TextObject>
             {
                 new TextObject("", Vector2.Zero, normalFont, Color.GhostWhite, spriteBatch),
