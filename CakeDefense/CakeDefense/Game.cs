@@ -476,15 +476,16 @@ namespace CakeDefense
 
                     cake.Draw();
 
+                    Tower mouseOverTower = null;
                     foreach (Tower tower in towers)
                     {
                         tower.Draw();
                         if (mouseRect.Intersects(tower.Rectangle))
-                        {
-                            DrawCircle(tower.Center, tower.FireRadius, 25, Color.Red);
-                            spriteBatch.DrawString(normalFont, "Price: " + tower.Cost, new Vector2(tower.Point.X + 40, tower.Point.Y), Color.Blue);
-                            spriteBatch.DrawString(normalFont, "Sale Price: " + tower.Cost / 2, new Vector2(tower.Point.X + 40, tower.Point.Y + 20), Color.Blue);
-                        }
+                            mouseOverTower = tower;
+                    }
+                    if (mouseOverTower != null) {
+                        DrawCircle(mouseOverTower.Center, mouseOverTower.FireRadius, 25, Color.Red);
+                        spriteBatch.DrawString(normalFont, "Price: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.Cost / 2, new Vector2(mouseOverTower.Point.X + mouseOverTower.Width + 2, mouseOverTower.Point.Y - 5), Color.Blue);
                     }
 
                     traps.ForEach(trap => trap.Draw(gameTime));
