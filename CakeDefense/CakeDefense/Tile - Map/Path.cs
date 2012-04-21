@@ -42,6 +42,12 @@ namespace CakeDefense
             get { return tiles.First(); }
         }
 
+        /// <summary> The middle Tile. </summary>
+        public Tile Middle
+        {
+            get { return GetTile(tiles.Count / 2); }
+        }
+
         /// <summary> The last Tile. </summary>
         public Tile End
         {

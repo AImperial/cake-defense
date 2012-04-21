@@ -76,20 +76,6 @@ namespace CakeDefense
                     }
                 }
                 return mapArray;
-
-
-                //string[] infoArray = null;
-                //string firstLine = null;
-                //while ((firstLine = reader.ReadLine()) != null)
-                //{
-                //    infoArray = firstLine.Split(',');
-                //    row = new int[infoArray.Length];
-                //    for (int i = 0; i < row.Length; i++)
-                //    {
-                //        row[i] = Int32.Parse(infoArray[i]);
-                //    }
-                //}
-                //return null;
             }
             return null;
         }
