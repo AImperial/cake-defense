@@ -56,6 +56,7 @@ namespace CakeDefense
         List<Enemy> enemies;
         List<List<Enemy>> prevWaves;
         List<Queue<Enemy>> waves;
+        List<Vector2> droppedCake;
         Timer spawnTimer;
         #endregion Enemy Stuff
 
@@ -475,8 +476,19 @@ namespace CakeDefense
 
                     cake.Draw();
                     towers.ForEach(tower => tower.Draw());
+                    towers.ForEach(tower => DrawCircle(tower.Center, tower.FireRadius, 25, Color.Red));
                     traps.ForEach(trap => trap.Draw(gameTime));
-                    enemies.ForEach(enemy => enemy.Draw(gameTime));
+
+                    foreach (Enemy enemy in enemies)
+                    {
+                        enemy.Draw(gameTime);
+                        if (enemy.IsDying && enemy.HasCake)
+                        {
+                            droppedCake.Add(enemy.Point);
+                        }
+                    }
+
+                    droppedCake.ForEach(dropped => spriteBatch.Draw(cakepieceTex, new Rectangle((int)(dropped.X), (int)(dropped.Y), 15, 15), Color.White));
 
                     if (heldItem != null)
                     {
@@ -571,6 +583,7 @@ namespace CakeDefense
                     break;
                 #endregion Everything else
             }
+
             if ((drawCursor == true && gameState == GameState.Game) || gameState != GameState.Game)
                 spriteBatch.Draw(cursorTex, new Rectangle(mouseRect.X, mouseRect.Y, 25, 25), Color.White);
 
@@ -696,6 +709,7 @@ namespace CakeDefense
 
             // Gets enemies
             LoadWaves(level, wave);
+            droppedCake = new List<Vector2>();
         }
 
         public void ContinueGame()
@@ -726,7 +740,7 @@ namespace CakeDefense
             for (int i = 0; i < Enum.GetNames(typeof(Var.TrapType)).Length; i++)
                 selectionList.Add(NewTrap((Var.TrapType)i));
 
-            cake = new Cake(cakeLeft, 580, 60, 160, 180, spriteBatch, cakeTex);
+            cake = new Cake(cakeLeft, 580, 60, 160, 180, spriteBatch, normalFont, cakeTex);
             
             hud = new HUD(spriteBatch, money, blankTex, mediumFont, cake, selectionList, stripesTex, this);
 
