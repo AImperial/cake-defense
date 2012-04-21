@@ -30,21 +30,24 @@ namespace CakeDefense
             sprite = spriteBatch;
             int[,] tileMap = LoadMap(level);
 
-            size = new Point(tileMap.GetLength(0), tileMap.GetLength(1));
-
-            tiles = new Tile[tileMap.GetLength(0), tileMap.GetLength(1)];
-            for (int x = 0; x < tileMap.GetLength(0); x++)
+            if (tileMap != null)
             {
-                for (int y = 0; y < tileMap.GetLength(1); y++)
-                {
-                    if (tileMap[x, y] == 0)
-                        tiles[x, y] = new Tile_Tower(x * Var.TILE_SIZE, y * Var.TILE_SIZE, Var.TILE_SIZE, Var.TILE_SIZE, new Point(x, y));
-                    else if (tileMap[x, y] >= 1)
-                        tiles[x, y] = new Tile_Path(x * Var.TILE_SIZE, y * Var.TILE_SIZE, Var.TILE_SIZE, Var.TILE_SIZE, new Point(x, y), tileMap[x, y] - 1);
-                }
-            }
+                size = new Point(tileMap.GetLength(0), tileMap.GetLength(1));
 
-            AssignTileNeighbors();
+                tiles = new Tile[tileMap.GetLength(0), tileMap.GetLength(1)];
+                for (int x = 0; x < tileMap.GetLength(0); x++)
+                {
+                    for (int y = 0; y < tileMap.GetLength(1); y++)
+                    {
+                        if (tileMap[x, y] == 0)
+                            tiles[x, y] = new Tile_Tower(x * Var.TILE_SIZE, y * Var.TILE_SIZE, Var.TILE_SIZE, Var.TILE_SIZE, new Point(x, y));
+                        else if (tileMap[x, y] >= 1)
+                            tiles[x, y] = new Tile_Path(x * Var.TILE_SIZE, y * Var.TILE_SIZE, Var.TILE_SIZE, Var.TILE_SIZE, new Point(x, y), tileMap[x, y] - 1);
+                    }
+                }
+
+                AssignTileNeighbors();
+            }
         }
         #endregion region Constructor
 
@@ -151,13 +154,16 @@ namespace CakeDefense
         #region Draw
         public void DrawMap(Texture2D tex, SpriteFont font)
         {
-            foreach (Tile tile in tiles)
+            if (tiles != null)
             {
-                if (tile is Tile_Tower)
-                    sprite.Draw(tex, tile.Rectangle, Color.LightGray);
-                else if (tile is Tile_Path)
-                    sprite.Draw(tex, tile.Rectangle, Color.Gray);
-                //sprite.DrawString(font, "x:" + tile.TileNum.X.ToString("00") + "\ny:" + tile.TileNum.Y.ToString("00"), tile.Point, Color.Green);
+                foreach (Tile tile in tiles)
+                {
+                    if (tile is Tile_Tower)
+                        sprite.Draw(tex, tile.Rectangle, Color.LightGray);
+                    else if (tile is Tile_Path)
+                        sprite.Draw(tex, tile.Rectangle, Color.Gray);
+                    //sprite.DrawString(font, "x:" + tile.TileNum.X.ToString("00") + "\ny:" + tile.TileNum.Y.ToString("00"), tile.Point, Color.Green);
+                }
             }
         }
         #endregion Draw

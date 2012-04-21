@@ -484,7 +484,7 @@ namespace CakeDefense
                             mouseOverTower = tower;
                     }
                     if (mouseOverTower != null) {
-                        DrawCircle(mouseOverTower.Center, mouseOverTower.FireRadius, 25, Color.Red);
+                        DrawCircle(mouseOverTower.Center, mouseOverTower.FireRadius, 64, Color.Red);
                         spriteBatch.DrawString(normalFont, "Price: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.Cost / 2, new Vector2(mouseOverTower.Point.X + mouseOverTower.Width + 2, mouseOverTower.Point.Y - 5), Color.Blue);
                     }
 
@@ -736,7 +736,8 @@ namespace CakeDefense
             // HUD / Cake / Map declared in LoadGame()
 
             paths = new List<Path>();
-            paths.Add(map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1));
+            if (map.Tiles != null)
+                paths.Add(map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1));
 
             // Gets enemies
             LoadWaves(level, wave); // level / wave taken from LoadGame();
@@ -779,13 +780,6 @@ namespace CakeDefense
                     spawnTimer.Start(animationTotalTime, Var.TIME_BETWEEN_SPAWNS);
                 else
                     spawnTimer.Start(animationTotalTime, Var.TIME_BETWEEN_WAVES);
-
-                if (waves.Count == 1 && waves[0].Count == 0 && enemies.Count == 0)
-                {
-                    waves.RemoveAt(0);
-                    wave = 0;
-                    NextLevel();
-                }
             }
             if (waves.Count > 1 && waves[0].Count == 0 && spawnTimer.Finished)
             {
@@ -793,12 +787,14 @@ namespace CakeDefense
                 wave++;
                 prevWaves.Add(waves[0].ToList());
             }
-            if (waves.Count == 0 && enemies.Count == 0)
+
+            if (waves.Count == 1 && waves[0].Count == 0 && enemies.Count == 0)
             {
+                waves.Clear();
+                wave = 0;
                 NextLevel();
             }
-
-            if (prevWaves.Count >= 1)
+            else if (prevWaves.Count >= 1)
             {
                 bool waveAlive = false;
                 foreach (Enemy enemy in prevWaves[0])
@@ -880,12 +876,12 @@ namespace CakeDefense
         /// <summary> Loads Game info such as money, cake, level, wave, saved towers, and saved traps. also MAP is created here. </summary>
         public bool LoadFile()
         {
-            if (File.Exists("Save.sav"))
+            if (CheckForSave())
             {
                 StreamReader reader = new StreamReader("Save.sav");
                 string[] infoArray = null;
                 string firstLine = null;
-                if ((firstLine = reader.ReadLine()) != "" && firstLine != null)
+                if ((firstLine = reader.ReadLine()) != null)
                 {
                     if (firstLine.Contains("//"))
                         firstLine = firstLine.Remove(firstLine.IndexOf("//"));
@@ -899,44 +895,46 @@ namespace CakeDefense
 
                     // Map is declared here as you need the map to place towers and traps, but you need what level to load.
                     map = new Map(level, spriteBatch);
-
-                    string curType = reader.ReadLine();
-                    Tower tempTower; string[] coord;
-                    while (curType == "--Towers--")
+                    if (map.Tiles != null)
                     {
-                        firstLine = reader.ReadLine();
-                        if (firstLine == null || (firstLine[0] == '-' && firstLine[1] == '-'))
+                        string curType = reader.ReadLine();
+                        Tower tempTower; string[] coord;
+                        while (curType == "--Towers--")
                         {
-                            curType = firstLine;
-                            break;
+                            firstLine = reader.ReadLine();
+                            if (firstLine == null || (firstLine[0] == '-' && firstLine[1] == '-'))
+                            {
+                                curType = firstLine;
+                                break;
+                            }
+                            if (firstLine.Contains("//"))
+                                firstLine = firstLine.Remove(firstLine.IndexOf("//"));
+
+                            // 0-Type ||| 1-tile (x,y) ||| 2-health ||| 3-AttackType
+                            infoArray = firstLine.Split('-'); coord = infoArray[1].Split(',');
+                            tempTower = LoadTower((Var.TowerType)Enum.Parse(typeof(Var.TowerType), infoArray[0], true), Int32.Parse(infoArray[2]), (Tower.Attacktype)Enum.Parse(typeof(Tower.Attacktype), infoArray[3], true));
+                            tempTower.Place((Tile_Tower)map.Tiles[Int32.Parse(coord[0]), Int32.Parse(coord[1])]);
+                            towers.Add(tempTower);
                         }
-                        if (firstLine.Contains("//"))
-                            firstLine = firstLine.Remove(firstLine.IndexOf("//"));
 
-                        // 0-Type ||| 1-tile (x,y) ||| 2-health ||| 3-AttackType
-                        infoArray = firstLine.Split('-'); coord = infoArray[1].Split(',');
-                        tempTower = LoadTower((Var.TowerType)Enum.Parse(typeof(Var.TowerType), infoArray[0], true), Int32.Parse(infoArray[2]), (Tower.Attacktype)Enum.Parse(typeof(Tower.Attacktype), infoArray[3], true));
-                        tempTower.Place((Tile_Tower)map.Tiles[Int32.Parse(coord[0]), Int32.Parse(coord[1])]);
-                        towers.Add(tempTower);
-                    }
-
-                    Trap tempTrap;
-                    while (curType == "--Traps--")
-                    {
-                        firstLine = reader.ReadLine();
-                        if (firstLine == null || (firstLine[0] == '-' && firstLine[1] == '-'))
+                        Trap tempTrap;
+                        while (curType == "--Traps--")
                         {
-                            curType = firstLine;
-                            break;
-                        }
-                        if (firstLine.Contains("//"))
-                            firstLine = firstLine.Remove(firstLine.IndexOf("//"));
+                            firstLine = reader.ReadLine();
+                            if (firstLine == null || (firstLine[0] == '-' && firstLine[1] == '-'))
+                            {
+                                curType = firstLine;
+                                break;
+                            }
+                            if (firstLine.Contains("//"))
+                                firstLine = firstLine.Remove(firstLine.IndexOf("//"));
 
-                        // 0-Type ||| 1-tile (x,y) ||| 2-health
-                        infoArray = firstLine.Split('-'); coord = infoArray[1].Split(',');
-                        tempTrap = LoadTrap((Var.TrapType)Enum.Parse(typeof(Var.TrapType), infoArray[0], true), Int32.Parse(infoArray[2]));
-                        tempTrap.Place((Tile_Path)map.Tiles[Int32.Parse(coord[0]), Int32.Parse(coord[1])]);
-                        traps.Add(tempTrap);
+                            // 0-Type ||| 1-tile (x,y) ||| 2-health
+                            infoArray = firstLine.Split('-'); coord = infoArray[1].Split(',');
+                            tempTrap = LoadTrap((Var.TrapType)Enum.Parse(typeof(Var.TrapType), infoArray[0], true), Int32.Parse(infoArray[2]));
+                            tempTrap.Place((Tile_Path)map.Tiles[Int32.Parse(coord[0]), Int32.Parse(coord[1])]);
+                            traps.Add(tempTrap);
+                        }
                     }
                 }
                 else{
@@ -971,17 +969,9 @@ namespace CakeDefense
 
             hud.GameSaved();
         }
-
-        public void DeleteSave()
-        {
-            StreamWriter writer = new StreamWriter("Save.sav");
-            writer.Write("");
-            writer.Close();
-            writer.Dispose();
-        }
         #endregion Save
 
-        #region Check If Saved Game
+        #region Check If Saved Game / Delete Save
         public bool CheckForSave()
         {
             if (File.Exists("save.sav"))
@@ -999,7 +989,15 @@ namespace CakeDefense
             }
             return false;
         }
-        #endregion Check If Saved Game
+
+        public void DeleteSave()
+        {
+            StreamWriter writer = new StreamWriter("Save.sav");
+            writer.Write("");
+            writer.Close();
+            writer.Dispose();
+        }
+        #endregion Check If Saved Game / Delete Save
 
         #endregion File Stuff
 
@@ -1300,7 +1298,7 @@ namespace CakeDefense
                         return;
 
                     Vector2 start, end, scale;
-                    int lineWidth = 1;
+                    int lineWidth = 3;
                     float rotation;
 
                     for (int i = 1; i <= vectors.Count; i++)
