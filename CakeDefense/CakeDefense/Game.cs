@@ -209,7 +209,11 @@ namespace CakeDefense
 
                         if (enemies[i].IsActive == false)
                         {
-                            enemies.RemoveAt(i);
+                            if (enemies[i].HasCake)
+                            {
+                                droppedCake.Add(enemies[i].Point);
+                            }
+                            enemies.RemoveAt(i);  
                             i--;
                         }
                     }
@@ -372,6 +376,8 @@ namespace CakeDefense
                                             heldItem = NewTrap(((Trap)heldItem).Type);
                                         }
                                     }
+
+                                    
                                     break;
                                 }
                             }
@@ -534,18 +540,11 @@ namespace CakeDefense
                     }
                     #endregion Traps
 
+                    droppedCake.ForEach(dropped => spriteBatch.Draw(cakepieceTex, new Rectangle((int)(dropped.X), (int)(dropped.Y), 15, 15), Color.White));
+
                     traps.ForEach(trap => trap.Draw(gameTime));
 
-                    foreach (Enemy enemy in enemies)
-                    {
-                        enemy.Draw(gameTime);
-                        if (enemy.IsDying && enemy.HasCake)
-                        {
-                            droppedCake.Add(enemy.Point);
-                        }
-                    }
-
-                    droppedCake.ForEach(dropped => spriteBatch.Draw(cakepieceTex, new Rectangle((int)(dropped.X), (int)(dropped.Y), 15, 15), Color.White));
+                    enemies.ForEach(enemy => enemy.Draw(gameTime));
 
                     if (heldItem != null)
                     {
@@ -554,7 +553,7 @@ namespace CakeDefense
                         {
                             if (mouseRect.Intersects(tile.Rectangle))
                             {
-                                if (heldItem is Tower && tile is Tile_Tower)
+                                if (heldItem is Tower && tile is Tile_Tower && !(tile.OccupiedBy is Cake))
                                     ImageObject.DrawRectangleOutline(tile.Rectangle, 2, Color.Blue, blankTex, spriteBatch);
                                 else if (heldItem is Trap && tile is Tile_Path)
                                     ImageObject.DrawRectangleOutline(tile.Rectangle, 2, Color.Green, blankTex, spriteBatch);
@@ -1250,7 +1249,7 @@ namespace CakeDefense
 
         public void RestartGame(Button bttn)
         {
-            ContinueGame();
+            NewGame();
         }
 
         #region Game Speed Buttons
