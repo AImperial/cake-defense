@@ -132,24 +132,34 @@ namespace CakeDefense
         #endregion Update
 
         #region Move
-        private void MoveBy(float num, List<Trap> traps)
+        private void MoveBy(float num, List<Trap> traps/*, List<Enemy> enemies*/)
         {
             traps.ForEach(trap => trap.AttackIfCan(this, time));
 
             #region Check for cake
             if (hasCake == false)
             {
+                int cakeCount = 0;
                 foreach (Tile tile in path.GetTile(currentTile).Neighbors)
                 {
                     if (tile != null && tile.OccupiedBy is Cake)
                     {
-                        hasCake = true;
+                        //loop through enemy objects
+                        /*for (int i = 0; i < enemies.Count; i++)
+                        {
+                            if (enemies[i].hasCake)
+                                cakeCount++;
+                        }*/
+
+                        if(cakeCount < 9)
+                            hasCake = true;
                         break;
                     }
                 }
             }
             #endregion Check for cake
 
+            #region Path
             if (path.InRange(currentTile + 1))
             {
                 // Move Left
@@ -237,6 +247,7 @@ namespace CakeDefense
                     }
                 }
             }
+            #endregion Path
         }
         #endregion Move
 
