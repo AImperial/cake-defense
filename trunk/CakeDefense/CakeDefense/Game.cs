@@ -1331,7 +1331,7 @@ namespace CakeDefense
                 return new Trap_Fire(
                     health,
                     1,
-                    150,
+                    100,
                     image,
                     flameTex
                 );
