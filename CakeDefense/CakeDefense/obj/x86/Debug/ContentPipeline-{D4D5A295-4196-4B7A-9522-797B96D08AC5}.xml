@@ -181,6 +181,24 @@
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\ant_ani.xnb</Output>
       <Time>2012-04-23T17:29:17.326855-04:00</Time>
     </Item>
+    <Item>
+      <Source>Sprites\spider_ani.png</Source>
+      <Name>Sprites\spider_ani</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\spider_ani.xnb</Output>
+      <Time>2012-04-23T18:21:53.9614117-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sprites\beetle_ani.png</Source>
+      <Name>Sprites\beetle_ani</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\beetle_ani.xnb</Output>
+      <Time>2012-04-23T18:33:41.6628225-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{D4D5A295-4196-4B7A-9522-797B96D08AC5}</ContentProjectGUID>
