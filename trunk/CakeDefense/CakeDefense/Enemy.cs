@@ -366,7 +366,7 @@ namespace CakeDefense
 
         private int CalculateDeathReward()
         {
-            return (int)((StartHealth * Speed) / 2.0f);
+            return (int)(StartHealth * (Speed));
         }
         #endregion Get Damaged (Hit)
 
