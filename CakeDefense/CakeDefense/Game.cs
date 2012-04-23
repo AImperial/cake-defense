@@ -24,7 +24,7 @@ namespace CakeDefense
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
-        Texture2D blankTex, stripesTex, cursorTex, bulletTex, ant, spider, beetle, pixel, towerTex, cakeTex, slowTex, flameTex, cakepieceTex, menuBttnTex, infoBoxTex;
+        Texture2D blankTex, stripesTex, cursorTex, bulletTex, ant, spider, beetle, pixel, towerTex, cakeTex, slowTex, flameTex, cakepieceTex;
         Dictionary<GameState, Texture2D> menuBackgrounds;
         GameTime animationTotalTime; public GameTime AnimationTime { get { return animationTotalTime; } }
         TimeSpan pausedTime;
@@ -142,16 +142,10 @@ namespace CakeDefense
                 { GameState.Menu, this.Content.Load<Texture2D>("Menu/MainMenu") },
                 { GameState.Instructions, this.Content.Load<Texture2D>("Menu/Instructions") },
                 { GameState.Credits, this.Content.Load<Texture2D>("Menu/Credits") },
-                { GameState.Game, this.Content.Load<Texture2D>("Menu/gameScreen") },
                 { GameState.GameOver_Win, this.Content.Load<Texture2D>("Menu/Win") },
                 { GameState.GameOver_Lose, this.Content.Load<Texture2D>("Menu/Lose") }
             };
             #endregion Menu
-
-            #region HUD
-            menuBttnTex = this.Content.Load<Texture2D>("HUD/MenuButton");
-            infoBoxTex = this.Content.Load<Texture2D>("HUD/InfoBox");
-            #endregion HUD
 
             #region Spritefonts
             largeFont = this.Content.Load<SpriteFont>("Spritefonts/Large");
@@ -510,7 +504,6 @@ namespace CakeDefense
                 #region GameState.Game
                 case GameState.Game: case GameState.Paused:
 
-                    spriteBatch.Draw(menuBackgrounds[gameState], Var.SCREEN_SIZE, Color.White);
                     map.DrawMap(blankTex, smallFont);
 
                     cake.Draw();
@@ -557,9 +550,9 @@ namespace CakeDefense
                     }
                     #endregion Traps
 
-                    traps.ForEach(trap => trap.Draw(gameTime));
-
                     droppedCake.ForEach(dropped => spriteBatch.Draw(cakepieceTex, new Rectangle((int)(dropped.X), (int)(dropped.Y), 15, 15), Color.White));
+
+                    traps.ForEach(trap => trap.Draw(gameTime));
 
                     enemies.ForEach(enemy => enemy.Draw(gameTime));
 
@@ -802,7 +795,7 @@ namespace CakeDefense
             }
 
             paths = new List<Path>();
-            paths.Add(map.FindPath(map.Tiles[1, 13], map.Tiles[23, 17], 1));
+            paths.Add(map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1));
 
             // Gets enemies
             LoadWaves(level, wave);
@@ -823,7 +816,7 @@ namespace CakeDefense
 
             paths = new List<Path>();
             if (map.Tiles != null)
-                paths.Add(map.FindPath(map.Tiles[1, 13], map.Tiles[23, 17], 1));
+                paths.Add(map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1));
 
             // Gets enemies
             LoadWaves(level, wave); // level / wave taken from LoadGame();
@@ -839,8 +832,7 @@ namespace CakeDefense
                 selectionList.Add(NewTrap((Var.TrapType)i));
 
             cake = new Cake(cakeLeft, Var.GAME_AREA.Left + (Var.TILE_SIZE * 15), Var.GAME_AREA.Top + (Var.TILE_SIZE * 2), Var.TILE_SIZE * 3, Var.TILE_SIZE * 3, spriteBatch, normalFont, cakeTex);
-            hud = new HUD(spriteBatch, money, infoBoxTex, mediumFont, cake, selectionList, stripesTex, this);
-            hud.MenuButton.Texture = menuBttnTex;
+            hud = new HUD(spriteBatch, money, blankTex, mediumFont, cake, selectionList, stripesTex, this);
 
             List<TextObject> texts = new List<TextObject>
             {
@@ -1243,7 +1235,7 @@ namespace CakeDefense
                     150,
                     health,
                     100,
-                    1,
+                    2,
                     500,//Fire Rate in ms
                     Var.BASE_BULLET_SPEED,
                     Var.TILE_SIZE,

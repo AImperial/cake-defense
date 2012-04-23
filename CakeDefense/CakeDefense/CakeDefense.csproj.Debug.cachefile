@@ -12,19 +12,11 @@ Content\Sprites\menu_bttn.xnb
 Content\Sprites\flypaper.xnb
 Content\Sprites\cakepiece.xnb
 Content\Cursor.xnb
-Content\Sprites\flame_trap.xnb
-Content\Sprites\ant_ani.xnb
-Content\Menu\gameScreen.xnb
 Content\Spritefonts\Large.xnb
 Content\Spritefonts\Medium.xnb
 Content\Spritefonts\Normal.xnb
 Content\Spritefonts\Small.xnb
-<<<<<<< .mine
-Content\HUD\InfoBox.xnb
-Content\HUD\MenuButton.xnb
-=======
 Content\Sprites\flame_trap.xnb
 Content\Sprites\ant_ani.xnb
 Content\Sprites\spider_ani.xnb
 Content\Sprites\beetle_ani.xnb
->>>>>>> .r67
