@@ -24,7 +24,7 @@ namespace CakeDefense
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
-        Texture2D blankTex, stripesTex, cursorTex, bulletTex, enemyAnimationTest, pixel, towerTex, cakeTex, slowTex, cakepieceTex;
+        Texture2D blankTex, stripesTex, cursorTex, bulletTex, enemyAnimationTest, pixel, towerTex, cakeTex, slowTex, flameTex, cakepieceTex;
         Dictionary<GameState, Texture2D> menuBackgrounds;
         GameTime animationTotalTime; public GameTime AnimationTime { get { return animationTotalTime; } }
         TimeSpan pausedTime;
@@ -163,6 +163,7 @@ namespace CakeDefense
             towerTex = this.Content.Load<Texture2D>("Sprites/can");
             bulletTex = this.Content.Load<Texture2D>("Sprites/Bullet");
             slowTex = this.Content.Load<Texture2D>("Sprites/flypaper");
+            flameTex = this.Content.Load<Texture2D>("Sprites/flame_trap");
             #endregion Sprites
 
             InitializeAfterLoadContent();
@@ -1243,7 +1244,7 @@ namespace CakeDefense
             if (type == Var.TrapType.Fire)
             {
                 ImageObject image = new ImageObject(
-                    blankTex,
+                    flameTex,
                     0, 0,
                     Var.TRAP_SIZE, Var.TRAP_SIZE,
                     spriteBatch
@@ -1254,7 +1255,7 @@ namespace CakeDefense
                     1,
                     150,
                     image,
-                    blankTex
+                    flameTex
                 );
             }
             #endregion Fire

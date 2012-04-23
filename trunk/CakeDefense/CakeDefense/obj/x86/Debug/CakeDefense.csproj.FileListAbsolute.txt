@@ -155,3 +155,4 @@ C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\obj\x
 C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\obj\x86\Debug\CakeDefense.exe
 C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\obj\x86\Debug\CakeDefense.pdb
+C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\flame_trap.xnb
