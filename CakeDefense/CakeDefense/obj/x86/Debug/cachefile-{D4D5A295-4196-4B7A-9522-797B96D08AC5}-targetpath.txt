@@ -2,7 +2,6 @@ Content\Blank.xnb
 Content\Menu\Credits.xnb
 Content\Menu\Instructions.xnb
 Content\Menu\MainMenu.xnb
-Content\Sprites\SpiderSprite.xnb
 Content\Sprites\Bullet.xnb
 Content\Menu\Lose.xnb
 Content\Sprites\can.xnb
@@ -18,3 +17,4 @@ Content\Spritefonts\Medium.xnb
 Content\Spritefonts\Normal.xnb
 Content\Spritefonts\Small.xnb
 Content\Sprites\flame_trap.xnb
+Content\Sprites\ant_ani.xnb

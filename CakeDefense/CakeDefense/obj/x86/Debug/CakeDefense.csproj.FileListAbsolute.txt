@@ -102,7 +102,6 @@ C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Instructions.xnb
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\MainMenu.xnb
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Cursor.xnb
-C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\SpiderSprite.xnb
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\Bullet.xnb
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Large.xnb
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Medium.xnb
@@ -156,3 +155,4 @@ C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\obj\x
 C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\obj\x86\Debug\CakeDefense.exe
 C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\obj\x86\Debug\CakeDefense.pdb
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\flame_trap.xnb
+C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\ant_ani.xnb

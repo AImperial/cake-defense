@@ -24,7 +24,7 @@ namespace CakeDefense
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
-        Texture2D blankTex, stripesTex, cursorTex, bulletTex, enemyAnimationTest, pixel, towerTex, cakeTex, slowTex, flameTex, cakepieceTex;
+        Texture2D blankTex, stripesTex, cursorTex, bulletTex, ant, spider, beetle, pixel, towerTex, cakeTex, slowTex, flameTex, cakepieceTex;
         Dictionary<GameState, Texture2D> menuBackgrounds;
         GameTime animationTotalTime; public GameTime AnimationTime { get { return animationTotalTime; } }
         TimeSpan pausedTime;
@@ -155,7 +155,9 @@ namespace CakeDefense
             #endregion Spritefonts
 
             #region Sprites
-            enemyAnimationTest = this.Content.Load<Texture2D>("Sprites/SpiderSprite");
+            ant = this.Content.Load<Texture2D>("Sprites/ant_ani");
+            spider = this.Content.Load<Texture2D>("Sprites/ant_ani");
+            beetle = this.Content.Load<Texture2D>("Sprites/ant_ani");
             
             cakeTex = this.Content.Load<Texture2D>("Sprites/cake");
             cakepieceTex = this.Content.Load<Texture2D>("Sprites/cakepiece");
@@ -1093,20 +1095,58 @@ namespace CakeDefense
         #region Enemy
         private Enemy NewEnemy(Var.EnemyType type, Path path, float speed, int health, int damage)
         {
+            #region Ant
+            if (type == Var.EnemyType.Ant)
+            {
+                ImageObject image = new ImageObject(
+                    ant,
+                    0,
+                    0,
+                    Var.ENEMY_SIZE,
+                    Var.ENEMY_SIZE,
+                    4,
+                    0,
+                    0,
+                    30,
+                    30,
+                    0,
+                    0,
+                    Color.White,
+                    100f,
+                    ImageObject.RIGHT,
+                    Vector2.Zero,
+                    SpriteEffects.None,
+                    spriteBatch
+                );
+                image.CenterOrigin();
+
+                return new Enemy(
+                    image,
+                    (int)(health * difficulty),
+                    (int)(damage * difficulty),
+                    speed * difficulty,
+                    path,
+                    blankTex,
+                    cakepieceTex,
+                    hud
+                );
+            }
+            #endregion Ant
+
             #region Spider
             if (type == Var.EnemyType.Spider)
             {
                 ImageObject image = new ImageObject(
-                    enemyAnimationTest,
+                    spider,
                     0,
                     0,
                     Var.ENEMY_SIZE,
                     Var.ENEMY_SIZE,
-                    3,
+                    4,
                     0,
                     0,
-                    16,
-                    16,
+                    30,
+                    30,
                     0,
                     0,
                     Color.White,
@@ -1130,6 +1170,44 @@ namespace CakeDefense
                 );
             }
             #endregion Spider
+
+            #region Beetle
+            if (type == Var.EnemyType.Beetle)
+            {
+                ImageObject image = new ImageObject(
+                    beetle,
+                    0,
+                    0,
+                    Var.ENEMY_SIZE,
+                    Var.ENEMY_SIZE,
+                    4,
+                    0,
+                    0,
+                    30,
+                    30,
+                    0,
+                    0,
+                    Color.White,
+                    100f,
+                    ImageObject.RIGHT,
+                    Vector2.Zero,
+                    SpriteEffects.None,
+                    spriteBatch
+                );
+                image.CenterOrigin();
+
+                return new Enemy(
+                    image,
+                    (int)(health * difficulty),
+                    (int)(damage * difficulty),
+                    speed * difficulty,
+                    path,
+                    blankTex,
+                    cakepieceTex,
+                    hud
+                );
+            }
+            #endregion Beetle
 
             return null;
         }
