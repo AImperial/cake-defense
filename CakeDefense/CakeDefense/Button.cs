@@ -104,8 +104,8 @@ namespace CakeDefense
         public override void Draw()
         {
             base.Draw();
-            if (outLineThickness > 0)
-                ImageObject.DrawRectangleOutline(Resized(), outLineThickness, Color.FromNonPremultiplied(outlineColor.R, outlineColor.G, outlineColor.B, (byte)(outlineColor.A * (transparency / 100))), Var.BLANK_TEX, spriteBatch);
+            //if (outLineThickness > 0)
+            //    ImageObject.DrawRectangleOutline(Resized(), outLineThickness, Color.FromNonPremultiplied(outlineColor.R, outlineColor.G, outlineColor.B, (byte)(outlineColor.A * (transparency / 100))), Var.BLANK_TEX, spriteBatch);
             if (message != null)
                 message.Draw();
         }

@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Blank.xnb</Output>
-      <Time>2012-04-23T17:15:07.6210849-04:00</Time>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Blank.xnb</Output>
+      <Time>2012-04-23T18:03:22.868332-04:00</Time>
     </Item>
     <Item>
       <Source>Menu\Credits.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Credits.xnb</Output>
-      <Time>2012-04-23T17:15:07.4910847-04:00</Time>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Credits.xnb</Output>
+      <Time>2012-04-23T18:03:25.605356-04:00</Time>
     </Item>
     <Item>
       <Source>Menu\Instructions.png</Source>
@@ -25,8 +25,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Instructions.xnb</Output>
-      <Time>2012-04-23T17:15:07.5010848-04:00</Time>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Instructions.xnb</Output>
+      <Time>2012-04-23T18:03:26.878148-04:00</Time>
     </Item>
     <Item>
       <Source>Menu\MainMenu.png</Source>
@@ -34,8 +34,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\MainMenu.xnb</Output>
-      <Time>2012-04-23T17:15:07.5610848-04:00</Time>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\MainMenu.xnb</Output>
+      <Time>2012-04-23T18:03:28.086562-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\Bullet.png</Source>
@@ -43,8 +43,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\Bullet.xnb</Output>
-      <Time>2012-04-23T17:15:07.7510851-04:00</Time>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\Bullet.xnb</Output>
+      <Time>2012-04-23T18:03:36.536961-04:00</Time>
     </Item>
     <Item>
       <Source>Menu\Lose.png</Source>
@@ -52,8 +52,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Lose.xnb</Output>
-      <Time>2012-04-23T17:15:07.4910847-04:00</Time>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Lose.xnb</Output>
+      <Time>2012-04-23T18:03:26.268036-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\can.png</Source>
@@ -61,8 +61,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\can.xnb</Output>
-      <Time>2012-04-23T17:15:07.7410851-04:00</Time>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\can.xnb</Output>
+      <Time>2012-04-23T18:03:31.300781-04:00</Time>
     </Item>
     <Item>
       <Source>Stripes.png</Source>
@@ -70,8 +70,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Stripes.xnb</Output>
-      <Time>2012-04-23T17:15:07.9110853-04:00</Time>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Stripes.xnb</Output>
+      <Time>2012-04-23T18:03:37.162041-04:00</Time>
     </Item>
     <Item>
       <Source>Menu\Win.png</Source>
@@ -79,8 +79,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Win.xnb</Output>
-      <Time>2012-04-23T17:15:07.4810847-04:00</Time>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Win.xnb</Output>
+      <Time>2012-04-23T18:03:24.89456-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\cake.png</Source>
@@ -88,8 +88,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\cake.xnb</Output>
-      <Time>2012-04-23T17:15:07.7510851-04:00</Time>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\cake.xnb</Output>
+      <Time>2012-04-23T18:03:36.026498-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\menu_bttn.png</Source>
@@ -97,8 +97,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\menu_bttn.xnb</Output>
-      <Time>2012-04-23T17:15:07.7910852-04:00</Time>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\menu_bttn.xnb</Output>
+      <Time>2012-04-23T18:03:36.750115-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\flypaper.png</Source>
@@ -106,8 +106,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\flypaper.xnb</Output>
-      <Time>2012-04-23T17:15:07.7410851-04:00</Time>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\flypaper.xnb</Output>
+      <Time>2012-04-23T18:03:31.859423-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\cakepiece.png</Source>
@@ -115,8 +115,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\cakepiece.xnb</Output>
-      <Time>2012-04-23T17:15:07.7610851-04:00</Time>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\cakepiece.xnb</Output>
+      <Time>2012-04-23T18:03:36.618125-04:00</Time>
     </Item>
     <Item>
       <Source>Cursor.png</Source>
@@ -124,44 +124,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Cursor.xnb</Output>
-      <Time>2012-04-23T17:15:07.4810847-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Spritefonts\Large.spritefont</Source>
-      <Name>Spritefonts\Large</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Large.xnb</Output>
-      <Time>2012-04-23T17:15:07.1310842-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Spritefonts\Medium.spritefont</Source>
-      <Name>Spritefonts\Medium</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Medium.xnb</Output>
-      <Time>2012-04-23T17:15:07.1410843-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Spritefonts\Normal.spritefont</Source>
-      <Name>Spritefonts\Normal</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Normal.xnb</Output>
-      <Time>2012-04-23T17:15:07.1210842-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Spritefonts\Small.spritefont</Source>
-      <Name>Spritefonts\Small</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Small.xnb</Output>
-      <Time>2012-04-23T17:15:07.1310842-04:00</Time>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Cursor.xnb</Output>
+      <Time>2012-04-23T18:03:22.286539-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\flame_trap.png</Source>
@@ -169,8 +133,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\flame_trap.xnb</Output>
-      <Time>2012-04-23T17:11:38.0752707-04:00</Time>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\flame_trap.xnb</Output>
+      <Time>2012-04-23T18:03:36.686158-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\ant_ani.png</Source>
@@ -178,8 +142,71 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\ant_ani.xnb</Output>
-      <Time>2012-04-23T17:29:17.326855-04:00</Time>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\ant_ani.xnb</Output>
+      <Time>2012-04-23T18:03:43.631154-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Menu\gameScreen.png</Source>
+      <Name>Menu\gameScreen</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\gameScreen.xnb</Output>
+      <Time>2012-04-23T18:33:06.080162-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Spritefonts\Large.spritefont</Source>
+      <Name>Spritefonts\Large</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Large.xnb</Output>
+      <Time>2012-04-23T18:03:21.120588-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Spritefonts\Medium.spritefont</Source>
+      <Name>Spritefonts\Medium</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Medium.xnb</Output>
+      <Time>2012-04-23T18:03:21.663305-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Spritefonts\Normal.spritefont</Source>
+      <Name>Spritefonts\Normal</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Normal.xnb</Output>
+      <Time>2012-04-23T18:03:20.007288-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Spritefonts\Small.spritefont</Source>
+      <Name>Spritefonts\Small</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Small.xnb</Output>
+      <Time>2012-04-23T18:03:20.512544-04:00</Time>
+    </Item>
+    <Item>
+      <Source>HUD\InfoBox.png</Source>
+      <Name>HUD\InfoBox</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\HUD\InfoBox.xnb</Output>
+      <Time>2012-04-23T18:57:35.449938-04:00</Time>
+    </Item>
+    <Item>
+      <Source>HUD\MenuButton.png</Source>
+      <Name>HUD\MenuButton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\HUD\MenuButton.xnb</Output>
+      <Time>2012-04-23T18:57:18.566189-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\spider_ani.png</Source>
@@ -206,39 +233,39 @@
       <TargetProfile>Reach</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefenseContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefenseContent\</RootDirectory>
+      <LoggerRootDirectory>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\</LoggerRootDirectory>
+      <IntermediateDirectory>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
-        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
         <Value>2011-09-01T17:22:30-04:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
         <Value>2011-09-01T17:22:30-04:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
         <Value>2011-09-01T17:22:30-04:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
         <Value>2011-09-01T17:22:30-04:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
         <Value>2011-09-01T17:22:30-04:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
         <Value>2011-09-01T17:22:30-04:00</Value>
       </Assembly>
       <Assembly>
         <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2012-02-01T23:47:33.8185123-05:00</Value>
+        <Value>2012-02-28T15:16:39.1299999-05:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>
