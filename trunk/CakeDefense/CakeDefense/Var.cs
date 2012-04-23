@@ -57,7 +57,7 @@ namespace CakeDefense
         #endregion Bullet
 
         #region Enemy
-        public static int MAX_ENEMY_HEALTH = 4, SPAWN_SPINS = 1, DEATH_SPINS = 3, ENEMY_SIZE = 25;
+        public static int MAX_ENEMY_HEALTH = 4, SPAWN_SPINS = 1, DEATH_SPINS = 3, ENEMY_SIZE = 30;
         public const float ENEMY_SLOW_CAP = .25f, WAVES_DIFFICULTY_INCREASE = .1f;
         public static TimeSpan SPAWN_TIME = new TimeSpan(0, 0, 0, 0, 500);
         public static TimeSpan DESPAWN_TIME = new TimeSpan(0, 0, 1);
@@ -76,7 +76,7 @@ namespace CakeDefense
         #endregion Time Stuff
 
         #region Enums
-        public enum EnemyType { Spider }
+        public enum EnemyType { Ant, Spider, Beetle }
         public enum TowerType { Basic }
         public enum TrapType { Basic, Slow, Fire }
         #endregion Enums
