@@ -156,8 +156,8 @@ namespace CakeDefense
 
             #region Sprites
             ant = this.Content.Load<Texture2D>("Sprites/ant_ani");
-            spider = this.Content.Load<Texture2D>("Sprites/ant_ani");
-            beetle = this.Content.Load<Texture2D>("Sprites/ant_ani");
+            spider = this.Content.Load<Texture2D>("Sprites/spider_ani");
+            beetle = this.Content.Load<Texture2D>("Sprites/beetle_ani");
             
             cakeTex = this.Content.Load<Texture2D>("Sprites/cake");
             cakepieceTex = this.Content.Load<Texture2D>("Sprites/cakepiece");
