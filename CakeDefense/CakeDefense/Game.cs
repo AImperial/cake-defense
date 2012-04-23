@@ -339,6 +339,10 @@ namespace CakeDefense
                                     if (CheckIfClicked(trap.Rectangle))
                                     {
                                         selectedItem = trap;
+                                        if (selectedItem is Trap_Fire)
+                                        {
+                                            ((Trap_Fire)selectedItem).IsClicked = true;
+                                        }
                                         break;
                                     }
                                 }
@@ -532,7 +536,10 @@ namespace CakeDefense
                     }
                     if (mouseOverTrap != null)
                     {
-                        spriteBatch.DrawString(normalFont, "Price: " + mouseOverTrap.Cost + "\nSale Price: " + mouseOverTrap.SellCost(), new Vector2(mouseOverTrap.Point.X + mouseOverTrap.Width + 2, mouseOverTrap.Point.Y - 5), Color.Green);
+                        if(mouseOverTrap is Trap_Fire)
+                            spriteBatch.DrawString(normalFont, "Price: " + mouseOverTrap.Cost + "\nSale Price: " + mouseOverTrap.SellCost() + "\nClick to activate", new Vector2(mouseOverTrap.Point.X + mouseOverTrap.Width + 2, mouseOverTrap.Point.Y - 5), Color.Green);
+                        else
+                            spriteBatch.DrawString(normalFont, "Price: " + mouseOverTrap.Cost + "\nSale Price: " + mouseOverTrap.SellCost(), new Vector2(mouseOverTrap.Point.X + mouseOverTrap.Width + 2, mouseOverTrap.Point.Y - 5), Color.Green);
                     }
                     if (selectedItem is Trap)
                     {
@@ -1180,6 +1187,11 @@ namespace CakeDefense
                 case Var.TrapType.Slow:
                     return LoadTrap(type, 5);
                 #endregion Slow
+
+                #region Fire
+                case Var.TrapType.Fire:
+                    return LoadTrap(type, 300);
+                #endregion Fire
             }
 
             return null;
@@ -1226,6 +1238,26 @@ namespace CakeDefense
                 );
             }
             #endregion Slow
+
+            #region Fire
+            if (type == Var.TrapType.Fire)
+            {
+                ImageObject image = new ImageObject(
+                    blankTex,
+                    0, 0,
+                    Var.TRAP_SIZE, Var.TRAP_SIZE,
+                    spriteBatch
+                );
+
+                return new Trap_Fire(
+                    health,
+                    1,
+                    150,
+                    image,
+                    blankTex
+                );
+            }
+            #endregion Fire
 
             return null;
         }

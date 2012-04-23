@@ -190,7 +190,7 @@ namespace CakeDefense
 
         #endregion Menu / Timer Stuff
 
-        /// <summary> Checks to see if you can spend a certain ammount of money (Does NOT subtract it). </summary>
+        /// <summary> Checks to see if you can spend a certain amount of money (Does NOT subtract it). </summary>
         public bool CanSpendMoney(int spending)
         {
             if (money - spending >= 0)
@@ -234,9 +234,6 @@ namespace CakeDefense
                 spriteBatch.Draw(stripesTex, selectionBar[i].Rectangle, clr);
 
                 selectionBar[i].Draw();
-             
-                //check for mousePos
-                //spriteBatch.DrawString(spriteFont, "Price: ", new Vector2(selectionBar[i].Rectangle.X, selectionBar[i].Rectangle.Y - 20), Color.Blue);
             }
 
             costWindow.Draw();

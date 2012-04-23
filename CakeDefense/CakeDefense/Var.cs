@@ -46,7 +46,8 @@ namespace CakeDefense
         public static Dictionary<TrapType, string> trapNames = new Dictionary<TrapType, string>
         {
             { TrapType.Basic, "Pain Trap" },
-            { TrapType.Slow, "Fly Paper" }
+            { TrapType.Slow, "Fly Paper" },
+            { TrapType.Fire, "Fire Trap" }
         };
         #endregion Trap
 
@@ -77,7 +78,7 @@ namespace CakeDefense
         #region Enums
         public enum EnemyType { Spider }
         public enum TowerType { Basic }
-        public enum TrapType { Basic, Slow }
+        public enum TrapType { Basic, Slow, Fire }
         #endregion Enums
 
         #region Colors
