@@ -16,17 +16,19 @@ using System.IO;
 
 namespace CakeDefense
 {
-    class Trap_Fire:Trap
+    class Trap_Zapper:Trap
     {
         #region Attributes
         private bool isClicked = false;
         #endregion Attributes
 
         #region Constructor
-        public Trap_Fire(int health, int damage, int cost, ImageObject io, Texture2D healthTex)
+        public Trap_Zapper(int health, int damage, int cost, ImageObject io, Texture2D healthTex)
             :base(health, damage, cost, io, healthTex)
         {
-            type = Var.TrapType.Fire;
+            type = Var.TrapType.Zapper;
+            Image.CutOut = new Rectangle(0, 0, 30, 30);
+            Image.TotalFrames = 2;
         }
         #endregion Constructor
 
@@ -57,5 +59,22 @@ namespace CakeDefense
             return false;
         }
         #endregion Methods
+
+        #region Draw
+        public override void Draw(GameTime gameTime)
+        {
+            if(IsClicked)
+            {
+                base.Draw(gameTime, Var.FRAME_SPEED);
+            }
+            else
+            {
+                base.Draw();
+            }
+
+            healthBar.Update(gameTime, CurrentHealth, Center.X, Y);
+            healthBar.Draw();
+        }
+        #endregion Draw
     }
 }

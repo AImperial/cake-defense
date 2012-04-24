@@ -24,7 +24,7 @@ namespace CakeDefense
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
-        Texture2D blankTex, stripesTex, cursorTex, bulletTex, ant, spider, beetle, pixel, towerTex, cakeTex, slowTex, flameTex, acidTex, cakepieceTex, menuBttnTex, infoBoxTex;
+        Texture2D blankTex, stripesTex, cursorTex, bulletTex, ant, spider, beetle, pixel, towerTex, cakeTex, acidTex, slowTex, zapperTex, cakepieceTex, menuBttnTex, infoBoxTex;
         Dictionary<GameState, Texture2D> menuBackgrounds;
         GameTime animationTotalTime; public GameTime AnimationTime { get { return animationTotalTime; } }
         TimeSpan pausedTime;
@@ -170,9 +170,9 @@ namespace CakeDefense
 
             towerTex = this.Content.Load<Texture2D>("Sprites/can");
             bulletTex = this.Content.Load<Texture2D>("Sprites/Bullet");
-            slowTex = this.Content.Load<Texture2D>("Sprites/flypaper");
-            flameTex = this.Content.Load<Texture2D>("Sprites/flame_trap");
             acidTex = this.Content.Load<Texture2D>("Sprites/acid_trap");
+            slowTex = this.Content.Load<Texture2D>("Sprites/flypaper");
+            zapperTex = this.Content.Load<Texture2D>("Sprites/zapper_ani");
             #endregion Sprites
 
             InitializeAfterLoadContent();
@@ -349,9 +349,9 @@ namespace CakeDefense
                                     if (CheckIfClicked(trap.Rectangle))
                                     {
                                         selectedItem = trap;
-                                        if (selectedItem is Trap_Fire)
+                                        if (selectedItem is Trap_Zapper)
                                         {
-                                            ((Trap_Fire)selectedItem).IsClicked = true;
+                                            ((Trap_Zapper)selectedItem).IsClicked = true;
                                         }
                                         break;
                                     }
@@ -511,7 +511,7 @@ namespace CakeDefense
                 #region GameState.Game
                 case GameState.Game: case GameState.Paused:
 
-                    spriteBatch.Draw(menuBackgrounds[gameState], Var.SCREEN_SIZE, Color.White);
+                    spriteBatch.Draw(menuBackgrounds[GameState.Game], Var.SCREEN_SIZE, Color.White);
                     map.DrawMap(blankTex, smallFont);
 
                     cake.Draw();
@@ -541,13 +541,17 @@ namespace CakeDefense
                     Trap mouseOverTrap = null;
                     foreach (Trap trap in traps)
                     {
-                        trap.Draw();
+                        if (trap is Trap_Zapper)
+                            trap.Draw(gameTime);
+                        else
+                            trap.Draw();
+
                         if (mouseRect.Intersects(trap.Rectangle))
                             mouseOverTrap = trap;
                     }
                     if (mouseOverTrap != null)
                     {
-                        if(mouseOverTrap is Trap_Fire)
+                        if(mouseOverTrap is Trap_Zapper)
                             spriteBatch.DrawString(normalFont, "Price: " + mouseOverTrap.Cost + "\nSale Price: " + mouseOverTrap.SellCost() + "\nClick to activate", new Vector2(mouseOverTrap.Point.X + mouseOverTrap.Width + 2, mouseOverTrap.Point.Y - 5), Color.Green);
                         else
                             spriteBatch.DrawString(normalFont, "Price: " + mouseOverTrap.Cost + "\nSale Price: " + mouseOverTrap.SellCost(), new Vector2(mouseOverTrap.Point.X + mouseOverTrap.Width + 2, mouseOverTrap.Point.Y - 5), Color.Green);
@@ -1274,10 +1278,10 @@ namespace CakeDefense
                     return LoadTrap(type, 5);
                 #endregion Slow
 
-                #region Fire
-                case Var.TrapType.Fire:
+                #region Zapper
+                case Var.TrapType.Zapper:
                     return LoadTrap(type, 300);
-                #endregion Fire
+                #endregion Zapper
             }
 
             return null;
@@ -1326,21 +1330,21 @@ namespace CakeDefense
             #endregion Slow
 
             #region Fire
-            if (type == Var.TrapType.Fire)
+            if (type == Var.TrapType.Zapper)
             {
                 ImageObject image = new ImageObject(
-                    flameTex,
+                    zapperTex,
                     0, 0,
                     Var.TRAP_SIZE, Var.TRAP_SIZE,
                     spriteBatch
                 );
 
-                return new Trap_Fire(
+                return new Trap_Zapper(
                     health,
                     1,
                     100,
                     image,
-                    flameTex
+                    zapperTex
                 );
             }
             #endregion Fire

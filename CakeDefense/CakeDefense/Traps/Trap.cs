@@ -99,7 +99,7 @@ namespace CakeDefense
         #endregion Methods
 
         #region Draw
-        public void Draw(GameTime gameTime)
+        public virtual void Draw(GameTime gameTime)
         {
             if (IsActive)
             {
