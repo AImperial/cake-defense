@@ -677,14 +677,14 @@ namespace CakeDefense
         /// <summary> Called in GameState.Game (NOT GameState.Paused)</summary>
         public void QuickKeys()
         {
-            if (SingleKeyPress(Keys.D1))
+            /*if (SingleKeyPress(Keys.D1))
             {
                 heldItem = NewTower(Var.TowerType.Basic);
             }
             if (SingleKeyPress(Keys.D0))
             {
                 heldItem = NewTrap(Var.TrapType.Basic);
-            }
+            }*/
             if (SingleKeyPress(Keys.M))
             {
                 musicOn = soundEffectsOn = !musicOn;
@@ -697,7 +697,7 @@ namespace CakeDefense
             {
                 ContinueGame();
             }
-            if (SingleKeyPress(Keys.Delete))
+            if (SingleKeyPress(Keys.S))
             {
                 if (selectedItem is Trap)
                 {
@@ -1234,6 +1234,13 @@ namespace CakeDefense
             }
             #endregion Basic
 
+            #region Shock
+            if (type == Var.TowerType.Shock)
+            {
+                return LoadTower(type, Var.MAX_TOWER_HEALTH, Tower.Attacktype.None);
+            }
+            #endregion Shock
+
             return null;
         }
 
@@ -1258,6 +1265,26 @@ namespace CakeDefense
                 );
             }
             #endregion Basic
+
+            #region Shock
+            if (type == Var.TowerType.Shock)
+            {
+                return new Tower_Shock(
+                    150,
+                    health,
+                    750,
+                    1,
+                    500,//Fire Rate in ms
+                    Var.BASE_BULLET_SPEED,
+                    Var.TILE_SIZE,
+                    Var.TILE_SIZE,
+                    spriteBatch,
+                    towerTex,
+                    bulletTex,
+                    attackType
+                );
+            }
+            #endregion Shock
 
             return null;
         }
@@ -1329,7 +1356,7 @@ namespace CakeDefense
             }
             #endregion Slow
 
-            #region Fire
+            #region Zapper
             if (type == Var.TrapType.Zapper)
             {
                 ImageObject image = new ImageObject(
@@ -1347,7 +1374,7 @@ namespace CakeDefense
                     zapperTex
                 );
             }
-            #endregion Fire
+            #endregion Zapper
 
             return null;
         }

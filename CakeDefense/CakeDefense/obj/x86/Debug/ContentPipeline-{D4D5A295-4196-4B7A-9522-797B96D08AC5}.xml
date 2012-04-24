@@ -191,6 +191,15 @@
       <Time>2012-04-23T20:44:50.9064657-04:00</Time>
     </Item>
     <Item>
+      <Source>Sprites\zapper_ani.png</Source>
+      <Name>Sprites\zapper_ani</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\zapper_ani.xnb</Output>
+      <Time>2012-04-23T20:03:03.7397219-04:00</Time>
+    </Item>
+    <Item>
       <Source>Spritefonts\Large.spritefont</Source>
       <Name>Spritefonts\Large</Name>
       <Importer>FontDescriptionImporter</Importer>
@@ -225,15 +234,6 @@
       <Options>None</Options>
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Small.xnb</Output>
       <Time>2012-04-23T19:35:33.0510128-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Sprites\zapper_ani.png</Source>
-      <Name>Sprites\zapper_ani</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\zapper_ani.xnb</Output>
-      <Time>2012-04-23T20:03:03.7397219-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
