@@ -50,15 +50,12 @@ namespace CakeDefense
                 item.Image.Transparency = 100;
             }
 
-            moneyDisplay = new Button(infoBoxTex, new Vector2(2, 2), 120, 40, 2, Color.DarkGray, sprite, new TextObject("$" + money, Vector2.Zero, font, Color.Red, sprite), null);
-            //moneyDisplay.Color = Color.DarkKhaki;
-            cakeDisplay = new Button(infoBoxTex, new Vector2(125, 2), 120, 40, 2, Color.DarkGray, sprite, new TextObject("Cake: " + cake.CurrentHealth, Vector2.Zero, font, Color.Red, sprite), null);
-            //cakeDisplay.Color = Color.DarkKhaki;
+            moneyDisplay = new Button(infoBoxTex, new Vector2(260, 2), 120, 40, 2, Color.DarkGray, sprite, new TextObject("$" + money, Vector2.Zero, font, Color.Red, sprite), null);
+            cakeDisplay = new Button(infoBoxTex, new Vector2(460, 2), 120, 40, 2, Color.DarkGray, sprite, new TextObject("Cake: " + cake.CurrentHealth, Vector2.Zero, font, Color.Red, sprite), null);
 
-            activeMenuDisplay = new Button(infoBoxTex, new Vector2(Var.TOTAL_WIDTH - 120 - 2, 2), 120, 40, 2, Color.LightCyan, sprite, new TextObject(" ", Vector2.Zero, font, Color.Red, sprite), null);
-            //activeMenuDisplay.Color = Color.Navy;
-            saveMessage = new Button(infoBoxTex, new Vector2(Var.GAME_AREA.X + 2, Var.GAME_AREA.Bottom - 40 - 2), 120, 40, 2, Color.MidnightBlue, sprite, new TextObject("Saved!", Vector2.Zero, font, Color.Red, sprite), null);
-            //saveMessage.Color = Color.Navy;
+            activeMenuDisplay = new Button(infoBoxTex, new Vector2(Var.TOTAL_WIDTH - 380, 2), 120, 40, 2, Color.LightCyan, sprite, new TextObject(" ", Vector2.Zero, font, Color.Red, sprite), null);
+            saveMessage = new Button(infoBoxTex, new Vector2(Var.GAME_AREA.X + 2, Var.GAME_AREA.Bottom - 42), 120, 40, 2, Color.MidnightBlue, sprite, new TextObject("Saved!", Vector2.Zero, font, Color.Red, sprite), null);
+
             PopulateMenuList(game);
             time = game.AnimationTime;
             menuTimer = new Timer(Var.GAME_SPEED);
@@ -94,7 +91,6 @@ namespace CakeDefense
         public Window CostWindow
         {
             get { return costWindow; }
-
             set { costWindow = value; }
         }
 
@@ -112,7 +108,6 @@ namespace CakeDefense
         #region Methods
 
         #region Menu / Timer Stuff
-
         public void Update(GameTime gameTime)
         {
             time = gameTime;
@@ -160,10 +155,7 @@ namespace CakeDefense
             parent.ChildButtons.Add(new Button(parent.Texture, parent.Point, parent.Width, parent.Height, 2, Color.Red, parent.SpriteBatch,
                 new TextObject("Exit", Vector2.Zero, parent.Message.Font, Color.Red, parent.SpriteBatch), new ButtonEvent(game.GoToMenu)));
 
-            //parent.ChildButtons.ForEach(bttn => bttn.Color = Color.Navy);
-
-
-            // Adds buttons to button 1's list in menu button's button list (ugg...?)
+            // Adds buttons to button 1's list in menu button's button list
             parent = activeMenuDisplay.ChildButtons[1];
             int tempWidth = parent.Width / 3;
             parent.ChildButtons = new List<Button>();
@@ -173,18 +165,13 @@ namespace CakeDefense
                 new TextObject("2x", Vector2.Zero, activeMenuDisplay.Message.Font, Color.Red, parent.SpriteBatch), new ButtonEvent(game.GameSpeedTwo)));
             parent.ChildButtons.Add(new Button(parent.Texture, parent.Point + new Vector2(tempWidth * 2, 0) + Vector2.One, tempWidth, parent.Height - 2, 2, Color.Red, parent.SpriteBatch,
                 new TextObject("4x", Vector2.Zero, activeMenuDisplay.Message.Font, Color.Red, parent.SpriteBatch), new ButtonEvent(game.GameSpeedFour)));
-
-            //parent.ChildButtons.ForEach(bttn => bttn.Color = Color.Navy);
         }
 
         public void StartMenuOpening(GameTime gameTime)
         {
             activeMenuDisplay.Focused = true;
-
             activeMenuDisplay.ChildButtons.ForEach(bttn => bttn.Point = activeMenuDisplay.Point);
-
             activeMenuDisplay.ChildButtons[1].ChildButtons.ForEach(bttn => bttn.Y = activeMenuDisplay.ChildButtons[1].Y + 1);
-
             menuTimer.Start(gameTime, Var.MENU_ACTION_TIME);
         }
 
@@ -232,10 +219,8 @@ namespace CakeDefense
                     clr = Color.Green;
 
                 spriteBatch.Draw(stripesTex, selectionBar[i].Rectangle, clr);
-
                 selectionBar[i].Draw();
             }
-
             costWindow.Draw();
         }
 

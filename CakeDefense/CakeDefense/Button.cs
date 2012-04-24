@@ -44,25 +44,21 @@ namespace CakeDefense
         #endregion Constructor
 
         #region Properties
-
         public TextObject Message
         {
             get { return message; }
-
             set { message = value; }
         }
 
         public bool Focused
         {
             get { return focused; }
-
             set { focused = value; }
         }
 
         public new Vector2 Resize
         {
             get { return resize; }
-
             set { resize = value; if (message != null) { message.Resize = value; CenterText(); } }
         }
 
@@ -70,14 +66,12 @@ namespace CakeDefense
         public new float Transparency
         {
             get { return transparency; }
-
             set { transparency = value; if (message != null) { message.Transparency = value; } }
         }
 
         public List<Button> ChildButtons
         {
             get { return childButtons; }
-
             set { childButtons = value; }
         }
 
@@ -104,8 +98,6 @@ namespace CakeDefense
         public override void Draw()
         {
             base.Draw();
-            //if (outLineThickness > 0)
-            //    ImageObject.DrawRectangleOutline(Resized(), outLineThickness, Color.FromNonPremultiplied(outlineColor.R, outlineColor.G, outlineColor.B, (byte)(outlineColor.A * (transparency / 100))), Var.BLANK_TEX, spriteBatch);
             if (message != null)
                 message.Draw();
         }
