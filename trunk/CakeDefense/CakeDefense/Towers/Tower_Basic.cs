@@ -36,6 +36,7 @@ namespace CakeDefense
                 {
                     float fireAngle = -1000; // random number to make sure it should fire.
                     List<Enemy> enemiesInRange = new List<Enemy>();
+
                     #region Get Enemies In Range
                     foreach (Enemy enemy in enemies)
                     {
