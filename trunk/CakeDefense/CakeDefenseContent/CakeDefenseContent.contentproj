@@ -146,13 +146,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\flame_trap.png">
-      <Name>flame_trap</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Sprites\ant_ani.png">
       <Name>ant_ani</Name>
       <Importer>TextureImporter</Importer>
@@ -195,6 +188,13 @@
   <ItemGroup>
     <Compile Include="Sprites\acid_trap.png">
       <Name>acid_trap</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\zapper_ani.png">
+      <Name>zapper_ani</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

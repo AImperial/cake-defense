@@ -47,7 +47,7 @@ namespace CakeDefense
         {
             { TrapType.Basic, "Acid Trap" },
             { TrapType.Slow, "Fly Paper" },
-            { TrapType.Fire, "Fire Trap" }
+            { TrapType.Zapper, "Zapper" }
         };
         #endregion Trap
 
@@ -78,7 +78,7 @@ namespace CakeDefense
         #region Enums
         public enum EnemyType { Ant, Spider, Beetle }
         public enum TowerType { Basic }
-        public enum TrapType { Basic, Slow, Fire }
+        public enum TrapType { Basic, Slow, Zapper }
         #endregion Enums
 
         #region Colors

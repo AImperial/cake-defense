@@ -91,7 +91,7 @@
     <Compile Include="Timer.cs" />
     <Compile Include="Towers\Tower.cs" />
     <Compile Include="Towers\Tower_Basic.cs" />
-    <Compile Include="Traps\Trap_Fire.cs" />
+    <Compile Include="Traps\Trap_Zapper.cs" />
     <Compile Include="Traps\Trap.cs" />
     <Compile Include="Traps\Trap_Basic.cs" />
     <Compile Include="Traps\Trap_Slow.cs" />

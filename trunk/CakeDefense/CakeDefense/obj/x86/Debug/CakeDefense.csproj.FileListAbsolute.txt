@@ -154,7 +154,6 @@ C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\obj\x
 C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\obj\x86\Debug\CakeDefense.exe
 C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\obj\x86\Debug\CakeDefense.pdb
-C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\flame_trap.xnb
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\ant_ani.xnb
 \\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Blank.xnb
 \\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Credits.xnb
@@ -190,3 +189,8 @@ C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content
 \\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\spider_ani.xnb
 \\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\beetle_ani.xnb
 \\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\acid_trap.xnb
+C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\gameScreen.xnb
+C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\HUD\InfoBox.xnb
+C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\HUD\MenuButton.xnb
+C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\acid_trap.xnb
+C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\zapper_ani.xnb
