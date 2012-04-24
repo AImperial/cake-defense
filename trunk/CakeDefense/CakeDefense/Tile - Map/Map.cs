@@ -158,9 +158,7 @@ namespace CakeDefense
             {
                 foreach (Tile tile in tiles)
                 {
-                    if (tile is Tile_Tower)
-                        sprite.Draw(tex, tile.Rectangle, Color.LightGray);
-                    else if (tile is Tile_Path)
+                    if (tile is Tile_Path)
                         sprite.Draw(tex, tile.Rectangle, Color.Gray);
                     //sprite.DrawString(font, "x:" + tile.TileNum.X.ToString("00") + "\ny:" + tile.TileNum.Y.ToString("00"), tile.Point, Color.Green);
                 }

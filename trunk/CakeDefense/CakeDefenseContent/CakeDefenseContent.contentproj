@@ -160,6 +160,25 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Menu\gameScreen.png">
+      <Name>gameScreen</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HUD\InfoBox.png">
+      <Name>InfoBox</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="HUD\MenuButton.png">
+      <Name>MenuButton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Sprites\spider_ani.png">
       <Name>spider_ani</Name>
       <Importer>TextureImporter</Importer>
@@ -169,6 +188,13 @@
   <ItemGroup>
     <Compile Include="Sprites\beetle_ani.png">
       <Name>beetle_ani</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sprites\acid_trap.png">
+      <Name>acid_trap</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

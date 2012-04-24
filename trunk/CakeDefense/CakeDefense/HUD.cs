@@ -50,15 +50,15 @@ namespace CakeDefense
                 item.Image.Transparency = 100;
             }
 
-            moneyDisplay = new Button(infoBoxTex, new Vector2(2, 2), 120, 40, 2, Color.DarkGray, sprite, new TextObject("$" + money, Vector2.Zero, font, Color.Black, sprite), null);
-            moneyDisplay.Color = Color.DarkKhaki;
-            cakeDisplay = new Button(infoBoxTex, new Vector2(125, 2), 120, 40, 2, Color.DarkGray, sprite, new TextObject("Cake: " + cake.CurrentHealth, Vector2.Zero, font, Color.Black, sprite), null);
-            cakeDisplay.Color = Color.DarkKhaki;
+            moneyDisplay = new Button(infoBoxTex, new Vector2(2, 2), 120, 40, 2, Color.DarkGray, sprite, new TextObject("$" + money, Vector2.Zero, font, Color.Red, sprite), null);
+            //moneyDisplay.Color = Color.DarkKhaki;
+            cakeDisplay = new Button(infoBoxTex, new Vector2(125, 2), 120, 40, 2, Color.DarkGray, sprite, new TextObject("Cake: " + cake.CurrentHealth, Vector2.Zero, font, Color.Red, sprite), null);
+            //cakeDisplay.Color = Color.DarkKhaki;
 
-            activeMenuDisplay = new Button(infoBoxTex, new Vector2(Var.TOTAL_WIDTH - 120 - 2, 2), 120, 40, 2, Color.LightCyan, sprite, new TextObject("Menu", Vector2.Zero, font, Color.GhostWhite, sprite), null);
-            activeMenuDisplay.Color = Color.Navy;
-            saveMessage = new Button(infoBoxTex, new Vector2(Var.GAME_AREA.X + 2, Var.GAME_AREA.Bottom - 40 - 2), 120, 40, 2, Color.MidnightBlue, sprite, new TextObject("Saved!", Vector2.Zero, font, Color.LightCyan, sprite), null);
-            saveMessage.Color = Color.Navy;
+            activeMenuDisplay = new Button(infoBoxTex, new Vector2(Var.TOTAL_WIDTH - 120 - 2, 2), 120, 40, 2, Color.LightCyan, sprite, new TextObject(" ", Vector2.Zero, font, Color.Red, sprite), null);
+            //activeMenuDisplay.Color = Color.Navy;
+            saveMessage = new Button(infoBoxTex, new Vector2(Var.GAME_AREA.X + 2, Var.GAME_AREA.Bottom - 40 - 2), 120, 40, 2, Color.MidnightBlue, sprite, new TextObject("Saved!", Vector2.Zero, font, Color.Red, sprite), null);
+            //saveMessage.Color = Color.Navy;
             PopulateMenuList(game);
             time = game.AnimationTime;
             menuTimer = new Timer(Var.GAME_SPEED);
@@ -151,30 +151,30 @@ namespace CakeDefense
         {
             Button parent = activeMenuDisplay;
             parent.ChildButtons = new List<Button>();
-            parent.ChildButtons.Add(new Button(parent.Texture, parent.Point, parent.Width, parent.Height, 2, Color.LightCyan, parent.SpriteBatch,
-                new TextObject("Pause", Vector2.Zero, parent.Message.Font, Color.GhostWhite, parent.SpriteBatch), new ButtonEvent(game.SwitchPauseAndGame)));
-            parent.ChildButtons.Add(new Button(parent.Texture, parent.Point, parent.Width, parent.Height, 2, Color.LightCyan, parent.SpriteBatch,
+            parent.ChildButtons.Add(new Button(parent.Texture, parent.Point, parent.Width, parent.Height, 2, Color.Red, parent.SpriteBatch,
+                new TextObject("Pause", Vector2.Zero, parent.Message.Font, Color.Red, parent.SpriteBatch), new ButtonEvent(game.SwitchPauseAndGame)));
+            parent.ChildButtons.Add(new Button(parent.Texture, parent.Point, parent.Width, parent.Height, 2, Color.Red, parent.SpriteBatch,
                 null, null));
-            parent.ChildButtons.Add(new Button(parent.Texture, parent.Point, parent.Width, parent.Height, 2, Color.LightCyan, parent.SpriteBatch,
-                new TextObject("Restart", Vector2.Zero, parent.Message.Font, Color.GhostWhite, parent.SpriteBatch), new ButtonEvent(game.RestartGame)));
-            parent.ChildButtons.Add(new Button(parent.Texture, parent.Point, parent.Width, parent.Height, 2, Color.LightCyan, parent.SpriteBatch,
-                new TextObject("Exit", Vector2.Zero, parent.Message.Font, Color.GhostWhite, parent.SpriteBatch), new ButtonEvent(game.GoToMenu)));
+            parent.ChildButtons.Add(new Button(parent.Texture, parent.Point, parent.Width, parent.Height, 2, Color.Red, parent.SpriteBatch,
+                new TextObject("Restart", Vector2.Zero, parent.Message.Font, Color.Red, parent.SpriteBatch), new ButtonEvent(game.RestartGame)));
+            parent.ChildButtons.Add(new Button(parent.Texture, parent.Point, parent.Width, parent.Height, 2, Color.Red, parent.SpriteBatch,
+                new TextObject("Exit", Vector2.Zero, parent.Message.Font, Color.Red, parent.SpriteBatch), new ButtonEvent(game.GoToMenu)));
 
-            parent.ChildButtons.ForEach(bttn => bttn.Color = Color.Navy);
+            //parent.ChildButtons.ForEach(bttn => bttn.Color = Color.Navy);
 
 
             // Adds buttons to button 1's list in menu button's button list (ugg...?)
             parent = activeMenuDisplay.ChildButtons[1];
             int tempWidth = parent.Width / 3;
             parent.ChildButtons = new List<Button>();
-            parent.ChildButtons.Add(new Button(parent.Texture, parent.Point + Vector2.One, tempWidth - 2, parent.Height - 2, 2, Color.LightCyan, parent.SpriteBatch,
-                new TextObject("1x", Vector2.Zero, activeMenuDisplay.Message.Font, Color.Multiply(Color.GhostWhite, .5f), parent.SpriteBatch), new ButtonEvent(game.GameSpeedOne)));
-            parent.ChildButtons.Add(new Button(parent.Texture, parent.Point + new Vector2(tempWidth, 0) + Vector2.One, tempWidth, parent.Height - 2, 2, Color.LightCyan, parent.SpriteBatch,
-                new TextObject("2x", Vector2.Zero, activeMenuDisplay.Message.Font, Color.GhostWhite, parent.SpriteBatch), new ButtonEvent(game.GameSpeedTwo)));
-            parent.ChildButtons.Add(new Button(parent.Texture, parent.Point + new Vector2(tempWidth * 2, 0) + Vector2.One, tempWidth, parent.Height - 2, 2, Color.LightCyan, parent.SpriteBatch,
-                new TextObject("4x", Vector2.Zero, activeMenuDisplay.Message.Font, Color.GhostWhite, parent.SpriteBatch), new ButtonEvent(game.GameSpeedFour)));
+            parent.ChildButtons.Add(new Button(parent.Texture, parent.Point + Vector2.One, tempWidth - 2, parent.Height - 2, 2, Color.Red, parent.SpriteBatch,
+                new TextObject("1x", Vector2.Zero, activeMenuDisplay.Message.Font, Color.Multiply(Color.Maroon, .5f), parent.SpriteBatch), new ButtonEvent(game.GameSpeedOne)));
+            parent.ChildButtons.Add(new Button(parent.Texture, parent.Point + new Vector2(tempWidth, 0) + Vector2.One, tempWidth, parent.Height - 2, 2, Color.Red, parent.SpriteBatch,
+                new TextObject("2x", Vector2.Zero, activeMenuDisplay.Message.Font, Color.Red, parent.SpriteBatch), new ButtonEvent(game.GameSpeedTwo)));
+            parent.ChildButtons.Add(new Button(parent.Texture, parent.Point + new Vector2(tempWidth * 2, 0) + Vector2.One, tempWidth, parent.Height - 2, 2, Color.Red, parent.SpriteBatch,
+                new TextObject("4x", Vector2.Zero, activeMenuDisplay.Message.Font, Color.Red, parent.SpriteBatch), new ButtonEvent(game.GameSpeedFour)));
 
-            parent.ChildButtons.ForEach(bttn => bttn.Color = Color.Navy);
+            //parent.ChildButtons.ForEach(bttn => bttn.Color = Color.Navy);
         }
 
         public void StartMenuOpening(GameTime gameTime)

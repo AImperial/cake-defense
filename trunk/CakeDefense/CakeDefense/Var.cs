@@ -45,7 +45,7 @@ namespace CakeDefense
         public static TimeSpan TRAP_SHOW_HEALTH_TIME = new TimeSpan(0, 0, 1);
         public static Dictionary<TrapType, string> trapNames = new Dictionary<TrapType, string>
         {
-            { TrapType.Basic, "Pain Trap" },
+            { TrapType.Basic, "Acid Trap" },
             { TrapType.Slow, "Fly Paper" },
             { TrapType.Fire, "Fire Trap" }
         };
