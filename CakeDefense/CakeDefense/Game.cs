@@ -24,7 +24,7 @@ namespace CakeDefense
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
-        Texture2D blankTex, stripesTex, cursorTex, bulletTex, ant, spider, beetle, pixel, towerTex, cakeTex, slowTex, flameTex, cakepieceTex;
+        Texture2D blankTex, stripesTex, cursorTex, bulletTex, ant, spider, beetle, pixel, towerTex, cakeTex, slowTex, flameTex, acidTex, cakepieceTex, menuBttnTex, infoBoxTex;
         Dictionary<GameState, Texture2D> menuBackgrounds;
         GameTime animationTotalTime; public GameTime AnimationTime { get { return animationTotalTime; } }
         TimeSpan pausedTime;
@@ -142,10 +142,16 @@ namespace CakeDefense
                 { GameState.Menu, this.Content.Load<Texture2D>("Menu/MainMenu") },
                 { GameState.Instructions, this.Content.Load<Texture2D>("Menu/Instructions") },
                 { GameState.Credits, this.Content.Load<Texture2D>("Menu/Credits") },
+                { GameState.Game, this.Content.Load<Texture2D>("Menu/gameScreen") },
                 { GameState.GameOver_Win, this.Content.Load<Texture2D>("Menu/Win") },
                 { GameState.GameOver_Lose, this.Content.Load<Texture2D>("Menu/Lose") }
             };
             #endregion Menu
+
+            #region HUD
+            menuBttnTex = this.Content.Load<Texture2D>("HUD/MenuButton");
+            infoBoxTex = this.Content.Load<Texture2D>("HUD/InfoBox");
+            #endregion HUD
 
             #region Spritefonts
             largeFont = this.Content.Load<SpriteFont>("Spritefonts/Large");
@@ -166,6 +172,7 @@ namespace CakeDefense
             bulletTex = this.Content.Load<Texture2D>("Sprites/Bullet");
             slowTex = this.Content.Load<Texture2D>("Sprites/flypaper");
             flameTex = this.Content.Load<Texture2D>("Sprites/flame_trap");
+            acidTex = this.Content.Load<Texture2D>("Sprites/acid_trap");
             #endregion Sprites
 
             InitializeAfterLoadContent();
@@ -504,6 +511,7 @@ namespace CakeDefense
                 #region GameState.Game
                 case GameState.Game: case GameState.Paused:
 
+                    spriteBatch.Draw(menuBackgrounds[gameState], Var.SCREEN_SIZE, Color.White);
                     map.DrawMap(blankTex, smallFont);
 
                     cake.Draw();
@@ -550,9 +558,9 @@ namespace CakeDefense
                     }
                     #endregion Traps
 
-                    droppedCake.ForEach(dropped => spriteBatch.Draw(cakepieceTex, new Rectangle((int)(dropped.X), (int)(dropped.Y), 15, 15), Color.White));
-
                     traps.ForEach(trap => trap.Draw(gameTime));
+
+                    droppedCake.ForEach(dropped => spriteBatch.Draw(cakepieceTex, new Rectangle((int)(dropped.X), (int)(dropped.Y), 15, 15), Color.White));
 
                     enemies.ForEach(enemy => enemy.Draw(gameTime));
 
@@ -564,7 +572,10 @@ namespace CakeDefense
                             if (mouseRect.Intersects(tile.Rectangle))
                             {
                                 if (heldItem is Tower && tile is Tile_Tower && !(tile.OccupiedBy is Cake))
+                                {
                                     ImageObject.DrawRectangleOutline(tile.Rectangle, 2, Color.Blue, blankTex, spriteBatch);
+                                    DrawCircle(tile.Center, ((Tower)heldItem).FireRadius, 64, Color.Red);
+                                }
                                 else if (heldItem is Trap && tile is Tile_Path)
                                     ImageObject.DrawRectangleOutline(tile.Rectangle, 2, Color.Green, blankTex, spriteBatch);
                             }
@@ -640,12 +651,10 @@ namespace CakeDefense
                     spriteBatch.DrawString(mediumFont, "Right click to return", new Vector2(15, Var.TOTAL_HEIGHT - mediumFont.MeasureString("-").Y - 10), Color.DarkGreen);
                     break;
                 case GameState.GameOver_Win:
-                    spriteBatch.Draw(menuBackgrounds[gameState], Var.SCREEN_SIZE, Color.White);
-                    buttons[gameState].ForEach(bttn => bttn.Draw());
-                    break;
                 case GameState.GameOver_Lose:
                     spriteBatch.Draw(menuBackgrounds[gameState], Var.SCREEN_SIZE, Color.White);
                     buttons[gameState].ForEach(bttn => bttn.Draw());
+                    buttons[gameState].ForEach(bttn => ImageObject.DrawRectangleOutline(bttn.Resized(), bttn.outLineThickness, Color.FromNonPremultiplied(bttn.outlineColor.R, bttn.outlineColor.G, bttn.outlineColor.B, (byte)(bttn.outlineColor.A * (bttn.Transparency / 100))), Var.BLANK_TEX, spriteBatch));
                     break;
                 #endregion Everything else
             }
@@ -795,7 +804,7 @@ namespace CakeDefense
             }
 
             paths = new List<Path>();
-            paths.Add(map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1));
+            paths.Add(map.FindPath(map.Tiles[1, 13], map.Tiles[23, 17], 1));
 
             // Gets enemies
             LoadWaves(level, wave);
@@ -816,7 +825,7 @@ namespace CakeDefense
 
             paths = new List<Path>();
             if (map.Tiles != null)
-                paths.Add(map.FindPath(map.Tiles[0, 11], map.Tiles[23, 17], 1));
+                paths.Add(map.FindPath(map.Tiles[1, 13], map.Tiles[23, 17], 1));
 
             // Gets enemies
             LoadWaves(level, wave); // level / wave taken from LoadGame();
@@ -832,7 +841,8 @@ namespace CakeDefense
                 selectionList.Add(NewTrap((Var.TrapType)i));
 
             cake = new Cake(cakeLeft, Var.GAME_AREA.Left + (Var.TILE_SIZE * 15), Var.GAME_AREA.Top + (Var.TILE_SIZE * 2), Var.TILE_SIZE * 3, Var.TILE_SIZE * 3, spriteBatch, normalFont, cakeTex);
-            hud = new HUD(spriteBatch, money, blankTex, mediumFont, cake, selectionList, stripesTex, this);
+            hud = new HUD(spriteBatch, money, infoBoxTex, mediumFont, cake, selectionList, stripesTex, this);
+            hud.MenuButton.Texture = menuBttnTex;
 
             List<TextObject> texts = new List<TextObject>
             {
@@ -934,10 +944,7 @@ namespace CakeDefense
                     thisWave.Enqueue(
                         NewEnemy(
                         (Var.EnemyType)Enum.Parse(typeof(Var.EnemyType), infoArray[0], true),
-                        paths[Int32.Parse(infoArray[1])],
-                        float.Parse(infoArray[2]),
-                        Int32.Parse(infoArray[3]),
-                        Int32.Parse(infoArray[4])
+                        paths[Int32.Parse(infoArray[1])]
                         )
                     );
                 }
@@ -1093,7 +1100,7 @@ namespace CakeDefense
         #region New Enemy / Tower / Trap
 
         #region Enemy
-        private Enemy NewEnemy(Var.EnemyType type, Path path, float speed, int health, int damage)
+        private Enemy NewEnemy(Var.EnemyType type, Path path)
         {
             #region Ant
             if (type == Var.EnemyType.Ant)
@@ -1122,9 +1129,9 @@ namespace CakeDefense
 
                 return new Enemy(
                     image,
-                    (int)(health * difficulty),
-                    (int)(damage * difficulty),
-                    speed * difficulty,
+                    (int)(10 * difficulty),
+                    (int)(2 * difficulty),
+                    1.3f * difficulty,
                     path,
                     blankTex,
                     cakepieceTex,
@@ -1160,9 +1167,9 @@ namespace CakeDefense
 
                 return new Enemy(
                     image,
-                    (int)(health * difficulty),
-                    (int)(damage * difficulty),
-                    speed * difficulty,
+                    (int)(15 * difficulty),
+                    (int)(2 * difficulty),
+                    1f * difficulty,
                     path,
                     blankTex,
                     cakepieceTex, 
@@ -1198,9 +1205,9 @@ namespace CakeDefense
 
                 return new Enemy(
                     image,
-                    (int)(health * difficulty),
-                    (int)(damage * difficulty),
-                    speed * difficulty,
+                    (int)(23 * difficulty),
+                    (int)(2 * difficulty),
+                    .7f * difficulty,
                     path,
                     blankTex,
                     cakepieceTex,
@@ -1235,7 +1242,7 @@ namespace CakeDefense
                     150,
                     health,
                     100,
-                    2,
+                    1,
                     500,//Fire Rate in ms
                     Var.BASE_BULLET_SPEED,
                     Var.TILE_SIZE,
@@ -1282,7 +1289,7 @@ namespace CakeDefense
             if (type == Var.TrapType.Basic)
             {
                 ImageObject image = new ImageObject(
-                    blankTex,
+                    acidTex,
                     0, 0,
                     Var.TRAP_SIZE, Var.TRAP_SIZE,
                     spriteBatch
@@ -1380,8 +1387,8 @@ namespace CakeDefense
         private void GameSpeedChange(int speed, Button bttn)
         {
             Var.GAME_SPEED = speed;
-            hud.MenuButton.ChildButtons[1].ChildButtons.ForEach(button => button.Message.Color = Color.GhostWhite);
-            bttn.Message.Color = Color.Multiply(bttn.Message.Color, .5f);
+            hud.MenuButton.ChildButtons[1].ChildButtons.ForEach(button => button.Message.Color = Color.Red);
+            bttn.Message.Color = Color.Maroon;
         }
         #endregion Game Speed Buttons
 
@@ -1403,50 +1410,6 @@ namespace CakeDefense
                     if (CheckIfClicked(bttn.Rectangle))
                         bttn.Click();
                 }
-
-                //for (int i = 0; i < hud.MenuButton.ChildButtons.Count; i++)
-                //{
-                //    if (CheckIfClicked(hud.MenuButton.ChildButtons[i].Rectangle))
-                //    {
-                //        switch (i)
-                //        {
-                //            case 0://Pause
-                //                hud.MenuButton.ChildButtons[i].Click();
-                //                break;
-                //            case 1://Change Game Speed
-                //                #region Change Speed
-                //                singlePress = false;
-                //                for (int j = 0; j < hud.MenuButton.ChildButtons[i].ChildButtons.Count; j++)
-                //                {
-                //                    if (CheckIfClicked(hud.MenuButton.ChildButtons[i].ChildButtons[j].Rectangle))
-                //                    {
-                //                        switch (j)
-                //                        {
-                //                            case 0:
-                //                                Var.GAME_SPEED = 1;
-                //                                break;
-                //                            case 1:
-                //                                Var.GAME_SPEED = 2;
-                //                                break;
-                //                            case 2:
-                //                                Var.GAME_SPEED = 4;
-                //                                break;
-                //                        }
-
-                //                    }
-
-                //                }
-                //                break;
-                //                #endregion Change Speed
-                //            case 2://Restart
-                //                hud.MenuButton.ChildButtons[i].Click();
-                //                break;
-                //            case 3://Exit
-                //                hud.MenuButton.ChildButtons[i].Click();
-                //                break;
-                //        }
-                //    }
-                //}
             }
         }
         #endregion Dropdown Menu

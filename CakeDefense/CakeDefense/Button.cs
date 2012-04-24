@@ -22,8 +22,8 @@ namespace CakeDefense
         #region Attributes
         protected TextObject message;
         protected bool focused;
-        protected int outLineThickness;
-        protected Color outlineColor;
+        public int outLineThickness;
+        public Color outlineColor;
         protected List<Button> childButtons;
         protected ButtonEvent bEvent;
         #endregion Attributes
@@ -104,8 +104,8 @@ namespace CakeDefense
         public override void Draw()
         {
             base.Draw();
-            if (outLineThickness > 0)
-                ImageObject.DrawRectangleOutline(Resized(), outLineThickness, Color.FromNonPremultiplied(outlineColor.R, outlineColor.G, outlineColor.B, (byte)(outlineColor.A * (transparency / 100))), Var.BLANK_TEX, spriteBatch);
+            //if (outLineThickness > 0)
+            //    ImageObject.DrawRectangleOutline(Resized(), outLineThickness, Color.FromNonPremultiplied(outlineColor.R, outlineColor.G, outlineColor.B, (byte)(outlineColor.A * (transparency / 100))), Var.BLANK_TEX, spriteBatch);
             if (message != null)
                 message.Draw();
         }
