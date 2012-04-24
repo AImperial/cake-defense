@@ -43,7 +43,7 @@ namespace CakeDefense
             {
                 base.Draw();
                 if(this.CurrentHealth < this.StartHealth)
-                    sprite.DrawString(spriteF, "Health Down! (" + this.CurrentHealth + "left)", new Vector2(X + (Width - spriteF.MeasureString("Health Down! (" + this.CurrentHealth + "left)").X) / 2, Y - 5), Color.Red);
+                    sprite.DrawString(spriteF, "Health Down!", new Vector2(X + (Width - spriteF.MeasureString("Health Down!").X) / 2, Y - 5), Color.Red);
             }
         }
         #endregion Draw

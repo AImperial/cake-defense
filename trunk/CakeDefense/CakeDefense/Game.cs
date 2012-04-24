@@ -1270,7 +1270,7 @@ namespace CakeDefense
             {
                 #region Basic
                 case Var.TrapType.Basic:
-                    return LoadTrap(type, 2);
+                    return LoadTrap(type, 5);
                 #endregion Basic
 
                 #region Slow
