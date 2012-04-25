@@ -235,6 +235,56 @@
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Small.xnb</Output>
       <Time>2012-04-23T19:35:33.0510128-04:00</Time>
     </Item>
+    <Item>
+      <Source>Sound\flypaper_placement.mp3</Source>
+      <Name>Sound\flypaper_placement</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\flypaper_placement.xnb</Output>
+      <Extra>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\flypaper_placement.wma</Extra>
+      <Time>2012-04-17T12:15:14-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sound\Music.mp3</Source>
+      <Name>Sound\Music</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Music.xnb</Output>
+      <Extra>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Music.wma</Extra>
+      <Time>2012-04-18T17:37:04-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sound\Splat.mp3</Source>
+      <Name>Sound\Splat</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Splat.xnb</Output>
+      <Extra>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Splat.wma</Extra>
+      <Time>2011-10-02T16:17:06-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sound\tower_place.mp3</Source>
+      <Name>Sound\tower_place</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\tower_place.xnb</Output>
+      <Extra>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\tower_place.wma</Extra>
+      <Time>2012-04-17T12:19:44-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sound\Tower_Shoot.mp3</Source>
+      <Name>Sound\Tower_Shoot</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Tower_Shoot.xnb</Output>
+      <Extra>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Tower_Shoot.wma</Extra>
+      <Time>2012-04-17T11:51:44-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{D4D5A295-4196-4B7A-9522-797B96D08AC5}</ContentProjectGUID>

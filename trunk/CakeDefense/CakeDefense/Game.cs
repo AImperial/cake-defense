@@ -66,6 +66,10 @@ namespace CakeDefense
         List<Trap> traps;
         #endregion Tower/Trap Stuff
 
+        #region Sound
+        Song theme;
+        #endregion Sound
+
         #endregion Attributes
 
         #region Initialize
@@ -175,6 +179,10 @@ namespace CakeDefense
             zapperTex = this.Content.Load<Texture2D>("Sprites/zapper_ani");
             #endregion Sprites
 
+            #region Sound
+            theme = this.Content.Load<Song>("Sound/Music");
+            #endregion Sound
+
             InitializeAfterLoadContent();
         }
         #endregion Initialize
@@ -203,6 +211,8 @@ namespace CakeDefense
                 case GameState.Game:
 
                     #region Update
+                    MediaPlayer.Play(theme);
+
                     drawCursor = true;
                     QuickKeys();
 
