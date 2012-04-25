@@ -88,7 +88,7 @@ namespace CakeDefense
             pixel = new Texture2D(GraphicsDevice, 1, 1); pixel.SetData<Color>(new Color[] { Color.White });
             gameState = GameState.Menu;
 
-            singlePress = false; debugOn = false; musicOn = true; soundEffectsOn = true;
+            singlePress = false; debugOn = false; musicOn = false; soundEffectsOn = false;
 
             base.Initialize();
         }
@@ -211,7 +211,11 @@ namespace CakeDefense
                 case GameState.Game:
 
                     #region Update
-                    MediaPlayer.Play(theme);
+                    if (musicOn == false)
+                    {
+                        MediaPlayer.Play(theme);
+                        musicOn = true;
+                    }
 
                     drawCursor = true;
                     QuickKeys();
@@ -229,7 +233,7 @@ namespace CakeDefense
 
                         if (enemies[i].IsActive == false)
                         {
-                            if (enemies[i].HasCake)
+                            if (enemies[i].HasCake && !(enemies[i].Path.GetTile(enemies[i].CurrentTile) == enemies[i].Path.End))
                             {
                                 droppedCake.Add(enemies[i].Point);
                             }
