@@ -61,6 +61,11 @@ namespace CakeDefense
             set { path = value; }
         }
 
+        public int CurrentTile
+        {
+            get { return currentTile; }
+        }
+
         public bool IsSpawning
         {
             get { return spawning; }

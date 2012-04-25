@@ -1,6 +1,10 @@
-123-9-0-2// 0-Money ||| 1-CakeLeft ||| 2-Level ||| 3-Wave
+63-6-0-3// 0-Money ||| 1-CakeLeft ||| 2-Level ||| 3-Wave
 --Towers--
-Basic-7,12-10-None
-Basic-9,10-10-None
-Basic-21,6-10-None
+Basic-15,6-10-None
+Basic-12,6-10-None
+Basic-20,7-10-None
+Basic-22,5-10-None
+Basic-9,5-10-None
 --Traps--
+Zapper-24,7-300
+Basic-30,13-3
