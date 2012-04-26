@@ -236,16 +236,6 @@
       <Time>2012-04-23T19:35:33.0510128-04:00</Time>
     </Item>
     <Item>
-      <Source>Sound\Music.mp3</Source>
-      <Name>Sound\Music</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Music.xnb</Output>
-      <Extra>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Music.wma</Extra>
-      <Time>2012-04-18T17:37:04-04:00</Time>
-    </Item>
-    <Item>
       <Source>Sound\flypaper_placement.wav</Source>
       <Name>Sound\flypaper_placement</Name>
       <Importer>WavImporter</Importer>
@@ -280,6 +270,16 @@
       <Options>None</Options>
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Tower_Shoot.xnb</Output>
       <Time>2012-04-25T20:28:33.2441157-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sound\Music.mp3</Source>
+      <Name>Sound\Music</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Music.xnb</Output>
+      <Extra>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Music.wma</Extra>
+      <Time>2012-04-18T17:37:04-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
