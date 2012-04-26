@@ -89,6 +89,7 @@
     <Compile Include="Tile - Map\Tile_Path.cs" />
     <Compile Include="Tile - Map\Tile_Tower.cs" />
     <Compile Include="Timer.cs" />
+    <Compile Include="Towers\Tower_Fire.cs" />
     <Compile Include="Towers\Tower_Shock.cs" />
     <Compile Include="Towers\Tower.cs" />
     <Compile Include="Towers\Tower_Basic.cs" />

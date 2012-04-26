@@ -19,7 +19,6 @@ namespace CakeDefense
     public class Game : Microsoft.Xna.Framework.Game
     {
         #region Attributes
-
         #region Graphic Stuff (Texture2D, SpriteFont, SpriteBatch, GraphicsDeviceManager)
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -70,7 +69,6 @@ namespace CakeDefense
         Song theme; 
         SoundEffect flypaperPlacement, splat, towerPlace, towerShoot;
         #endregion Sound
-
         #endregion Attributes
 
         #region Initialize
@@ -1269,6 +1267,12 @@ namespace CakeDefense
             }
             #endregion Shock
 
+            #region Fire
+            if (type == Var.TowerType.Fire)
+            {
+                return LoadTower(type, Var.MAX_TOWER_HEALTH, Tower.Attacktype.None);
+            }
+            #endregion Fire
             return null;
         }
 
@@ -1314,6 +1318,25 @@ namespace CakeDefense
             }
             #endregion Shock
 
+            #region Fire
+            if (type == Var.TowerType.Fire)
+            {
+                return new Tower_Fire(
+                    150,
+                    health,
+                    200,
+                    4,
+                    1000,//Fire Rate in ms
+                    Var.BASE_BULLET_SPEED,
+                    Var.TILE_SIZE,
+                    Var.TILE_SIZE,
+                    spriteBatch,
+                    towerTex,
+                    bulletTex,
+                    attackType
+                );
+            }
+            #endregion Basic
             return null;
         }
         #endregion Tower
