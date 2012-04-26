@@ -31,6 +31,7 @@ namespace CakeDefense
 
         SpriteBatch sprite;
         Texture2D cakepieceTex;
+        private List<Enemy> enemies;
         #endregion Attributes
 
         #region Constructor
@@ -109,7 +110,7 @@ namespace CakeDefense
             {
                 if (spawning == false && despawning == false && IsDying == false)
                 {
-                    MoveBy(Speed_Actual, traps); // move the enemy (properly)
+                    MoveBy(Speed_Actual, traps, enemies); // move the enemy (properly)
 
                     if (path.GetTile(currentTile) == path.End)
                     {
@@ -137,7 +138,7 @@ namespace CakeDefense
         #endregion Update
 
         #region Move
-        private void MoveBy(float num, List<Trap> traps/*, List<Enemy> enemies*/)
+        private void MoveBy(float num, List<Trap> traps, List<Enemy> enemies)
         {
             traps.ForEach(trap => trap.AttackIfCan(this, time));
 
@@ -150,11 +151,11 @@ namespace CakeDefense
                     if (tile != null && tile.OccupiedBy is Cake)
                     {
                         //loop through enemy objects
-                        /*for (int i = 0; i < enemies.Count; i++)
+                        for (int i = 0; i < enemies.Count; i++)
                         {
                             if (enemies[i].hasCake)
                                 cakeCount++;
-                        }*/
+                        }
 
                         if(cakeCount < 9)
                             hasCake = true;
@@ -177,7 +178,7 @@ namespace CakeDefense
                         // How far off it went over center
                         float distOff = num - (Center.X - path.GetTile(currentTile).Center.X);
                         X -= num - distOff;
-                        MoveBy(distOff, traps);
+                        MoveBy(distOff, traps, enemies);
                     }
                     // Otherwise move normally
                     else
@@ -198,7 +199,7 @@ namespace CakeDefense
                         // How far off it went over center
                         float distOff = num - (Center.Y - path.GetTile(currentTile).Center.Y);
                         Y -= num - distOff;
-                        MoveBy(distOff, traps);
+                        MoveBy(distOff, traps, enemies);
                     }
                     // Otherwise move normally
                     else
@@ -219,7 +220,7 @@ namespace CakeDefense
                         // How far off it went over center
                         float distOff = num - (path.GetTile(currentTile).Center.X - Center.X);
                         X += num - distOff;
-                        MoveBy(distOff, traps);
+                        MoveBy(distOff, traps, enemies);
                     }
                     // Otherwise move normally
                     else
@@ -240,7 +241,7 @@ namespace CakeDefense
                         // How far off it went over center
                         float distOff = num - (path.GetTile(currentTile).Center.Y - Center.Y);
                         Y += num - distOff;
-                        MoveBy(distOff, traps);
+                        MoveBy(distOff, traps, enemies);
                     }
                     // Otherwise move normally
                     else
@@ -255,6 +256,13 @@ namespace CakeDefense
             #endregion Path
         }
         #endregion Move
+
+        #region Enemies List
+        public void updateEnemiesList(List<Enemy> list)
+        {
+            enemies = list;
+        }
+        #endregion Enemies List
 
         #region Let Tower find where you will be
         /// <summary> Does NOT WORK on high enemy / game speeds currently. </summary>
@@ -271,7 +279,7 @@ namespace CakeDefense
                 }
                 else
                 {
-                    MoveBy(Speed_Actual, new List<Trap>());
+                    MoveBy(Speed_Actual, new List<Trap>(), enemies);
                     ii++;
                 }
             } while (ii > 0);
