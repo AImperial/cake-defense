@@ -16,13 +16,13 @@ using System.IO;
 
 namespace CakeDefense
 {
-    class Tower_Basic:Tower
+    class Tower_Fire:Tower
     {
         #region Constructor
-        public Tower_Basic(float fireRadius, int health, int cost, int damage, float speed, float bSpeed, int w, int h, SpriteBatch spB, Texture2D t, Texture2D bt, Attacktype attackType)
+        public Tower_Fire(float fireRadius, int health, int cost, int damage, float speed, float bSpeed, int w, int h, SpriteBatch spB, Texture2D t, Texture2D bt, Attacktype attackType)
             : base(fireRadius, health, cost, damage, speed, bSpeed, w, h, spB, t, bt, attackType)
         {
-            type = Var.TowerType.Basic;
+            type = Var.TowerType.Fire;
         }
         #endregion Constructor
 

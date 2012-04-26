@@ -159,7 +159,7 @@ namespace CakeDefense
                                 cakeCount++;
                         }
 
-                        if((cakeCount + dropped.Count) < Var.MAX_CAKE_HEALTH)
+                        if((cakeCount + dropped.Count) < hud.Health)
                             hasCake = true;
                         break;
                     }

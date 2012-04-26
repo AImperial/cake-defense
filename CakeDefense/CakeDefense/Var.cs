@@ -37,7 +37,8 @@ namespace CakeDefense
         public static Dictionary<TowerType, string> towerNames = new Dictionary<TowerType, string>
         {
             { TowerType.Basic, "Rad" },
-            { TowerType.Shock, "Shocky" }
+            { TowerType.Shock, "Shocky" },
+            { TowerType.Fire, "Fireball" }
         };
         #endregion Tower
 
@@ -78,7 +79,7 @@ namespace CakeDefense
 
         #region Enums
         public enum EnemyType { Ant, Spider, Beetle }
-        public enum TowerType { Basic, Shock }
+        public enum TowerType { Basic, Shock, Fire }
         public enum TrapType { Basic, Slow, Zapper }
         #endregion Enums
 
