@@ -238,15 +238,17 @@ namespace CakeDefense
                     {
                         enemies[i].Update(animationTotalTime, traps);
 
+                        enemies[i].updateEnemiesList(enemies);
+
                         if (enemies[i].IsActive == false)
                         {
-                            splat.Play();
                             if (enemies[i].HasCake && !(enemies[i].Path.GetTile(enemies[i].CurrentTile) == enemies[i].Path.End))
                             {
                                 droppedCake.Add(enemies[i].Point);
                             }
                             enemies.RemoveAt(i);  
                             i--;
+                            splat.Play();
                         }
                     }
 
@@ -533,7 +535,6 @@ namespace CakeDefense
             {
                 #region GameState.Game
                 case GameState.Game: case GameState.Paused:
-
                     spriteBatch.Draw(menuBackgrounds[GameState.Game], Var.SCREEN_SIZE, Color.White);
                     map.DrawMap(blankTex, smallFont);
 
@@ -564,10 +565,7 @@ namespace CakeDefense
                     Trap mouseOverTrap = null;
                     foreach (Trap trap in traps)
                     {
-                        if (trap is Trap_Zapper)
-                            trap.Draw(gameTime);
-                        else
-                            trap.Draw();
+                        trap.Draw(gameTime);
 
                         if (mouseRect.Intersects(trap.Rectangle))
                             mouseOverTrap = trap;
@@ -584,8 +582,6 @@ namespace CakeDefense
                         ImageObject.DrawRectangleOutline(((Trap)selectedItem).OccupiedTile.Rectangle, 3, Color.Green, blankTex, spriteBatch);
                     }
                     #endregion Traps
-
-                    traps.ForEach(trap => trap.Draw(gameTime));
 
                     droppedCake.ForEach(dropped => spriteBatch.Draw(cakepieceTex, new Rectangle((int)(dropped.X), (int)(dropped.Y), 15, 15), Color.White));
 
@@ -689,7 +685,7 @@ namespace CakeDefense
                 spriteBatch.Draw(cursorTex, new Rectangle(mouseRect.X, mouseRect.Y, 25, 25), Color.White);
 
             spriteBatch.End();
-            base.Draw(gameTime);
+             base.Draw(gameTime);
         }
         #endregion Draw
 
