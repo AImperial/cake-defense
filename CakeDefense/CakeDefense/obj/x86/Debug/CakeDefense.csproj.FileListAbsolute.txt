@@ -199,8 +199,4 @@ C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Splat.xnb
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\tower_place.xnb
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Tower_Shoot.xnb
-C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\flypaper_placement.wma
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Music.wma
-C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Splat.wma
-C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\tower_place.wma
-C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Tower_Shoot.wma

@@ -199,30 +199,31 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Compile Include="Sound\flypaper_placement.mp3">
+    <Compile Include="Sound\flypaper_placement.wav">
       <Name>flypaper_placement</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
+    <Compile Include="Sound\Splat.wav">
+      <Name>Splat</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Sound\tower_place.wav">
+      <Name>tower_place</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Sound\Tower_Shoot.wav">
+      <Name>Tower_Shoot</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Sound\Music.mp3">
       <Name>Music</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
-    <Compile Include="Sound\Splat.mp3">
-      <Name>Splat</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
-    <Compile Include="Sound\tower_place.mp3">
-      <Name>tower_place</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
-    <Compile Include="Sound\Tower_Shoot.mp3">
-      <Name>Tower_Shoot</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
     </Compile>

@@ -67,7 +67,8 @@ namespace CakeDefense
         #endregion Tower/Trap Stuff
 
         #region Sound
-        Song theme;
+        Song theme; 
+        SoundEffect flypaperPlacement, splat, towerPlace, towerShoot;
         #endregion Sound
 
         #endregion Attributes
@@ -88,7 +89,7 @@ namespace CakeDefense
             pixel = new Texture2D(GraphicsDevice, 1, 1); pixel.SetData<Color>(new Color[] { Color.White });
             gameState = GameState.Menu;
 
-            singlePress = false; debugOn = false; musicOn = false; soundEffectsOn = false;
+            singlePress = false; debugOn = false; musicOn = false; soundEffectsOn = true;
 
             base.Initialize();
         }
@@ -181,6 +182,11 @@ namespace CakeDefense
 
             #region Sound
             theme = this.Content.Load<Song>("Sound/Music");
+
+            flypaperPlacement = this.Content.Load<SoundEffect>("Sound/flypaper_placement");
+            splat = this.Content.Load<SoundEffect>("Sound/Splat");
+            towerPlace = this.Content.Load<SoundEffect>("Sound/tower_place");
+            towerShoot = this.Content.Load<SoundEffect>("Sound/Tower_Shoot");
             #endregion Sound
 
             InitializeAfterLoadContent();
@@ -203,6 +209,7 @@ namespace CakeDefense
             mouseRect = new Rectangle(mouseState.X, mouseState.Y, 1, 1);
             mousePoint = new Vector2(mouseState.X, mouseState.Y);
             #endregion Kb/MouseState
+
             animationTotalTime = new GameTime(gameTime.TotalGameTime - pausedTime, TimeSpan.Zero);
 
             switch (gameState)
@@ -233,6 +240,7 @@ namespace CakeDefense
 
                         if (enemies[i].IsActive == false)
                         {
+                            splat.Play();
                             if (enemies[i].HasCake && !(enemies[i].Path.GetTile(enemies[i].CurrentTile) == enemies[i].Path.End))
                             {
                                 droppedCake.Add(enemies[i].Point);
@@ -392,6 +400,7 @@ namespace CakeDefense
                                             ((Tower)heldItem).Place((Tile_Tower)tile);
                                             towers.Add(((Tower)heldItem));
                                             heldItem = NewTower(((Tower)heldItem).Type);
+                                            towerPlace.Play();
                                         }
                                     }
                                     else if (tile is Tile_Path)
@@ -402,10 +411,10 @@ namespace CakeDefense
                                             ((Trap)heldItem).Place((Tile_Path)tile);
                                             traps.Add(((Trap)heldItem));
                                             heldItem = NewTrap(((Trap)heldItem).Type);
+                                            if (heldItem is Trap_Slow)
+                                                flypaperPlacement.Play();
                                         }
                                     }
-
-                                    
                                     break;
                                 }
                             }
@@ -611,7 +620,6 @@ namespace CakeDefense
                     hud.Draw();
 
                     // break; is in Pause.
-
                 #endregion GameState.Game
 
                 #region Everything else
