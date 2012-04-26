@@ -216,6 +216,9 @@ namespace CakeDefense
                 case GameState.Game:
 
                     #region Update
+                    if (MediaPlayer.State != MediaState.Playing)
+                        musicOn = false;
+
                     if (musicOn == false)
                     {
                         MediaPlayer.Play(theme);
@@ -476,6 +479,7 @@ namespace CakeDefense
 
                 #region Menu
                 case GameState.Menu:
+                    MediaPlayer.Stop();
                     if (CheckIfClicked(buttons[gameState][0].Rectangle))
                     {
                         NewGame();
