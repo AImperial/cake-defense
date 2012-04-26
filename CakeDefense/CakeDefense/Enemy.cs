@@ -32,6 +32,7 @@ namespace CakeDefense
         SpriteBatch sprite;
         Texture2D cakepieceTex;
         private List<Enemy> enemies;
+        private List<Vector2> dropped;
         #endregion Attributes
 
         #region Constructor
@@ -80,6 +81,7 @@ namespace CakeDefense
         public bool HasCake
         {
             get { return hasCake; }
+            set { hasCake = value; }
         }
 
         /// <summary> Ranges from 0-1. One is normal speed. </summary>
@@ -157,7 +159,7 @@ namespace CakeDefense
                                 cakeCount++;
                         }
 
-                        if(cakeCount < 9)
+                        if((cakeCount + dropped.Count) < Var.MAX_CAKE_HEALTH)
                             hasCake = true;
                         break;
                     }
@@ -257,12 +259,13 @@ namespace CakeDefense
         }
         #endregion Move
 
-        #region Enemies List
-        public void updateEnemiesList(List<Enemy> list)
+        #region Enemies and Cake List
+        public void updateEnemiesAndDroppedList(List<Enemy> list, List<Vector2> cake)
         {
             enemies = list;
+            dropped = cake;
         }
-        #endregion Enemies List
+        #endregion Enemies and Cake List
 
         #region Let Tower find where you will be
         /// <summary> Does NOT WORK on high enemy / game speeds currently. </summary>

@@ -238,9 +238,19 @@ namespace CakeDefense
                     {
                         enemies[i].Update(animationTotalTime, traps);
 
-                        enemies[i].updateEnemiesList(enemies);
-
-                        if (enemies[i].IsActive == false)
+                        enemies[i].updateEnemiesAndDroppedList(enemies, droppedCake);
+                        if (enemies[i].IsActive)
+                        {
+                            for (int j = 0; j < droppedCake.Count; j++)
+                            {
+                                if (enemies[i].HasCake == false && enemies[i].Rectangle.Intersects(new Rectangle((int)droppedCake[j].X, (int)droppedCake[j].Y, 10, 10)))
+                                {
+                                    enemies[i].HasCake = true;
+                                    droppedCake.RemoveAt(j);
+                                }
+                            }
+                        }
+                        else
                         {
                             if (enemies[i].HasCake && !(enemies[i].Path.GetTile(enemies[i].CurrentTile) == enemies[i].Path.End))
                             {
