@@ -153,7 +153,7 @@ namespace CakeDefense
         #region Draw
         public void DrawMap(Texture2D tex, SpriteFont font)
         {
-            if (tiles != null)
+            /*if (tiles != null)
             {
                 foreach (Tile tile in tiles)
                 {
@@ -161,7 +161,7 @@ namespace CakeDefense
                         sprite.Draw(tex, tile.Rectangle, Color.Gray);
                     //sprite.DrawString(font, "x:" + tile.TileNum.X.ToString("00") + "\ny:" + tile.TileNum.Y.ToString("00"), tile.Point, Color.Green);
                 }
-            }
+            }*/
         }
         #endregion Draw
     }
