@@ -302,24 +302,39 @@ namespace CakeDefense
                             drawCursor = true;
                             string name = "";
                             int cost = 0;
+                            string desc = "";
                             if (itm is Tower)
                             {
                                 Tower tower = (Tower)itm;
                                 name = Var.towerNames[tower.Type];
                                 cost = tower.Cost;
+                                if (tower is Tower_Basic)
+                                    desc = "Shoots enemies!";
+                                else if (tower is Tower_Shock)
+                                    desc = "Shocking tower!";
+                                else if (tower is Tower_Fire)
+                                    desc = "Shoots fireballs at enemies.";
                             }
                             else if (itm is Trap)
                             {
                                 Trap trap = (Trap)itm;
                                 name = Var.trapNames[trap.Type];
                                 cost = trap.Cost;
+                                if(trap is Trap_Basic)
+                                    desc = "Damages enemies slightly!";
+                                else if(trap is Trap_Slow)
+                                    desc = "Slows enemies!";
+                                else if(trap is Trap_Zapper)
+                                    desc = "Zaps enemies! Click to activate.";
                             }
 
                             hud.CostWindow.TextObjects[0].Message = name;
                             hud.CostWindow.TextObjects[1].Message = "$" + cost;
+                            hud.CostWindow.TextObjects[2].Message = desc;
+
                             int width = hud.CostWindow.TextObjects[0].Width + 10;
-                            if (hud.CostWindow.TextObjects[1].Width + 10 > width)
-                                width = hud.CostWindow.TextObjects[1].Width + 10;
+                            if (hud.CostWindow.TextObjects[2].Width + 10 > width)
+                                width = hud.CostWindow.TextObjects[2].Width + 10;
 
                             hud.CostWindow.Width = width;
                             hud.CostWindow.Center = new Vector2(itm.Center.X, hud.CostWindow.Center.Y);
@@ -563,7 +578,8 @@ namespace CakeDefense
                     if (mouseOverTower != null)
                     {
                         DrawCircle(mouseOverTower.Center, mouseOverTower.FireRadius, 64, Color.Red);
-                        spriteBatch.DrawString(normalFont, "Price: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost(), new Vector2(mouseOverTower.Point.X + mouseOverTower.Width + 2, mouseOverTower.Point.Y - 5), Color.Blue);
+
+                        spriteBatch.DrawString(normalFont, "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel + "\nUpgrade Cost: " + mouseOverTower.Cost, new Vector2(mouseOverTower.Point.X + mouseOverTower.Width + 2, mouseOverTower.Point.Y - 5), Color.Blue);
                     }
                     if (selectedItem is Tower)
                     {
@@ -584,10 +600,7 @@ namespace CakeDefense
                     }
                     if (mouseOverTrap != null)
                     {
-                        if(mouseOverTrap is Trap_Zapper)
-                            spriteBatch.DrawString(normalFont, "Price: " + mouseOverTrap.Cost + "\nSale Price: " + mouseOverTrap.SellCost() + "\nClick to activate", new Vector2(mouseOverTrap.Point.X + mouseOverTrap.Width + 2, mouseOverTrap.Point.Y - 5), Color.Green);
-                        else
-                            spriteBatch.DrawString(normalFont, "Price: " + mouseOverTrap.Cost + "\nSale Price: " + mouseOverTrap.SellCost(), new Vector2(mouseOverTrap.Point.X + mouseOverTrap.Width + 2, mouseOverTrap.Point.Y - 5), Color.Green);
+                        spriteBatch.DrawString(normalFont, "Value: " + mouseOverTrap.Cost + "\nSale Price: " + mouseOverTrap.SellCost(), new Vector2(mouseOverTrap.Point.X + mouseOverTrap.Width + 2, mouseOverTrap.Point.Y - 5), Color.Green);
                     }
                     if (selectedItem is Trap)
                     {
@@ -707,26 +720,21 @@ namespace CakeDefense
         /// <summary> Called in GameState.Game (NOT GameState.Paused)</summary>
         public void QuickKeys()
         {
-            /*if (SingleKeyPress(Keys.D1))
-            {
-                heldItem = NewTower(Var.TowerType.Basic);
-            }
-            if (SingleKeyPress(Keys.D0))
-            {
-                heldItem = NewTrap(Var.TrapType.Basic);
-            }*/
             if (SingleKeyPress(Keys.M))
             {
                 musicOn = soundEffectsOn = !musicOn;
             }
+
             if (SingleKeyPress(Keys.P))
             {
                 gameState = GameState.Paused;
             }
+
             if (SingleKeyPress(Keys.R))
             {
                 ContinueGame();
             }
+
             if (SingleKeyPress(Keys.S))
             {
                 if (selectedItem is Trap)
@@ -743,6 +751,23 @@ namespace CakeDefense
                 }
                 selectedItem = null;
             }
+
+            if (SingleKeyPress(Keys.U))
+            {
+                if (selectedItem is Tower)
+                {
+                    if (((Tower)selectedItem).UpgradeLevel < 3 && hud.CanSpendMoney(((Tower)selectedItem).Cost))
+                    {
+                        hud.Money -= ((Tower)selectedItem).SellCost();
+                        ((Tower)selectedItem).UpgradeLevel++;
+                        ((Tower)selectedItem).Speed -= (float)50;
+                        ((Tower)selectedItem).Damage += 1;
+                        ((Tower)selectedItem).FireRadius += (float)30;
+                        ((Tower)selectedItem).Cost += ((Tower)selectedItem).Cost;
+                    }
+                }
+            }
+
             if (SingleKeyPress(Keys.Escape))
             {
                 gameState = GameState.Menu;
@@ -881,11 +906,13 @@ namespace CakeDefense
             List<TextObject> texts = new List<TextObject>
             {
                 new TextObject("-", Vector2.Zero, normalFont, Color.GhostWhite, spriteBatch),
+                new TextObject("-", Vector2.Zero, normalFont, Color.GhostWhite, spriteBatch),
                 new TextObject("-", Vector2.Zero, normalFont, Color.GhostWhite, spriteBatch)
             };
-            hud.CostWindow = new Window(0, (int)(hud.SelectionBar[0].Y - texts[0].Height - texts[1].Height - 10), 100, texts[0].Height + texts[1].Height, spriteBatch, blankTex, null, texts);
+            hud.CostWindow = new Window(0, (int)(hud.SelectionBar[0].Y - texts[0].Height - texts[1].Height - texts[2].Height - 10), 100, texts[0].Height + texts[1].Height + texts[2].Height, spriteBatch, blankTex, null, texts);
             hud.CostWindow.TextObjects[0].Y = hud.CostWindow.Y;
             hud.CostWindow.TextObjects[1].Y = hud.CostWindow.Y + texts[0].Height;
+            hud.CostWindow.TextObjects[2].Y = hud.CostWindow.Y + texts[0].Height + texts[0].Height;
             hud.CostWindow.Color = Var.PAUSE_GRAY;
         }
         #endregion New / Continued Game

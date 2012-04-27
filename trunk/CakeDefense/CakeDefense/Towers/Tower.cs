@@ -24,7 +24,7 @@ namespace CakeDefense
         protected Tile_Tower occupiedTile;
         protected Stopwatch timer;
         protected Random rand;
-        protected int cost;
+        protected int cost, upgradeLevel;
         protected float fireRadius, bulletSpeed;
         protected List<Bullet> bullets;
         protected Texture2D bulletTexture;
@@ -48,6 +48,7 @@ namespace CakeDefense
             bulletTexture = bt;
             bullets = new List<Bullet>();
             Image.Transparency = Var.PLACING_TRANSPARENCY;
+            upgradeLevel = 0;
         }
         #endregion Constructor
 
@@ -76,31 +77,33 @@ namespace CakeDefense
             set { cost = value; }
         }
 
+        public int UpgradeLevel
+        {
+            get { return upgradeLevel; }
+            set { upgradeLevel = value; }
+        }
+
         public float BulletSpeed
         {
             get { return bulletSpeed; }
-
             set { bulletSpeed = value; }
         }
 
         public float FireRadius
         {
             get { return fireRadius; }
-
             set { fireRadius = value; }
         }
 
         public Var.TowerType Type
         {
             get { return type; }
-
             set { type = value; }
         }
 
         public Attacktype AttackType
         {
             get { return attackType; }
-
             set { attackType = value; }
         }
         #endregion Properties
