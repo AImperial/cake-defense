@@ -89,42 +89,36 @@ namespace CakeDefense
         public float X
         {
             get { return point.X; }
-
             set { point.X = value; CenterImage(); }
         }
 
         public float Y
         {
             get { return point.Y; }
-
             set { point.Y = value; CenterImage(); }
         }
 
         public int Width
         {
             get { return size.X; }
-
             set { size.X = value; }
         }
 
         public int Height
         {
             get { return size.Y; }
-
             set { size.Y = value; }
         }
 
         public Vector2 Point
         {
             get { return point; }
-
             set { point = value; CenterImage(); }
         }
 
         public Rectangle Rectangle
         {
             get { return new Rectangle((int)X, (int)Y, Width, Height); }
-
             set
             {
                 X = value.X;
@@ -137,7 +131,6 @@ namespace CakeDefense
         public Vector2 Center
         {
             get { return new Vector2(X + Width / 2, Y + Height / 2); }
-
             set
             {
                 X = (int)value.X - (Width / 2);
@@ -150,45 +143,38 @@ namespace CakeDefense
         public bool IsActive
         {
             get { return isActive; }
-
             set { isActive = value; }
         }
 
         public float Direction
         {
             get { return Image.Rotation; }
-
             set { Image.Rotation = value; }
         }
 
         public int StartHealth
         {
             get { return strtHlth; }
-
             set { strtHlth = value; }
         }
 
         public int CurrentHealth
         {
             get { return currHealth; }
-
             set { currHealth = value; }
         }
 
         public int Damage
         {
             get { return dmgDn; }
-
             set { dmgDn = value; }
         }
 
         public float Speed
         {
             get { return speed; }
-
             set { speed = value; }
         }
-
         #endregion Properties
 
         #region Methods

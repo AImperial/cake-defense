@@ -44,21 +44,18 @@ namespace CakeDefense
         public bool IsActive
         {
             get { return isActive; }
-
             set { isActive = value; }
         }
 
         public List<Button> Buttons
         {
             get { return buttons; }
-
             set { buttons = value; }
         }
 
         public List<TextObject> TextObjects
         {
             get { return textObjects; }
-
             set { textObjects = value; }
         }
         #endregion Properties
