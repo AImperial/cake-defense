@@ -578,8 +578,10 @@ namespace CakeDefense
                     if (mouseOverTower != null)
                     {
                         DrawCircle(mouseOverTower.Center, mouseOverTower.FireRadius, 64, Color.Red);
-
-                        spriteBatch.DrawString(normalFont, "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel + "\nUpgrade Cost: " + mouseOverTower.Cost, new Vector2(mouseOverTower.Point.X + mouseOverTower.Width + 2, mouseOverTower.Point.Y - 5), Color.Blue);
+                        if(mouseOverTower is Tower_Shock)
+                            spriteBatch.DrawString(normalFont, "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel + "\nUpgrade Cost: " + mouseOverTower.Cost, new Vector2(mouseOverTower.Point.X + mouseOverTower.Width + 2, mouseOverTower.Point.Y - 5), Color.Blue);
+                        else
+                            spriteBatch.DrawString(normalFont, "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel + "\nUpgrade Cost: " + mouseOverTower.Cost + "\nAttack Mode: " + mouseOverTower.AttackType, new Vector2(mouseOverTower.Point.X + mouseOverTower.Width + 2, mouseOverTower.Point.Y - 5), Color.Blue);
                     }
                     if (selectedItem is Tower)
                     {
@@ -686,8 +688,11 @@ namespace CakeDefense
 
                 case GameState.Menu:
                     spriteBatch.Draw(menuBackgrounds[gameState], Var.SCREEN_SIZE, Color.White);
-                    if (CheckForSave() == false)
-                        spriteBatch.Draw(blankTex, buttons[gameState][3].Rectangle, Color.Black);
+                    /*spriteBatch.Draw(blankTex, buttons[gameState][0].Rectangle, Color.Pink);
+                    spriteBatch.Draw(blankTex, buttons[gameState][1].Rectangle, Color.Pink);
+                    spriteBatch.Draw(blankTex, buttons[gameState][2].Rectangle, Color.Pink);
+                    spriteBatch.Draw(blankTex, buttons[gameState][3].Rectangle, Color.Pink);
+                    spriteBatch.Draw(blankTex, buttons[gameState][4].Rectangle, Color.Pink);*/
                     break;
                 case GameState.Instructions:
                     spriteBatch.Draw(menuBackgrounds[gameState], Var.SCREEN_SIZE, Color.White);
@@ -764,6 +769,33 @@ namespace CakeDefense
                         ((Tower)selectedItem).Damage += 1;
                         ((Tower)selectedItem).FireRadius += (float)30;
                         ((Tower)selectedItem).Cost += ((Tower)selectedItem).Cost;
+                    }
+                }
+            }
+
+            if (SingleKeyPress(Keys.A))
+            {
+                if (selectedItem is Tower && !(selectedItem is Tower_Shock))
+                {
+                    if (((Tower)selectedItem).AttackType == Tower.Attacktype.None)
+                    {
+                        ((Tower)selectedItem).AttackType = Tower.Attacktype.Fastest;
+                    }
+                    else if (((Tower)selectedItem).AttackType == Tower.Attacktype.Fastest)
+                    {
+                        ((Tower)selectedItem).AttackType = Tower.Attacktype.Slowest;
+                    }
+                    else if (((Tower)selectedItem).AttackType == Tower.Attacktype.Slowest)
+                    {
+                        ((Tower)selectedItem).AttackType = Tower.Attacktype.Strongest;
+                    }
+                    else if (((Tower)selectedItem).AttackType == Tower.Attacktype.Strongest)
+                    {
+                        ((Tower)selectedItem).AttackType = Tower.Attacktype.Weakest;
+                    }
+                    else if (((Tower)selectedItem).AttackType == Tower.Attacktype.Weakest)
+                    {
+                        ((Tower)selectedItem).AttackType = Tower.Attacktype.None;
                     }
                 }
             }
@@ -1488,10 +1520,12 @@ namespace CakeDefense
         {
             GameSpeedChange(1, bttn);
         }
+
         public void GameSpeedTwo(Button bttn)
         {
             GameSpeedChange(2, bttn);
         }
+
         public void GameSpeedFour(Button bttn)
         {
             GameSpeedChange(4, bttn);
