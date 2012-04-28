@@ -50,11 +50,11 @@ namespace CakeDefense
                     {
                         foreach (Enemy enemy in enemiesInRange)
                         {
-                            if(timer.ElapsedMilliseconds % 20== 0)
-                                enemy.Hit(Damage);
+                            enemy.Hit(Damage);
                         }
                     }
                     #endregion Attack
+                    timer.Restart();
                 }
             }
         }

@@ -169,7 +169,6 @@ C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content
 \\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\flypaper.xnb
 \\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\cakepiece.xnb
 \\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Cursor.xnb
-\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\flame_trap.xnb
 \\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\ant_ani.xnb
 \\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\gameScreen.xnb
 \\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Large.xnb
@@ -200,3 +199,10 @@ C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\tower_place.xnb
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Tower_Shoot.xnb
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Music.wma
+\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\zapper_ani.xnb
+\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\flypaper_placement.xnb
+\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Splat.xnb
+\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\tower_place.xnb
+\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Tower_Shoot.xnb
+\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Music.xnb
+\\banner.main.ad.rit.edu\students\tjs7664\IGMProfile\Desktop\SVN Folders\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Music.wma

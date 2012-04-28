@@ -87,7 +87,7 @@ namespace CakeDefense
             pixel = new Texture2D(GraphicsDevice, 1, 1); pixel.SetData<Color>(new Color[] { Color.White });
             gameState = GameState.Menu;
 
-            singlePress = false; debugOn = false; musicOn = false; soundEffectsOn = true;
+            singlePress = false; debugOn = false; musicOn = true; soundEffectsOn = true;
 
             base.Initialize();
         }
@@ -216,14 +216,10 @@ namespace CakeDefense
                 case GameState.Game:
 
                     #region Update
-                    if (MediaPlayer.State != MediaState.Playing)
-                        musicOn = false;
-
-                    if (musicOn == false)
-                    {
+                    if (musicOn == false && MediaPlayer.State == MediaState.Playing)
+                        MediaPlayer.Stop();
+                    else if (musicOn && MediaPlayer.State != MediaState.Playing)
                         MediaPlayer.Play(theme);
-                        musicOn = true;
-                    }
 
                     drawCursor = true;
                     QuickKeys();
@@ -1503,6 +1499,11 @@ namespace CakeDefense
                 gameState = GameState.Paused;
             else
                 gameState = GameState.Game;
+        }
+
+        public void Mute_UnMute(Button bttn)
+        {
+            soundEffectsOn = musicOn = !musicOn;
         }
 
         public void GoToMenu(Button bttn)
