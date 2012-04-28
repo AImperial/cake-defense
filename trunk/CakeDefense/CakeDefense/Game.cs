@@ -578,8 +578,12 @@ namespace CakeDefense
                     if (mouseOverTower != null)
                     {
                         DrawCircle(mouseOverTower.Center, mouseOverTower.FireRadius, 64, Color.Red);
-                        if(mouseOverTower is Tower_Shock)
+                        if(mouseOverTower is Tower_Shock && mouseOverTower.UpgradeLevel < 3)
                             spriteBatch.DrawString(normalFont, "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel + "\nUpgrade Cost: " + mouseOverTower.Cost, new Vector2(mouseOverTower.Point.X + mouseOverTower.Width + 2, mouseOverTower.Point.Y - 5), Color.Blue);
+                        else if(mouseOverTower is Tower_Shock && mouseOverTower.UpgradeLevel >= 3)
+                            spriteBatch.DrawString(normalFont, "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel, new Vector2(mouseOverTower.Point.X + mouseOverTower.Width + 2, mouseOverTower.Point.Y - 5), Color.Blue);
+                        else if(!(mouseOverTower is Tower_Shock) && mouseOverTower.UpgradeLevel >= 3)
+                            spriteBatch.DrawString(normalFont, "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel + "\nAttack Mode: " + mouseOverTower.AttackType, new Vector2(mouseOverTower.Point.X + mouseOverTower.Width + 2, mouseOverTower.Point.Y - 5), Color.Blue);
                         else
                             spriteBatch.DrawString(normalFont, "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel + "\nUpgrade Cost: " + mouseOverTower.Cost + "\nAttack Mode: " + mouseOverTower.AttackType, new Vector2(mouseOverTower.Point.X + mouseOverTower.Width + 2, mouseOverTower.Point.Y - 5), Color.Blue);
                     }
