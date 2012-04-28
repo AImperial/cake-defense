@@ -151,6 +151,8 @@ namespace CakeDefense
             parent.ChildButtons.Add(new Button(parent.Texture, parent.Point, parent.Width, parent.Height, 2, Color.Red, parent.SpriteBatch,
                 null, null));
             parent.ChildButtons.Add(new Button(parent.Texture, parent.Point, parent.Width, parent.Height, 2, Color.Red, parent.SpriteBatch,
+                new TextObject("Mute", Vector2.Zero, parent.Message.Font, Color.Red, parent.SpriteBatch), new ButtonEvent(game.Mute_UnMute)));
+            parent.ChildButtons.Add(new Button(parent.Texture, parent.Point, parent.Width, parent.Height, 2, Color.Red, parent.SpriteBatch,
                 new TextObject("Restart", Vector2.Zero, parent.Message.Font, Color.Red, parent.SpriteBatch), new ButtonEvent(game.RestartGame)));
             parent.ChildButtons.Add(new Button(parent.Texture, parent.Point, parent.Width, parent.Height, 2, Color.Red, parent.SpriteBatch,
                 new TextObject("Exit", Vector2.Zero, parent.Message.Font, Color.Red, parent.SpriteBatch), new ButtonEvent(game.GoToMenu)));
