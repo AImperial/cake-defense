@@ -1222,9 +1222,9 @@ namespace CakeDefense
 
                 return new Enemy(
                     image,
-                    (int)(10 * difficulty),
+                    (int)(15 * difficulty),
                     (int)(2 * difficulty),
-                    1.3f * difficulty,
+                    1.2f * difficulty,
                     path,
                     blankTex,
                     cakepieceTex,
@@ -1260,9 +1260,9 @@ namespace CakeDefense
 
                 return new Enemy(
                     image,
-                    (int)(15 * difficulty),
+                    (int)(30 * difficulty),
                     (int)(2 * difficulty),
-                    1f * difficulty,
+                    1.0f * difficulty,
                     path,
                     blankTex,
                     cakepieceTex, 
@@ -1298,9 +1298,9 @@ namespace CakeDefense
 
                 return new Enemy(
                     image,
-                    (int)(23 * difficulty),
+                    (int)(60 * difficulty),
                     (int)(2 * difficulty),
-                    .7f * difficulty,
+                    0.7f * difficulty,
                     path,
                     blankTex,
                     cakepieceTex,
