@@ -367,10 +367,12 @@ namespace CakeDefense
                                 if (itm is Tower)
                                 {
                                     heldItem = NewTower(((Tower)itm).Type);
+                                    heldItem.Point = mousePoint;
                                 }
                                 else if (itm is Trap)
                                 {
                                     heldItem = NewTrap(((Trap)itm).Type);
+                                    heldItem.Point = mousePoint;
                                 }
                             }
                         }
@@ -424,6 +426,7 @@ namespace CakeDefense
                                             ((Tower)heldItem).Place((Tile_Tower)tile);
                                             towers.Add(((Tower)heldItem));
                                             heldItem = NewTower(((Tower)heldItem).Type);
+                                            heldItem.Point = mousePoint;
                                             towerPlace.Play();
                                         }
                                     }
@@ -435,6 +438,7 @@ namespace CakeDefense
                                             ((Trap)heldItem).Place((Tile_Path)tile);
                                             traps.Add(((Trap)heldItem));
                                             heldItem = NewTrap(((Trap)heldItem).Type);
+                                            heldItem.Point = mousePoint;
                                             if (heldItem is Trap_Slow)
                                                 flypaperPlacement.Play();
                                         }
