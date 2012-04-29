@@ -255,7 +255,8 @@ namespace CakeDefense
                             }
                             enemies.RemoveAt(i);  
                             i--;
-                            splat.Play();
+                            if(musicOn)
+                                splat.Play();
                         }
                     }
 
@@ -427,7 +428,8 @@ namespace CakeDefense
                                             towers.Add(((Tower)heldItem));
                                             heldItem = NewTower(((Tower)heldItem).Type);
                                             heldItem.Point = mousePoint;
-                                            towerPlace.Play();
+                                            if(musicOn)
+                                                towerPlace.Play();
                                         }
                                     }
                                     else if (tile is Tile_Path)
@@ -439,7 +441,7 @@ namespace CakeDefense
                                             traps.Add(((Trap)heldItem));
                                             heldItem = NewTrap(((Trap)heldItem).Type);
                                             heldItem.Point = mousePoint;
-                                            if (heldItem is Trap_Slow)
+                                            if (heldItem is Trap_Slow && musicOn)
                                                 flypaperPlacement.Play();
                                         }
                                     }
