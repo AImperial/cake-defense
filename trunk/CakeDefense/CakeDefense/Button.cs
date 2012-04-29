@@ -193,7 +193,7 @@ namespace CakeDefense
                 }
                 for (int i = 0; i < parts.Length; i++)
                 {
-                    Vector2 pos = new Vector2(X + ((bigWdth - font.MeasureString(parts[i]).X * resize.X) / 2), Y + ((font.MeasureString(" ").Y - (font.LineSpacing / 2)) * i * resize.Y));
+                    Vector2 pos = new Vector2(X + ((bigWdth - font.MeasureString(parts[i]).X * resize.X) / 2), Y + (font.LineSpacing * i * resize.Y));
                     
                     SpriteBatch.DrawString(font, parts[i], pos, TransparentColor(), 0, Vector2.Zero, resize, SpriteEffects.None, 0);
                 }

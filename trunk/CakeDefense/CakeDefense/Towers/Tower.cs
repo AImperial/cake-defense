@@ -30,7 +30,7 @@ namespace CakeDefense
         protected Texture2D bulletTexture;
         protected Var.TowerType type;
 
-        public enum Attacktype { None, Fastest, Slowest, Strongest, Weakest }
+        public enum Attacktype { None, Fastest, Slowest, Strongest, Weakest, First, Last }
         protected Attacktype attackType;
         #endregion Attributes
 

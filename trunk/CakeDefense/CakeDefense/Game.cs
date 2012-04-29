@@ -60,7 +60,7 @@ namespace CakeDefense
         #endregion Enemy Stuff
 
         #region Tower/Trap Stuff (Tower List, heldItem)
-        GameObject heldItem, selectedItem;
+        GameObject heldItem, selectedItem, mouseOverItem;
         List<Tower> towers;
         List<Trap> traps;
         #endregion Tower/Trap Stuff
@@ -349,6 +349,54 @@ namespace CakeDefense
                     }
                     #endregion Selection Bar Name/Price MouseOver
 
+                    #region Something Already Placed
+                    List<GameObject> gos = new List<GameObject>();
+                    gos.AddRange(towers); gos.AddRange(traps);
+                    foreach (GameObject itm in gos)
+                    {
+                        if (itm.Rectangle.Intersects(mouseRect))
+                        {
+                            hud.InfoWindow.IsActive = true;
+                            mouseOverItem = itm;
+                            string message = "-";
+                            if (itm is Tower)
+                            {
+                                Tower mouseOverTower = (Tower)mouseOverItem;
+                                if (mouseOverTower is Tower_Shock && mouseOverTower.UpgradeLevel < 3)
+                                    message = "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel + "\nUpgrade Cost: " + mouseOverTower.Cost;
+                                else if (mouseOverTower is Tower_Shock && mouseOverTower.UpgradeLevel >= 3)
+                                    message = "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel;
+                                else if (!(mouseOverTower is Tower_Shock) && mouseOverTower.UpgradeLevel >= 3)
+                                    message = "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel + "\nAttack Mode: " + mouseOverTower.AttackType;
+                                else
+                                    message = "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel + "\nUpgrade Cost: " + mouseOverTower.Cost + "\nAttack Mode: " + mouseOverTower.AttackType;
+                            }
+                            else if (itm is Trap)
+                            {
+                                Trap mouseOverTrap = (Trap)mouseOverItem;
+
+                                message = "Value: " + mouseOverTrap.Cost + "\nSale Price: " + mouseOverTrap.SellCost();
+                            }
+
+                            hud.InfoWindow.TextObjects[0].Message = message;
+
+                            hud.InfoWindow.Width = hud.InfoWindow.TextObjects[0].Width + 10;
+                            hud.InfoWindow.CenterX = (int)itm.Center.X;
+
+                            hud.InfoWindow.Height = hud.InfoWindow.TextObjects[0].Height + 10;
+                            hud.InfoWindow.Y = (int)itm.Y - hud.InfoWindow.Height - 5;
+
+                            hud.InfoWindow.TextObjects[0].Center = hud.InfoWindow.Center;
+
+                            break;
+                        }
+                        else
+                        {
+                            hud.InfoWindow.IsActive = false;
+                        }
+                    }
+                    #endregion Something Already Placed
+
                     #endregion Mouse Over
 
                     #region If Mouse Clicked
@@ -559,7 +607,6 @@ namespace CakeDefense
         {
             GraphicsDevice.Clear(Color.DarkGreen);
             spriteBatch.Begin();
-
             switch (gameState)
             {
                 #region GameState.Game
@@ -579,20 +626,12 @@ namespace CakeDefense
                     }
                     if (mouseOverTower != null)
                     {
+                        // InfoWindow changed in MouseOver part of Update()
                         DrawCircle(mouseOverTower.Center, mouseOverTower.FireRadius, 64, Color.Red);
-                        if(mouseOverTower is Tower_Shock && mouseOverTower.UpgradeLevel < 3)
-                            spriteBatch.DrawString(normalFont, "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel + "\nUpgrade Cost: " + mouseOverTower.Cost, new Vector2(mouseOverTower.Point.X + mouseOverTower.Width + 2, mouseOverTower.Point.Y - 5), Color.Blue);
-                        else if(mouseOverTower is Tower_Shock && mouseOverTower.UpgradeLevel >= 3)
-                            spriteBatch.DrawString(normalFont, "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel, new Vector2(mouseOverTower.Point.X + mouseOverTower.Width + 2, mouseOverTower.Point.Y - 5), Color.Blue);
-                        else if(!(mouseOverTower is Tower_Shock) && mouseOverTower.UpgradeLevel >= 3)
-                            spriteBatch.DrawString(normalFont, "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel + "\nAttack Mode: " + mouseOverTower.AttackType, new Vector2(mouseOverTower.Point.X + mouseOverTower.Width + 2, mouseOverTower.Point.Y - 5), Color.Blue);
-                        else
-                            spriteBatch.DrawString(normalFont, "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel + "\nUpgrade Cost: " + mouseOverTower.Cost + "\nAttack Mode: " + mouseOverTower.AttackType, new Vector2(mouseOverTower.Point.X + mouseOverTower.Width + 2, mouseOverTower.Point.Y - 5), Color.Blue);
                     }
                     if (selectedItem is Tower)
                     {
-                        if (selectedItem != mouseOverTower)
-                            DrawCircle(selectedItem.Center, ((Tower)selectedItem).FireRadius, 64, Color.Red);
+                        DrawCircle(selectedItem.Center, ((Tower)selectedItem).FireRadius, 64, Color.Red);
                         ImageObject.DrawRectangleOutline(((Tower)selectedItem).OccupiedTile.Rectangle, 3, Color.Blue, blankTex, spriteBatch);
                     }
                     #endregion Towers
@@ -606,11 +645,11 @@ namespace CakeDefense
                         if (mouseRect.Intersects(trap.Rectangle))
                             mouseOverTrap = trap;
                     }
-                    if (mouseOverTrap != null)
-                    {
-                        spriteBatch.DrawString(normalFont, "Value: " + mouseOverTrap.Cost + "\nSale Price: " + mouseOverTrap.SellCost(), new Vector2(mouseOverTrap.Point.X + mouseOverTrap.Width + 2, mouseOverTrap.Point.Y - 5), Color.Green);
-                    }
-                    if (selectedItem is Trap)
+                    //if (mouseOverTrap != null && mouseOverTrap != selectedItem)
+                    //{
+                    //    // InfoWindow changed in MouseOver part of Update()
+                    //}
+                    if (selectedItem is Trap && selectedItem != mouseOverTrap)
                     {
                         ImageObject.DrawRectangleOutline(((Trap)selectedItem).OccupiedTile.Rectangle, 3, Color.Green, blankTex, spriteBatch);
                     }
@@ -783,26 +822,10 @@ namespace CakeDefense
             {
                 if (selectedItem is Tower && !(selectedItem is Tower_Shock))
                 {
-                    if (((Tower)selectedItem).AttackType == Tower.Attacktype.None)
-                    {
-                        ((Tower)selectedItem).AttackType = Tower.Attacktype.Fastest;
-                    }
-                    else if (((Tower)selectedItem).AttackType == Tower.Attacktype.Fastest)
-                    {
-                        ((Tower)selectedItem).AttackType = Tower.Attacktype.Slowest;
-                    }
-                    else if (((Tower)selectedItem).AttackType == Tower.Attacktype.Slowest)
-                    {
-                        ((Tower)selectedItem).AttackType = Tower.Attacktype.Strongest;
-                    }
-                    else if (((Tower)selectedItem).AttackType == Tower.Attacktype.Strongest)
-                    {
-                        ((Tower)selectedItem).AttackType = Tower.Attacktype.Weakest;
-                    }
-                    else if (((Tower)selectedItem).AttackType == Tower.Attacktype.Weakest)
-                    {
-                        ((Tower)selectedItem).AttackType = Tower.Attacktype.None;
-                    }
+                    Tower.Attacktype type = ((Tower)selectedItem).AttackType + 1;
+                    if ((int)type >= Enum.GetNames(typeof(Tower.Attacktype)).Length)
+                        type = Tower.Attacktype.None;
+                    ((Tower)selectedItem).AttackType = type;
                 }
             }
 
@@ -940,6 +963,9 @@ namespace CakeDefense
             cake = new Cake(cakeLeft, Var.GAME_AREA.Left + (Var.TILE_SIZE * 15), Var.GAME_AREA.Top + (Var.TILE_SIZE * 2), Var.TILE_SIZE * 3, Var.TILE_SIZE * 3, spriteBatch, normalFont, cakeTex);
             hud = new HUD(spriteBatch, money, infoBoxTex, mediumFont, cake, selectionList, stripesTex, this);
             hud.MenuButton.Texture = menuBttnTex;
+
+            hud.InfoWindow = new Window(0, 0, 0, 0, spriteBatch, blankTex, null, new List<TextObject> { new TextObject("", Vector2.Zero, normalFont, Color.GhostWhite, spriteBatch) });
+            hud.InfoWindow.Color = Var.PAUSE_GRAY;
 
             List<TextObject> texts = new List<TextObject>
             {

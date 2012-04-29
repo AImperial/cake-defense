@@ -99,6 +99,26 @@ namespace CakeDefense
                                 }
                                 break;
                             #endregion Attacktype.Weakest
+
+                            #region Attacktype.First
+                            case Attacktype.First:
+                                foreach (Enemy enemy in enemiesInRange)
+                                {
+                                    if (enemy.CurrentTile > enemyToAttack.CurrentTile)
+                                        enemyToAttack = enemy;
+                                }
+                                break;
+                            #endregion Attacktype.First
+
+                            #region Attacktype.Last
+                            case Attacktype.Last:
+                                foreach (Enemy enemy in enemiesInRange)
+                                {
+                                    if (enemy.CurrentTile < enemyToAttack.CurrentTile)
+                                        enemyToAttack = enemy;
+                                }
+                                break;
+                            #endregion Attacktype.Last
                         }
                         fireAngle = enemyToAttack.CheckWhereIWillBe(this); // attacks enemy chosen
                     }

@@ -1,9 +1,9 @@
-822-9-0-2// 0-Money ||| 1-CakeLeft ||| 2-Level ||| 3-Wave
+1647-9-0-3// 0-Money ||| 1-CakeLeft ||| 2-Level ||| 3-Wave
 --Towers--
-Shock-9,11-10-None
-Basic-8,9-10-None
-Shock-6,7-10-None
+Basic-6,13-10-Last
+Shock-22,5-10-None
+Shock-19,13-10-None
+Shock-22,6-10-None
+Shock-22,7-10-None
+Fire-9,12-10-Last
 --Traps--
-Slow-14,5-5
-Basic-17,6-5
-Zapper-18,12-300

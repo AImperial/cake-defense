@@ -160,6 +160,36 @@ namespace CakeDefense
             set { height = value; }
         }
 
+        public int Right
+        {
+            get { return X + Width; }
+
+            set { X = value - Width; }
+        }
+
+        public int Bottom
+        {
+            get { return Y + Height; }
+
+            set { Y = value - Height; }
+        }
+
+        /// <summary> The Center 'X' Value of the rectangle of this ImageObject. </summary>
+        public int CenterX
+        {
+            get { return X + Width / 2; }
+
+            set { X = value - Width / 2; }
+        }
+
+        /// <summary> The Center 'Y' Value of the rectangle of this ImageObject. </summary>
+        public int CenterY
+        {
+            get { return Y + Height / 2; }
+
+            set { Y = value - Height / 2; }
+        }
+
         /// <summary> The Center of the rectangle of this GameObject. </summary>
         public Vector2 Center
         {
