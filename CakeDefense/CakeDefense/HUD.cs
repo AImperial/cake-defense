@@ -28,7 +28,7 @@ namespace CakeDefense
         private List<GameObject> selectionBar;
         private GameTime time;
         private Timer menuTimer, saveTimer;
-        private Window costWindow;
+        private Window costWindow, infoWindow;
         #endregion Attributes
 
         #region Constructor
@@ -67,31 +67,43 @@ namespace CakeDefense
         public SpriteBatch SpriteBatch
         {
             get { return spriteBatch; }
+
             set { spriteBatch = value; }
         }
 
         public int Money
         {
             get { return money; }
+
             set { money = value; }
         }
 
         public int Score
         {
             get { return score; }
+
             set { score = value; }
         }
 
         public int Health
         {
             get { return cake.CurrentHealth; }
+
             set { cake.CurrentHealth = value; }
         }
 
         public Window CostWindow
         {
             get { return costWindow; }
+
             set { costWindow = value; }
+        }
+
+        public Window InfoWindow
+        {
+            get { return infoWindow; }
+
+            set { infoWindow = value; }
         }
 
         public Button MenuButton
@@ -224,6 +236,8 @@ namespace CakeDefense
                 selectionBar[i].Draw();
             }
             costWindow.Draw();
+
+            infoWindow.Draw();
         }
 
         public void DrawDropDownMenu()

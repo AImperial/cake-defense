@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Blank.xnb</Output>
-      <Time>2012-04-23T15:17:29.35864-04:00</Time>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Blank.xnb</Output>
+      <Time>2012-04-02T22:59:08.0648817-04:00</Time>
     </Item>
     <Item>
       <Source>Menu\Credits.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Credits.xnb</Output>
-      <Time>2012-04-23T15:17:29.5326499-04:00</Time>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Credits.xnb</Output>
+      <Time>2012-04-02T22:40:13.6929994-04:00</Time>
     </Item>
     <Item>
       <Source>Menu\Instructions.png</Source>
@@ -25,8 +25,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Instructions.xnb</Output>
-      <Time>2012-04-23T16:13:18.8659888-04:00</Time>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Instructions.xnb</Output>
+      <Time>2012-04-28T19:26:04.2654064-04:00</Time>
     </Item>
     <Item>
       <Source>Menu\MainMenu.png</Source>
@@ -34,17 +34,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\MainMenu.xnb</Output>
-      <Time>2012-04-23T15:17:29.7646607-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Sprites\SpiderSprite.png</Source>
-      <Name>Sprites\SpiderSprite</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\SpiderSprite.xnb</Output>
-      <Time>2012-04-23T15:17:29.8566659-04:00</Time>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\MainMenu.xnb</Output>
+      <Time>2012-04-28T19:26:04.2914079-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\Bullet.png</Source>
@@ -52,8 +43,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\Bullet.xnb</Output>
-      <Time>2012-04-23T15:17:30.0206753-04:00</Time>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\Bullet.xnb</Output>
+      <Time>2012-04-10T14:42:22.812201-04:00</Time>
     </Item>
     <Item>
       <Source>Menu\Lose.png</Source>
@@ -61,8 +52,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Lose.xnb</Output>
-      <Time>2012-04-23T15:17:29.6786557-04:00</Time>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Lose.xnb</Output>
+      <Time>2012-04-12T00:32:55.0896341-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\can.png</Source>
@@ -70,8 +61,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\can.xnb</Output>
-      <Time>2012-04-23T15:17:29.8906679-04:00</Time>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\can.xnb</Output>
+      <Time>2012-04-12T18:33:44.5768126-04:00</Time>
     </Item>
     <Item>
       <Source>Stripes.png</Source>
@@ -79,8 +70,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Stripes.xnb</Output>
-      <Time>2012-04-23T15:17:30.4426994-04:00</Time>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Stripes.xnb</Output>
+      <Time>2012-04-13T15:33:15.2952105-04:00</Time>
     </Item>
     <Item>
       <Source>Menu\Win.png</Source>
@@ -88,8 +79,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Win.xnb</Output>
-      <Time>2012-04-23T15:17:29.5966522-04:00</Time>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Win.xnb</Output>
+      <Time>2012-04-15T14:57:12.8729935-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\cake.png</Source>
@@ -97,8 +88,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\cake.xnb</Output>
-      <Time>2012-04-23T15:17:29.9936738-04:00</Time>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\cake.xnb</Output>
+      <Time>2012-04-21T16:12:20.0415728-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\menu_bttn.png</Source>
@@ -106,8 +97,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\menu_bttn.xnb</Output>
-      <Time>2012-04-23T15:17:30.1316817-04:00</Time>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\menu_bttn.xnb</Output>
+      <Time>2012-04-21T16:12:20.0535734-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\flypaper.png</Source>
@@ -115,8 +106,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\flypaper.xnb</Output>
-      <Time>2012-04-23T15:17:29.92867-04:00</Time>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\flypaper.xnb</Output>
+      <Time>2012-04-21T16:12:20.0375725-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\cakepiece.png</Source>
@@ -124,8 +115,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\cakepiece.xnb</Output>
-      <Time>2012-04-23T15:17:30.0836789-04:00</Time>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\cakepiece.xnb</Output>
+      <Time>2012-04-21T16:12:20.046573-04:00</Time>
     </Item>
     <Item>
       <Source>Cursor.png</Source>
@@ -133,8 +124,80 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Cursor.xnb</Output>
-      <Time>2012-04-23T15:17:29.3136374-04:00</Time>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Cursor.xnb</Output>
+      <Time>2012-04-28T19:26:04.0373933-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sprites\ant_ani.png</Source>
+      <Name>Sprites\ant_ani</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\ant_ani.xnb</Output>
+      <Time>2012-04-28T19:26:05.0564516-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Menu\gameScreen.png</Source>
+      <Name>Menu\gameScreen</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\gameScreen.xnb</Output>
+      <Time>2012-04-28T19:26:04.2844075-04:00</Time>
+    </Item>
+    <Item>
+      <Source>HUD\InfoBox.png</Source>
+      <Name>HUD\InfoBox</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\HUD\InfoBox.xnb</Output>
+      <Time>2012-04-28T19:26:04.049394-04:00</Time>
+    </Item>
+    <Item>
+      <Source>HUD\MenuButton.png</Source>
+      <Name>HUD\MenuButton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\HUD\MenuButton.xnb</Output>
+      <Time>2012-04-28T19:26:04.0433937-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sprites\spider_ani.png</Source>
+      <Name>Sprites\spider_ani</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\spider_ani.xnb</Output>
+      <Time>2012-04-28T19:26:05.0134492-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sprites\beetle_ani.png</Source>
+      <Name>Sprites\beetle_ani</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\beetle_ani.xnb</Output>
+      <Time>2012-04-28T19:26:05.045451-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sprites\acid_trap.png</Source>
+      <Name>Sprites\acid_trap</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\acid_trap.xnb</Output>
+      <Time>2012-04-28T19:26:05.0294501-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sprites\zapper_ani.png</Source>
+      <Name>Sprites\zapper_ani</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\zapper_ani.xnb</Output>
+      <Time>2012-04-28T19:26:05.0504513-04:00</Time>
     </Item>
     <Item>
       <Source>Spritefonts\Large.spritefont</Source>
@@ -142,8 +205,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Large.xnb</Output>
-      <Time>2012-04-23T15:17:28.8566112-04:00</Time>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Large.xnb</Output>
+      <Time>2012-04-02T23:16:52.9447894-04:00</Time>
     </Item>
     <Item>
       <Source>Spritefonts\Medium.spritefont</Source>
@@ -151,8 +214,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Medium.xnb</Output>
-      <Time>2012-04-23T15:17:29.1836299-04:00</Time>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Medium.xnb</Output>
+      <Time>2012-04-02T23:16:52.9517898-04:00</Time>
     </Item>
     <Item>
       <Source>Spritefonts\Normal.spritefont</Source>
@@ -160,8 +223,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Normal.xnb</Output>
-      <Time>2012-04-23T15:17:28.7266038-04:00</Time>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Normal.xnb</Output>
+      <Time>2012-04-02T23:16:52.9857917-04:00</Time>
     </Item>
     <Item>
       <Source>Spritefonts\Small.spritefont</Source>
@@ -169,8 +232,54 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Small.xnb</Output>
-      <Time>2012-04-23T15:17:28.7876073-04:00</Time>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Spritefonts\Small.xnb</Output>
+      <Time>2012-04-02T23:16:52.9957923-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sound\flypaper_placement.wav</Source>
+      <Name>Sound\flypaper_placement</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\flypaper_placement.xnb</Output>
+      <Time>2012-04-28T19:26:04.8074374-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sound\Splat.wav</Source>
+      <Name>Sound\Splat</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Splat.xnb</Output>
+      <Time>2012-04-28T19:26:04.7964368-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sound\tower_place.wav</Source>
+      <Name>Sound\tower_place</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\tower_place.xnb</Output>
+      <Time>2012-04-28T19:26:04.801437-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sound\Tower_Shoot.wav</Source>
+      <Name>Sound\Tower_Shoot</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Tower_Shoot.xnb</Output>
+      <Time>2012-04-28T19:26:04.8124377-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sound\Music.mp3</Source>
+      <Name>Sound\Music</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Music.xnb</Output>
+      <Extra>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Music.wma</Extra>
+      <Time>2012-04-28T19:26:04.8294386-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -178,10 +287,10 @@
       <TargetProfile>Reach</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefenseContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefenseContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\RigorousSchism\Desktop\Cake Tower Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefenseContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefenseContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
@@ -210,7 +319,7 @@
       </Assembly>
       <Assembly>
         <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2011-03-21T21:31:57.5295196-04:00</Value>
+        <Value>2011-03-23T12:08:07.5313954-04:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>
