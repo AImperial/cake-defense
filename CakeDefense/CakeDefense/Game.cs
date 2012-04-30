@@ -23,9 +23,9 @@ namespace CakeDefense
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
-        Texture2D blankTex, stripesTex, cursorTex, bulletTex, ant, spider, beetle, pixel, towerTex, tower2Tex, 
-            tower3Tex, cakeTex, acidTex, slowTex, zapperTex, cakepieceTex, menuBttnTex, infoBoxTex, play_button,
-            load_button, instruc_button, credits_button, exit_button;
+        Texture2D blankTex, radiTex, zapiTex, zoltiTex, fireiTex, acidiTex, flyiTex, cursorTex, bulletTex, ant, spider,
+            beetle, pixel, towerTex, tower2Tex, tower3Tex, cakeTex, acidTex, slowTex, zapperTex, cakepieceTex, menuBttnTex,
+            infoBoxTex, play_button, load_button, instruc_button, credits_button, exit_button, fireballTex;
         Dictionary<GameState, Texture2D> menuBackgrounds;
         GameTime animationTotalTime; public GameTime AnimationTime { get { return animationTotalTime; } }
         TimeSpan pausedTime;
@@ -119,18 +119,16 @@ namespace CakeDefense
                 },
                 { GameState.GameOver_Win,
                     new List<Button> {
-                        new Button(blankTex, new Vector2((Var.TOTAL_WIDTH - 240) / 2, (Var.TOTAL_HEIGHT - 80) / 2), 240, 80, 2, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch, new TextObject("Go To Menu", Vector2.Zero, largeFont, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch), new ButtonEvent(GoToMenu))
+                        new Button(blankTex, new Vector2(250, Var.TOTAL_HEIGHT - 200), 226, 122, 2, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch, new TextObject("", Vector2.Zero, largeFont, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch), new ButtonEvent(GoToMenu))
                     }
                 },
                 { GameState.GameOver_Lose,
                     new List<Button> {
-                        new Button(blankTex, new Vector2(250, (Var.TOTAL_HEIGHT - 80) / 2), 240, 80, 2, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch, new TextObject("Go To Menu", Vector2.Zero, largeFont, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch), new ButtonEvent(GoToMenu)),
-                        new Button(blankTex, new Vector2(600, (Var.TOTAL_HEIGHT - 80) / 2), 240, 80, 2, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch, new TextObject("Restart", Vector2.Zero, largeFont, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch), new ButtonEvent(RestartGame))
+                        new Button(blankTex, new Vector2(250, Var.TOTAL_HEIGHT - 200), 226, 122, 2, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch, new TextObject("", Vector2.Zero, largeFont, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch), new ButtonEvent(GoToMenu)),
+                        new Button(blankTex, new Vector2(800, Var.TOTAL_HEIGHT - 200), 226, 122, 2, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch, new TextObject("", Vector2.Zero, largeFont, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch), new ButtonEvent(RestartGame))
                     }
                 }
             };
-            buttons[GameState.GameOver_Win].ForEach(bttn => bttn.Color = Color.Black);
-            buttons[GameState.GameOver_Lose].ForEach(bttn => bttn.Color = Color.Black);
             buttons[GameState.Paused][0].Color = Color.Black;
         }
 
@@ -139,7 +137,6 @@ namespace CakeDefense
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Var.BLANK_TEX = blankTex = this.Content.Load<Texture2D>("Blank");
             cursorTex = this.Content.Load<Texture2D>("Cursor");
-            stripesTex = this.Content.Load<Texture2D>("Stripes");
 
             #region Menu
             menuBackgrounds = new Dictionary<GameState, Texture2D>
@@ -162,6 +159,12 @@ namespace CakeDefense
             #region HUD
             menuBttnTex = this.Content.Load<Texture2D>("HUD/MenuButton");
             infoBoxTex = this.Content.Load<Texture2D>("HUD/InfoBox");
+            acidiTex = this.Content.Load<Texture2D>("HUD/acid_item");
+            fireiTex = this.Content.Load<Texture2D>("HUD/fire_item");
+            flyiTex = this.Content.Load<Texture2D>("HUD/flypaper_item");
+            radiTex = this.Content.Load<Texture2D>("HUD/rad_item");
+            zapiTex = this.Content.Load<Texture2D>("HUD/zap_item");
+            zoltiTex = this.Content.Load<Texture2D>("HUD/zolt_item");
             #endregion HUD
 
             #region Spritefonts
@@ -183,6 +186,7 @@ namespace CakeDefense
             tower2Tex = this.Content.Load<Texture2D>("Sprites/can2");
             tower3Tex = this.Content.Load<Texture2D>("Sprites/can3");
             bulletTex = this.Content.Load<Texture2D>("Sprites/Bullet");
+            fireballTex = this.Content.Load<Texture2D>("Sprites/Fireball");
             acidTex = this.Content.Load<Texture2D>("Sprites/acid_trap");
             slowTex = this.Content.Load<Texture2D>("Sprites/flypaper");
             zapperTex = this.Content.Load<Texture2D>("Sprites/zapper_ani");
@@ -622,7 +626,6 @@ namespace CakeDefense
                 case GameState.Game: case GameState.Paused:
                     spriteBatch.Draw(menuBackgrounds[GameState.Game], Var.SCREEN_SIZE, Color.White);
                     map.DrawMap(blankTex, smallFont);
-
                     cake.Draw();
 
                     #region Towers
@@ -654,10 +657,6 @@ namespace CakeDefense
                         if (mouseRect.Intersects(trap.Rectangle))
                             mouseOverTrap = trap;
                     }
-                    //if (mouseOverTrap != null && mouseOverTrap != selectedItem)
-                    //{
-                    //    // InfoWindow changed in MouseOver part of Update()
-                    //}
                     if (selectedItem is Trap && selectedItem != mouseOverTrap)
                     {
                         ImageObject.DrawRectangleOutline(((Trap)selectedItem).OccupiedTile.Rectangle, 3, Color.Green, blankTex, spriteBatch);
@@ -665,7 +664,6 @@ namespace CakeDefense
                     #endregion Traps
 
                     droppedCake.ForEach(dropped => spriteBatch.Draw(cakepieceTex, new Rectangle((int)(dropped.X), (int)(dropped.Y), 15, 15), Color.White));
-
                     enemies.ForEach(enemy => enemy.Draw(gameTime));
 
                     if (heldItem != null)
@@ -751,7 +749,7 @@ namespace CakeDefense
                     foreach (Button bttn in buttons[gameState])
                     {
                         if (mouseRect.Intersects(bttn.Rectangle))
-                            bttn.DrawRectangleOutline(5, Color.FromNonPremultiplied(254, 165, 255, 255), stripesTex);
+                            bttn.DrawRectangleOutline(5, Color.FromNonPremultiplied(254, 165, 255, 255), blankTex);
                     }
                     break;
                 case GameState.Instructions:
@@ -763,9 +761,14 @@ namespace CakeDefense
                     spriteBatch.DrawString(mediumFont, "Right click to return", new Vector2(15, Var.TOTAL_HEIGHT - mediumFont.MeasureString("-").Y - 10), Color.Black);
                     break;
                 case GameState.GameOver_Win:
+                    spriteBatch.Draw(menuBackgrounds[gameState], Var.SCREEN_SIZE, Color.White);
+                    spriteBatch.Draw(exit_button, buttons[gameState][0].Rectangle, Color.White);
+                    buttons[gameState].ForEach(bttn => ImageObject.DrawRectangleOutline(bttn.Resized(), bttn.outLineThickness, Color.FromNonPremultiplied(bttn.outlineColor.R, bttn.outlineColor.G, bttn.outlineColor.B, (byte)(bttn.outlineColor.A * (bttn.Transparency / 100))), Var.BLANK_TEX, spriteBatch));
+                    break;
                 case GameState.GameOver_Lose:
                     spriteBatch.Draw(menuBackgrounds[gameState], Var.SCREEN_SIZE, Color.White);
-                    buttons[gameState].ForEach(bttn => bttn.Draw());
+                    spriteBatch.Draw(exit_button, buttons[gameState][0].Rectangle, Color.White);
+                    spriteBatch.Draw(exit_button, buttons[gameState][1].Rectangle, Color.White);
                     buttons[gameState].ForEach(bttn => ImageObject.DrawRectangleOutline(bttn.Resized(), bttn.outLineThickness, Color.FromNonPremultiplied(bttn.outlineColor.R, bttn.outlineColor.G, bttn.outlineColor.B, (byte)(bttn.outlineColor.A * (bttn.Transparency / 100))), Var.BLANK_TEX, spriteBatch));
                     break;
                 #endregion Everything else
@@ -976,7 +979,7 @@ namespace CakeDefense
                 selectionList.Add(NewTrap((Var.TrapType)i));
 
             cake = new Cake(cakeLeft, Var.GAME_AREA.Left + (Var.TILE_SIZE * 15), Var.GAME_AREA.Top + (Var.TILE_SIZE * 2), Var.TILE_SIZE * 3, Var.TILE_SIZE * 3, spriteBatch, normalFont, cakeTex);
-            hud = new HUD(spriteBatch, money, infoBoxTex, mediumFont, cake, selectionList, stripesTex, this);
+            hud = new HUD(spriteBatch, money, infoBoxTex, mediumFont, cake, selectionList, acidiTex, fireiTex, flyiTex, radiTex, zapiTex, zoltiTex, this);
             hud.MenuButton.Texture = menuBttnTex;
 
             hud.InfoWindow = new Window(0, 0, 0, 0, spriteBatch, blankTex, null, new List<TextObject> { new TextObject("", Vector2.Zero, normalFont, Color.GhostWhite, spriteBatch) });
@@ -1447,7 +1450,7 @@ namespace CakeDefense
                     Var.TILE_SIZE,
                     spriteBatch,
                     tower3Tex,
-                    bulletTex,
+                    fireballTex,
                     attackType
                 );
             }

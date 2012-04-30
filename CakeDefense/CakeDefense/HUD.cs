@@ -21,7 +21,7 @@ namespace CakeDefense
         #region Attributes
         private SpriteBatch spriteBatch;
         private SpriteFont spriteFont;
-        private Texture2D stripesTex;
+        private Texture2D acidTex, fireTex, flyTex, radTex, zapTex, zoltTex;
         private int money, score, maxWave, currentWave;
         private Cake cake;
         private Button moneyDisplay, cakeDisplay, waveDisplay, saveMessage, activeMenuDisplay;
@@ -32,13 +32,18 @@ namespace CakeDefense
         #endregion Attributes
 
         #region Constructor
-        public HUD(SpriteBatch sprite, int money, Texture2D infoBoxTex, SpriteFont font, Cake cake, List<GameObject> towerTrapImages, Texture2D stripes, Game game)
+        public HUD(SpriteBatch sprite, int money, Texture2D infoBoxTex, SpriteFont font, Cake cake, List<GameObject> towerTrapImages, Texture2D acid, Texture2D fire, Texture2D fly, Texture2D rad, Texture2D zap, Texture2D zolt, Game game)
         {
             this.spriteBatch = sprite;
             this.spriteFont = font;
             this.money = money;
             this.cake = cake;
-            stripesTex = stripes;
+            acidTex = acid;
+            fireTex = fire;
+            flyTex = fly;
+            radTex = rad;
+            zapTex = zap;
+            zoltTex = zolt;
 
             selectionBar = towerTrapImages;
             int xStart = (Var.GAME_AREA.Width - (selectionBar.Count * 70)) / 2, ndx = 0;
@@ -68,56 +73,48 @@ namespace CakeDefense
         public SpriteBatch SpriteBatch
         {
             get { return spriteBatch; }
-
             set { spriteBatch = value; }
         }
 
         public int Money
         {
             get { return money; }
-
             set { money = value; }
         }
 
         public int Score
         {
             get { return score; }
-
             set { score = value; }
         }
 
         public int Health
         {
             get { return cake.CurrentHealth; }
-
             set { cake.CurrentHealth = value; }
         }
 
         public int MaxWave
         {
             get { return maxWave; }
-
             set { maxWave = value;}
         }
 
         public int CurrentWave
         {
             get { return currentWave; }
-
             set { currentWave = value + 1; waveDisplay.Message.Message = "Wave: " + currentWave + "/" + maxWave; waveDisplay.CenterText(); }
         }
 
         public Window CostWindow
         {
             get { return costWindow; }
-
             set { costWindow = value; }
         }
 
         public Window InfoWindow
         {
             get { return infoWindow; }
-
             set { infoWindow = value; }
         }
 
@@ -244,12 +241,20 @@ namespace CakeDefense
 
             for (int i = 0; i < selectionBar.Count; i++)
             {
-                Color clr = Color.Blue;
-                if (selectionBar[i] is Trap)
-                    clr = Color.Green;
+                if (i == 0)
+                    spriteBatch.Draw(radTex, selectionBar[i].Rectangle, Color.White);
+                if (i == 1)
+                    spriteBatch.Draw(zoltTex, selectionBar[i].Rectangle, Color.White);
+                if (i == 2)
+                    spriteBatch.Draw(fireTex, selectionBar[i].Rectangle, Color.White);
+                if (i == 3)
+                    spriteBatch.Draw(acidTex, selectionBar[i].Rectangle, Color.White);
+                if (i == 4)
+                    spriteBatch.Draw(flyTex, selectionBar[i].Rectangle, Color.White);
+                if (i == 5)
+                    spriteBatch.Draw(zapTex, selectionBar[i].Rectangle, Color.White);
 
-                spriteBatch.Draw(stripesTex, selectionBar[i].Rectangle, clr);
-                selectionBar[i].Draw();
+                //selectionBar[i].Draw();
             }
             costWindow.Draw();
 

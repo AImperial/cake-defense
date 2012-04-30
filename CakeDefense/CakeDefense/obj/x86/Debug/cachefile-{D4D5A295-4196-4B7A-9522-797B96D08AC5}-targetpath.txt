@@ -37,3 +37,10 @@ Content\Menu\instruc_button.xnb
 Content\Menu\load_button.xnb
 Content\Menu\play_button.xnb
 Content\Sprites\can2.xnb
+Content\HUD\acid_item.xnb
+Content\HUD\fire_item.xnb
+Content\HUD\flypaper_item.xnb
+Content\HUD\rad_item.xnb
+Content\HUD\zap_item.xnb
+Content\HUD\zolt_item.xnb
+Content\Sprites\Fireball.xnb
