@@ -22,9 +22,9 @@ namespace CakeDefense
         private SpriteBatch spriteBatch;
         private SpriteFont spriteFont;
         private Texture2D stripesTex;
-        private int money, score;
+        private int money, score, maxWave, currentWave;
         private Cake cake;
-        private Button moneyDisplay, cakeDisplay, saveMessage, activeMenuDisplay;
+        private Button moneyDisplay, cakeDisplay, waveDisplay, saveMessage, activeMenuDisplay;
         private List<GameObject> selectionBar;
         private GameTime time;
         private Timer menuTimer, saveTimer;
@@ -50,10 +50,11 @@ namespace CakeDefense
                 item.Image.Transparency = 100;
             }
 
-            moneyDisplay = new Button(infoBoxTex, new Vector2(260, 2), 120, 40, 2, Color.DarkGray, sprite, new TextObject("$" + money, Vector2.Zero, font, Color.Red, sprite), null);
-            cakeDisplay = new Button(infoBoxTex, new Vector2(460, 2), 120, 40, 2, Color.DarkGray, sprite, new TextObject("Cake: " + cake.CurrentHealth, Vector2.Zero, font, Color.Red, sprite), null);
+            moneyDisplay = new Button(infoBoxTex, new Vector2(250, 2), 120, 40, 2, Color.DarkGray, sprite, new TextObject("$" + money, Vector2.Zero, font, Color.Red, sprite), null);
+            cakeDisplay = new Button(infoBoxTex, new Vector2(464, 2), 120, 40, 2, Color.DarkGray, sprite, new TextObject("Cake: " + cake.CurrentHealth, Vector2.Zero, font, Color.Red, sprite), null);
+            waveDisplay = new Button(infoBoxTex, new Vector2(685, 2), 140, 40, 2, Color.DarkGray, sprite, new TextObject("", Vector2.Zero, font, Color.Red, sprite), null);
 
-            activeMenuDisplay = new Button(infoBoxTex, new Vector2(Var.TOTAL_WIDTH - 380, 2), 120, 40, 2, Color.LightCyan, sprite, new TextObject(" ", Vector2.Zero, font, Color.Red, sprite), null);
+            activeMenuDisplay = new Button(infoBoxTex, new Vector2(Var.TOTAL_WIDTH - 370, 2), 120, 40, 2, Color.LightCyan, sprite, new TextObject(" ", Vector2.Zero, font, Color.Red, sprite), null);
             saveMessage = new Button(infoBoxTex, new Vector2(Var.GAME_AREA.X + 2, Var.GAME_AREA.Bottom - 42), 120, 40, 2, Color.MidnightBlue, sprite, new TextObject("Saved!", Vector2.Zero, font, Color.Red, sprite), null);
 
             PopulateMenuList(game);
@@ -90,6 +91,20 @@ namespace CakeDefense
             get { return cake.CurrentHealth; }
 
             set { cake.CurrentHealth = value; }
+        }
+
+        public int MaxWave
+        {
+            get { return maxWave; }
+
+            set { maxWave = value;}
+        }
+
+        public int CurrentWave
+        {
+            get { return currentWave; }
+
+            set { currentWave = value + 1; waveDisplay.Message.Message = "Wave: " + currentWave + "/" + maxWave; waveDisplay.CenterText(); }
         }
 
         public Window CostWindow
@@ -220,6 +235,7 @@ namespace CakeDefense
         {
             moneyDisplay.Draw();
             cakeDisplay.Draw();
+            waveDisplay.Draw();
 
             DrawDropDownMenu();
 

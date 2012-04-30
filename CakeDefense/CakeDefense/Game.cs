@@ -103,11 +103,11 @@ namespace CakeDefense
             {
                 { GameState.Menu,
                     new List<Button> {
-                        new Button(null, new Vector2(109, 124), 498, 284, 0, Color.White, null, null, null),
-                        new Button(null, new Vector2(762, 80), 420, 145, 0, Color.White, null, null, null),
-                        new Button(null, new Vector2(776, 387), 417, 136, 0, Color.White, null, null, null),
-                        new Button(null, new Vector2(97, 459), 607, 195, 0, Color.White, null, null, null),
-                        new Button(null, new Vector2(0, 0), 163, 79, 0, Color.White, null, null, null)
+                        new Button(null, new Vector2(35, 230), 640, 140, 0, Color.White, spriteBatch, null, null),
+                        new Button(null, new Vector2(35, 370), 640, 120, 0, Color.White, spriteBatch, null, null),
+                        new Button(null, new Vector2(35, 490), 640, 130, 0, Color.White, spriteBatch, null, null),
+                        new Button(null, new Vector2(0, 0), 0, 0, 0, Color.White, spriteBatch, null, null),
+                        new Button(null, new Vector2(Var.TOTAL_WIDTH - 163, 0), 163, 79, 0, Color.White, spriteBatch, null, null)
                     }
                 },
                 { GameState.Paused,
@@ -733,6 +733,12 @@ namespace CakeDefense
 
                 case GameState.Menu:
                     spriteBatch.Draw(menuBackgrounds[gameState], Var.SCREEN_SIZE, Color.White);
+
+                    foreach (Button bttn in buttons[gameState])
+                    {
+                        if (mouseRect.Intersects(bttn.Rectangle))
+                            bttn.DrawRectangleOutline(5, Color.FromNonPremultiplied(254, 165, 255, 255), stripesTex);
+                    }
                     /*spriteBatch.Draw(blankTex, buttons[gameState][0].Rectangle, Color.Pink);
                     spriteBatch.Draw(blankTex, buttons[gameState][1].Rectangle, Color.Pink);
                     spriteBatch.Draw(blankTex, buttons[gameState][2].Rectangle, Color.Pink);
@@ -1000,6 +1006,7 @@ namespace CakeDefense
             {
                 waves.RemoveAt(0);
                 wave++;
+                hud.CurrentWave = wave;
                 prevWaves.Add(waves[0].ToList());
             }
 
@@ -1077,6 +1084,10 @@ namespace CakeDefense
                     waves.Add(thisWave);
                 wave++;
                 difficulty += Var.WAVES_DIFFICULTY_INCREASE;
+            }
+            if (hud != null) {
+                hud.MaxWave = waves.Count;
+                hud.CurrentWave = waveNum;
             }
             wave = waveNum;
             if (waves.Count > 0)
