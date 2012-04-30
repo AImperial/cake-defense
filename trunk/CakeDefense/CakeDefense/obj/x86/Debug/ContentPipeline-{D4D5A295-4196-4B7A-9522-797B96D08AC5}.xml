@@ -17,7 +17,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Credits.xnb</Output>
-      <Time>2012-04-23T19:35:34.8958175-04:00</Time>
+      <Time>2012-04-30T14:13:42.5948726-04:00</Time>
     </Item>
     <Item>
       <Source>Menu\Instructions.png</Source>
@@ -26,7 +26,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Instructions.xnb</Output>
-      <Time>2012-04-23T19:35:34.9114175-04:00</Time>
+      <Time>2012-04-30T14:13:37.6555924-04:00</Time>
     </Item>
     <Item>
       <Source>Menu\MainMenu.png</Source>
@@ -35,7 +35,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\MainMenu.xnb</Output>
-      <Time>2012-04-27T17:11:08.170589-04:00</Time>
+      <Time>2012-04-30T14:13:28.0723076-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\Bullet.png</Source>
@@ -53,7 +53,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Lose.xnb</Output>
-      <Time>2012-04-23T19:35:34.8958175-04:00</Time>
+      <Time>2012-04-30T14:13:56.929586-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\can.png</Source>
@@ -80,7 +80,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Win.xnb</Output>
-      <Time>2012-04-23T19:35:34.8802175-04:00</Time>
+      <Time>2012-04-30T14:13:52.826416-04:00</Time>
     </Item>
     <Item>
       <Source>Sprites\cake.png</Source>
@@ -280,6 +280,69 @@
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Music.xnb</Output>
       <Extra>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sound\Music.wma</Extra>
       <Time>2012-04-18T17:37:04-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sprites\can3.png</Source>
+      <Name>Sprites\can3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\can3.xnb</Output>
+      <Time>2012-04-30T14:28:39.7720267-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Menu\credits_button.png</Source>
+      <Name>Menu\credits_button</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\credits_button.xnb</Output>
+      <Time>2012-04-30T14:14:12.3580409-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Menu\exit_button.png</Source>
+      <Name>Menu\exit_button</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\exit_button.xnb</Output>
+      <Time>2012-04-30T14:14:23.2924503-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Menu\instruc_button.png</Source>
+      <Name>Menu\instruc_button</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\instruc_button.xnb</Output>
+      <Time>2012-04-30T14:14:08.9038456-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Menu\load_button.png</Source>
+      <Name>Menu\load_button</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\load_button.xnb</Output>
+      <Time>2012-04-30T14:14:16.170259-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Menu\play_button.png</Source>
+      <Name>Menu\play_button</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\play_button.xnb</Output>
+      <Time>2012-04-30T14:14:05.4756612-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sprites\can2.png</Source>
+      <Name>Sprites\can2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\can2.xnb</Output>
+      <Time>2012-04-30T14:40:57.9422509-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

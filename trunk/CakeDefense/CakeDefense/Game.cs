@@ -23,7 +23,9 @@ namespace CakeDefense
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
-        Texture2D blankTex, stripesTex, cursorTex, bulletTex, ant, spider, beetle, pixel, towerTex, cakeTex, acidTex, slowTex, zapperTex, cakepieceTex, menuBttnTex, infoBoxTex;
+        Texture2D blankTex, stripesTex, cursorTex, bulletTex, ant, spider, beetle, pixel, towerTex, tower2Tex, 
+            tower3Tex, cakeTex, acidTex, slowTex, zapperTex, cakepieceTex, menuBttnTex, infoBoxTex, play_button,
+            load_button, instruc_button, credits_button, exit_button;
         Dictionary<GameState, Texture2D> menuBackgrounds;
         GameTime animationTotalTime; public GameTime AnimationTime { get { return animationTotalTime; } }
         TimeSpan pausedTime;
@@ -103,11 +105,11 @@ namespace CakeDefense
             {
                 { GameState.Menu,
                     new List<Button> {
-                        new Button(null, new Vector2(35, 230), 640, 140, 0, Color.White, spriteBatch, null, null),
-                        new Button(null, new Vector2(35, 370), 640, 120, 0, Color.White, spriteBatch, null, null),
-                        new Button(null, new Vector2(35, 490), 640, 130, 0, Color.White, spriteBatch, null, null),
-                        new Button(null, new Vector2(0, 0), 0, 0, 0, Color.White, spriteBatch, null, null),
-                        new Button(null, new Vector2(Var.TOTAL_WIDTH - 163, 0), 163, 79, 0, Color.White, spriteBatch, null, null)
+                        new Button(null, new Vector2(35, 230), 304, 139, 0, Color.White, spriteBatch, null, null),//play button
+                        new Button(null, new Vector2(35, 380), 658, 104, 0, Color.White, spriteBatch, null, null),//instructions button
+                        new Button(null, new Vector2(35, 495), 459, 122, 0, Color.White, spriteBatch, null, null),//credits button
+                        new Button(null, new Vector2(0, 0), 0, 0, 0, Color.White, spriteBatch, null, null),//load button
+                        new Button(null, new Vector2(Var.TOTAL_WIDTH - 226, 0), 226, 122, 0, Color.White, spriteBatch, null, null)//exit button
                     }
                 },
                 { GameState.Paused,
@@ -149,6 +151,12 @@ namespace CakeDefense
                 { GameState.GameOver_Win, this.Content.Load<Texture2D>("Menu/Win") },
                 { GameState.GameOver_Lose, this.Content.Load<Texture2D>("Menu/Lose") }
             };
+
+            play_button = this.Content.Load<Texture2D>("Menu/play_button");
+            load_button = this.Content.Load<Texture2D>("Menu/play_button");
+            instruc_button = this.Content.Load<Texture2D>("Menu/instruc_button");
+            credits_button = this.Content.Load<Texture2D>("Menu/credits_button");
+            exit_button = this.Content.Load<Texture2D>("Menu/exit_button");
             #endregion Menu
 
             #region HUD
@@ -172,6 +180,8 @@ namespace CakeDefense
             cakepieceTex = this.Content.Load<Texture2D>("Sprites/cakepiece");
 
             towerTex = this.Content.Load<Texture2D>("Sprites/can");
+            tower2Tex = this.Content.Load<Texture2D>("Sprites/can2");
+            tower3Tex = this.Content.Load<Texture2D>("Sprites/can3");
             bulletTex = this.Content.Load<Texture2D>("Sprites/Bullet");
             acidTex = this.Content.Load<Texture2D>("Sprites/acid_trap");
             slowTex = this.Content.Load<Texture2D>("Sprites/flypaper");
@@ -733,24 +743,24 @@ namespace CakeDefense
                 case GameState.Menu:
                     spriteBatch.Draw(menuBackgrounds[gameState], Var.SCREEN_SIZE, Color.White);
 
+                    spriteBatch.Draw(play_button, buttons[gameState][0].Rectangle, Color.White);
+                    spriteBatch.Draw(instruc_button, buttons[gameState][1].Rectangle, Color.White);
+                    spriteBatch.Draw(credits_button, buttons[gameState][2].Rectangle, Color.White);
+                    spriteBatch.Draw(blankTex, buttons[gameState][3].Rectangle, Color.White);
+                    spriteBatch.Draw(exit_button, buttons[gameState][4].Rectangle, Color.White);
                     foreach (Button bttn in buttons[gameState])
                     {
                         if (mouseRect.Intersects(bttn.Rectangle))
                             bttn.DrawRectangleOutline(5, Color.FromNonPremultiplied(254, 165, 255, 255), stripesTex);
                     }
-                    /*spriteBatch.Draw(blankTex, buttons[gameState][0].Rectangle, Color.Pink);
-                    spriteBatch.Draw(blankTex, buttons[gameState][1].Rectangle, Color.Pink);
-                    spriteBatch.Draw(blankTex, buttons[gameState][2].Rectangle, Color.Pink);
-                    spriteBatch.Draw(blankTex, buttons[gameState][3].Rectangle, Color.Pink);
-                    spriteBatch.Draw(blankTex, buttons[gameState][4].Rectangle, Color.Pink);*/
                     break;
                 case GameState.Instructions:
                     spriteBatch.Draw(menuBackgrounds[gameState], Var.SCREEN_SIZE, Color.White);
-                    spriteBatch.DrawString(mediumFont, "Right click to return", new Vector2(15, Var.TOTAL_HEIGHT - mediumFont.MeasureString("-").Y - 10), Color.DarkGreen);
+                    spriteBatch.DrawString(mediumFont, "Right click to return", new Vector2(15, Var.TOTAL_HEIGHT - mediumFont.MeasureString("-").Y - 10), Color.Black);
                     break;
                 case GameState.Credits:
                     spriteBatch.Draw(menuBackgrounds[gameState], Var.SCREEN_SIZE, Color.White);
-                    spriteBatch.DrawString(mediumFont, "Right click to return", new Vector2(15, Var.TOTAL_HEIGHT - mediumFont.MeasureString("-").Y - 10), Color.DarkGreen);
+                    spriteBatch.DrawString(mediumFont, "Right click to return", new Vector2(15, Var.TOTAL_HEIGHT - mediumFont.MeasureString("-").Y - 10), Color.Black);
                     break;
                 case GameState.GameOver_Win:
                 case GameState.GameOver_Lose:
@@ -1416,7 +1426,7 @@ namespace CakeDefense
                     Var.TILE_SIZE,
                     Var.TILE_SIZE,
                     spriteBatch,
-                    towerTex,
+                    tower2Tex,
                     bulletTex,
                     attackType
                 );
@@ -1436,7 +1446,7 @@ namespace CakeDefense
                     Var.TILE_SIZE,
                     Var.TILE_SIZE,
                     spriteBatch,
-                    towerTex,
+                    tower3Tex,
                     bulletTex,
                     attackType
                 );
