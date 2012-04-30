@@ -97,13 +97,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Stripes.png">
-      <Name>Stripes</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Menu\Win.png">
       <Name>Win</Name>
       <Importer>TextureImporter</Importer>
@@ -304,6 +297,13 @@
   <ItemGroup>
     <Compile Include="Sprites\Fireball.png">
       <Name>Fireball</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Menu\restart_button.png">
+      <Name>restart_button</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
