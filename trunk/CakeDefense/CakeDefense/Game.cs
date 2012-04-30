@@ -354,7 +354,7 @@ namespace CakeDefense
                     gos.AddRange(towers); gos.AddRange(traps);
                     foreach (GameObject itm in gos)
                     {
-                        if (itm.Rectangle.Intersects(mouseRect))
+                        if (itm.Rectangle.Intersects(mouseRect) && itm.IsActive)
                         {
                             hud.InfoWindow.IsActive = true;
                             mouseOverItem = itm;
@@ -374,7 +374,6 @@ namespace CakeDefense
                             else if (itm is Trap)
                             {
                                 Trap mouseOverTrap = (Trap)mouseOverItem;
-
                                 message = "Value: " + mouseOverTrap.Cost + "\nSale Price: " + mouseOverTrap.SellCost();
                             }
 
@@ -1390,7 +1389,7 @@ namespace CakeDefense
                 return new Tower_Basic(
                     150,
                     health,
-                    100,
+                    150,
                     1,
                     500,//Fire Rate in ms
                     Var.BASE_BULLET_SPEED,
@@ -1410,9 +1409,9 @@ namespace CakeDefense
                 return new Tower_Shock(
                     150,
                     health,
-                    750,
+                    650,
                     1,
-                    500,//Fire Rate in ms
+                    750,//Fire Rate in ms
                     Var.BASE_BULLET_SPEED,
                     Var.TILE_SIZE,
                     Var.TILE_SIZE,
@@ -1432,7 +1431,7 @@ namespace CakeDefense
                     health,
                     200,
                     4,
-                    1000,//Fire Rate in ms
+                    850,//Fire Rate in ms
                     Var.BASE_BULLET_SPEED,
                     Var.TILE_SIZE,
                     Var.TILE_SIZE,
@@ -1526,7 +1525,7 @@ namespace CakeDefense
                 return new Trap_Zapper(
                     health,
                     1,
-                    100,
+                    150,
                     image,
                     zapperTex
                 );

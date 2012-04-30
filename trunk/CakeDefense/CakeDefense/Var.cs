@@ -28,7 +28,7 @@ namespace CakeDefense
         #endregion Screen/Map Stuff
 
         #region Cake / HUD
-        public static int MAX_CAKE_HEALTH = 9, START_MONEY = 5000;
+        public static int MAX_CAKE_HEALTH = 9, START_MONEY = 500;
         public static TimeSpan MENU_ACTION_TIME = new TimeSpan(0, 0, 0, 0, 500), SAVE_MESSAGE_TIME = new TimeSpan(0, 0, 5);
         #endregion Cake / HUD
 
