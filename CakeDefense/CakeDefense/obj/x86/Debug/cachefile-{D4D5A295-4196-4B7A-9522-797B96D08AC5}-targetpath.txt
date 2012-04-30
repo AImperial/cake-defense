@@ -5,7 +5,6 @@ Content\Menu\MainMenu.xnb
 Content\Sprites\Bullet.xnb
 Content\Menu\Lose.xnb
 Content\Sprites\can.xnb
-Content\Stripes.xnb
 Content\Menu\Win.xnb
 Content\Sprites\cake.xnb
 Content\Sprites\menu_bttn.xnb
@@ -44,3 +43,4 @@ Content\HUD\rad_item.xnb
 Content\HUD\zap_item.xnb
 Content\HUD\zolt_item.xnb
 Content\Sprites\Fireball.xnb
+Content\Menu\restart_button.xnb

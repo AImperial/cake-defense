@@ -25,7 +25,7 @@ namespace CakeDefense
         SpriteFont largeFont, mediumFont, normalFont, smallFont;
         Texture2D blankTex, radiTex, zapiTex, zoltiTex, fireiTex, acidiTex, flyiTex, cursorTex, bulletTex, ant, spider,
             beetle, pixel, towerTex, tower2Tex, tower3Tex, cakeTex, acidTex, slowTex, zapperTex, cakepieceTex, menuBttnTex,
-            infoBoxTex, play_button, load_button, instruc_button, credits_button, exit_button, fireballTex;
+            infoBoxTex, play_button, load_button, instruc_button, credits_button, exit_button, restart_button, fireballTex;
         Dictionary<GameState, Texture2D> menuBackgrounds;
         GameTime animationTotalTime; public GameTime AnimationTime { get { return animationTotalTime; } }
         TimeSpan pausedTime;
@@ -125,7 +125,7 @@ namespace CakeDefense
                 { GameState.GameOver_Lose,
                     new List<Button> {
                         new Button(blankTex, new Vector2(250, Var.TOTAL_HEIGHT - 200), 226, 122, 2, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch, new TextObject("", Vector2.Zero, largeFont, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch), new ButtonEvent(GoToMenu)),
-                        new Button(blankTex, new Vector2(800, Var.TOTAL_HEIGHT - 200), 226, 122, 2, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch, new TextObject("", Vector2.Zero, largeFont, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch), new ButtonEvent(RestartGame))
+                        new Button(blankTex, new Vector2(800, Var.TOTAL_HEIGHT - 200), 392, 112, 2, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch, new TextObject("", Vector2.Zero, largeFont, Color.FromNonPremultiplied(136, 0, 21, 255), spriteBatch), new ButtonEvent(RestartGame))
                     }
                 }
             };
@@ -154,6 +154,7 @@ namespace CakeDefense
             instruc_button = this.Content.Load<Texture2D>("Menu/instruc_button");
             credits_button = this.Content.Load<Texture2D>("Menu/credits_button");
             exit_button = this.Content.Load<Texture2D>("Menu/exit_button");
+            restart_button = this.Content.Load<Texture2D>("Menu/restart_button");
             #endregion Menu
 
             #region HUD
@@ -377,13 +378,13 @@ namespace CakeDefense
                             {
                                 Tower mouseOverTower = (Tower)mouseOverItem;
                                 if (mouseOverTower is Tower_Shock && mouseOverTower.UpgradeLevel < 3)
-                                    message = "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel + "\nUpgrade Cost: " + mouseOverTower.Cost;
+                                    message = "Value: " + mouseOverTower.Cost + "\n[S]ale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel + "\n[U]pgrade Cost: " + mouseOverTower.Cost;
                                 else if (mouseOverTower is Tower_Shock && mouseOverTower.UpgradeLevel >= 3)
-                                    message = "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel;
+                                    message = "Value: " + mouseOverTower.Cost + "\n[S]ale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel;
                                 else if (!(mouseOverTower is Tower_Shock) && mouseOverTower.UpgradeLevel >= 3)
-                                    message = "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel + "\nAttack Mode: " + mouseOverTower.AttackType;
+                                    message = "Value: " + mouseOverTower.Cost + "\n[S]ale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel + "\n[A]ttack Mode: " + mouseOverTower.AttackType;
                                 else
-                                    message = "Value: " + mouseOverTower.Cost + "\nSale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel + "\nUpgrade Cost: " + mouseOverTower.Cost + "\nAttack Mode: " + mouseOverTower.AttackType;
+                                    message = "Value: " + mouseOverTower.Cost + "\n[S]ale Price: " + mouseOverTower.SellCost() + "\nUpgrade Level: " + mouseOverTower.UpgradeLevel + "\n[U]pgrade Cost: " + mouseOverTower.Cost + "\n[A]ttack Mode: " + mouseOverTower.AttackType;
                             }
                             else if (itm is Trap)
                             {
@@ -768,7 +769,7 @@ namespace CakeDefense
                 case GameState.GameOver_Lose:
                     spriteBatch.Draw(menuBackgrounds[gameState], Var.SCREEN_SIZE, Color.White);
                     spriteBatch.Draw(exit_button, buttons[gameState][0].Rectangle, Color.White);
-                    spriteBatch.Draw(exit_button, buttons[gameState][1].Rectangle, Color.White);
+                    spriteBatch.Draw(restart_button, buttons[gameState][1].Rectangle, Color.White);
                     buttons[gameState].ForEach(bttn => ImageObject.DrawRectangleOutline(bttn.Resized(), bttn.outLineThickness, Color.FromNonPremultiplied(bttn.outlineColor.R, bttn.outlineColor.G, bttn.outlineColor.B, (byte)(bttn.outlineColor.A * (bttn.Transparency / 100))), Var.BLANK_TEX, spriteBatch));
                     break;
                 #endregion Everything else
