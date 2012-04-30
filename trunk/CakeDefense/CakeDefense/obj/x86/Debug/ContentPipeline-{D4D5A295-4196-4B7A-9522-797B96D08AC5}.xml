@@ -44,7 +44,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\Bullet.xnb</Output>
-      <Time>2012-04-23T19:35:35.738219-04:00</Time>
+      <Time>2012-04-30T16:01:54.5969609-04:00</Time>
     </Item>
     <Item>
       <Source>Menu\Lose.png</Source>
@@ -343,6 +343,69 @@
       <Options>None</Options>
       <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\can2.xnb</Output>
       <Time>2012-04-30T14:40:57.9422509-04:00</Time>
+    </Item>
+    <Item>
+      <Source>HUD\acid_item.png</Source>
+      <Name>HUD\acid_item</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\HUD\acid_item.xnb</Output>
+      <Time>2012-04-30T15:25:57.4827299-04:00</Time>
+    </Item>
+    <Item>
+      <Source>HUD\fire_item.png</Source>
+      <Name>HUD\fire_item</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\HUD\fire_item.xnb</Output>
+      <Time>2012-04-30T15:15:41.8952279-04:00</Time>
+    </Item>
+    <Item>
+      <Source>HUD\flypaper_item.png</Source>
+      <Name>HUD\flypaper_item</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\HUD\flypaper_item.xnb</Output>
+      <Time>2012-04-30T15:21:47.7232209-04:00</Time>
+    </Item>
+    <Item>
+      <Source>HUD\rad_item.png</Source>
+      <Name>HUD\rad_item</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\HUD\rad_item.xnb</Output>
+      <Time>2012-04-30T15:12:39.841868-04:00</Time>
+    </Item>
+    <Item>
+      <Source>HUD\zap_item.png</Source>
+      <Name>HUD\zap_item</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\HUD\zap_item.xnb</Output>
+      <Time>2012-04-30T15:25:52.3144905-04:00</Time>
+    </Item>
+    <Item>
+      <Source>HUD\zolt_item.png</Source>
+      <Name>HUD\zolt_item</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\HUD\zolt_item.xnb</Output>
+      <Time>2012-04-30T15:21:42.8329457-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sprites\Fireball.png</Source>
+      <Name>Sprites\Fireball</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\Fireball.xnb</Output>
+      <Time>2012-04-30T16:01:50.8370047-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
