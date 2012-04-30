@@ -1278,9 +1278,9 @@ namespace CakeDefense
 
                 return new Enemy(
                     image,
-                    (int)(15 * difficulty),
+                    (int)(10 * difficulty),
                     (int)(2 * difficulty),
-                    1.2f * difficulty,
+                    1.6f * difficulty,
                     path,
                     blankTex,
                     cakepieceTex,
@@ -1316,7 +1316,7 @@ namespace CakeDefense
 
                 return new Enemy(
                     image,
-                    (int)(30 * difficulty),
+                    (int)(25 * difficulty),
                     (int)(2 * difficulty),
                     1.0f * difficulty,
                     path,
@@ -1354,7 +1354,7 @@ namespace CakeDefense
 
                 return new Enemy(
                     image,
-                    (int)(60 * difficulty),
+                    (int)(50 * difficulty),
                     (int)(2 * difficulty),
                     0.7f * difficulty,
                     path,
@@ -1403,7 +1403,7 @@ namespace CakeDefense
                 return new Tower_Basic(
                     150,
                     health,
-                    150,
+                    125,
                     1,
                     500,//Fire Rate in ms
                     Var.BASE_BULLET_SPEED,
@@ -1423,7 +1423,7 @@ namespace CakeDefense
                 return new Tower_Shock(
                     150,
                     health,
-                    650,
+                    500,
                     1,
                     750,//Fire Rate in ms
                     Var.BASE_BULLET_SPEED,
