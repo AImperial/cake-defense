@@ -5,7 +5,6 @@ Content\Menu\MainMenu.xnb
 Content\Sprites\Bullet.xnb
 Content\Menu\Lose.xnb
 Content\Sprites\can.xnb
-Content\Stripes.xnb
 Content\Menu\Win.xnb
 Content\Sprites\cake.xnb
 Content\Sprites\menu_bttn.xnb
@@ -20,15 +19,6 @@ Content\Sprites\spider_ani.xnb
 Content\Sprites\beetle_ani.xnb
 Content\Sprites\acid_trap.xnb
 Content\Sprites\zapper_ani.xnb
-Content\Spritefonts\Large.xnb
-Content\Spritefonts\Medium.xnb
-Content\Spritefonts\Normal.xnb
-Content\Spritefonts\Small.xnb
-Content\Sound\flypaper_placement.xnb
-Content\Sound\Splat.xnb
-Content\Sound\tower_place.xnb
-Content\Sound\Tower_Shoot.xnb
-Content\Sound\Music.xnb
 Content\Sprites\can3.xnb
 Content\Menu\credits_button.xnb
 Content\Menu\exit_button.xnb
@@ -44,4 +34,13 @@ Content\HUD\zap_item.xnb
 Content\HUD\zolt_item.xnb
 Content\Sprites\Fireball.xnb
 Content\Menu\restart_button.xnb
+Content\Spritefonts\Large.xnb
+Content\Spritefonts\Medium.xnb
+Content\Spritefonts\Normal.xnb
+Content\Spritefonts\Small.xnb
+Content\Sound\flypaper_placement.xnb
+Content\Sound\Splat.xnb
+Content\Sound\tower_place.xnb
+Content\Sound\Tower_Shoot.xnb
+Content\Sound\Music.xnb
 Content\Sound\Music.wma
