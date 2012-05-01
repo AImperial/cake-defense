@@ -114,7 +114,6 @@ C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\obj\x86\Debug\CakeDef
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\obj\x86\Debug\CakeDefense.pdb
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\can.xnb
 C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\can.xnb
-C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Stripes.xnb
 C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Lose.xnb
 C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Win.xnb
 C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\Lose.xnb
@@ -285,3 +284,18 @@ C:\Users\Josh\Desktop\cake-defense\CakeDefense\CakeDefense\bin\x86\Debug\Content
 \\banner.main.ad.rit.edu\students\twk5591\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 \\banner.main.ad.rit.edu\students\twk5591\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\obj\x86\Debug\CakeDefense.exe
 \\banner.main.ad.rit.edu\students\twk5591\IGMProfile\Desktop\cake-defense\CakeDefense\CakeDefense\obj\x86\Debug\CakeDefense.pdb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\can3.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\credits_button.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\exit_button.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\instruc_button.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\load_button.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\play_button.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\can2.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\HUD\acid_item.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\HUD\fire_item.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\HUD\flypaper_item.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\HUD\rad_item.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\HUD\zap_item.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\HUD\zolt_item.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Sprites\Fireball.xnb
+C:\Users\Peppy\Desktop\Group Games\Cake Defense\CakeDefense\CakeDefense\bin\x86\Debug\Content\Menu\restart_button.xnb
